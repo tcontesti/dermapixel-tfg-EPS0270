@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DermApIxel — Evaluación de modelos fundacionales para dermatología clínica · TFG EPS0270</title>
+<meta name="description" content="Trabajo de Fin de Grado EPS0270 de Antonio Contestí Coll (UIB, curso 2025-2026): evaluación homogénea e independiente de modelos fundacionales para dermatología, dataset DermapixelAI 1.0 en español, adaptación Dermapixel R0 y prototipo clínico en producción.">
+<meta name="author" content="Antonio Contestí Coll">
+<meta property="og:title" content="DermApIxel: evaluación de modelos fundacionales para dermatología clínica">
+<meta property="og:description" content="TFG EPS0270 · UIB 2025-2026 — evaluación de modelos fundacionales, dataset en español DermapixelAI 1.0, Dermapixel R0 y prototipo clínico en producción (dermapixel.eu).">
+<meta property="og:type" content="article">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['"Inter Tight"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          serif: ['Newsreader', 'Georgia', 'serif'],
+          mono: ['"JetBrains Mono"', 'monospace'],
+        },
+        colors: {
+          paper: '#fafaf9',
+          ink: {
+            DEFAULT: '#0a0a0a',
+            900: '#0a0a0a',
+            800: '#171717',
+            700: '#262626',
+            600: '#404040',
+            500: '#737373',
+            400: '#a3a3a3',
+            300: '#d4d4d4',
+            200: '#e5e5e5',
+            100: '#f5f5f5',
+            50: '#fafafa',
+          },
+        },
+        letterSpacing: {
+          'tightest': '-0.04em',
+          'tighter-2': '-0.025em',
+          'micro': '0.12em',
+          'wider-2': '0.18em',
+          'widest-2': '0.24em',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body {
+    background: #fafaf9;
+    color: #0a0a0a;
+  }
+  body {
+    font-feature-settings: "ss01", "ss02", "cv11", "cv02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .display {
+    font-feature-settings: "ss01", "cv11";
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum", "ss01";
+  }
+  /* Hairline rules */
+  .rule-top    { box-shadow: inset 0 1px 0 #e5e5e5; }
+  .rule-bottom { box-shadow: inset 0 -1px 0 #e5e5e5; }
+  .rule-left   { box-shadow: inset 1px 0 0 #e5e5e5; }
+  /* Hover underline animation */
+  .link-u {
+    position: relative;
+    display: inline-block;
+  }
+  .link-u::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-u:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  /* Fade in on load */
+  .fade {
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .d-1 { animation-delay: 0.05s; }
+  .d-2 { animation-delay: 0.15s; }
+  .d-3 { animation-delay: 0.25s; }
+  .d-4 { animation-delay: 0.35s; }
+  .d-5 { animation-delay: 0.45s; }
+  @keyframes fadeIn { to { opacity: 1; } }
+  /* Index numerals for sections */
+  .index-num {
+    font-family: '"JetBrains Mono"', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+</head>
+
+<body class="font-sans text-ink">
+
+<!-- ─── TOPBAR ─────────────────────────────────────────────────────────────── -->
+<div class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-4 flex items-baseline justify-between text-[11px] uppercase tracking-widest-2 text-ink-500">
+    <div class="font-medium">
+      <span class="text-ink-800">UIB</span> &nbsp;·&nbsp; EPS &nbsp;·&nbsp; 2025—2026
+    </div>
+    <div class="hidden sm:flex gap-8">
+      <a href="#trabajo" class="link-u hover:text-ink-800 transition-colors">Trabajo</a>
+      <a href="#prototipo" class="link-u hover:text-ink-800 transition-colors">Prototipo</a>
+      <a href="#capturas" class="link-u hover:text-ink-800 transition-colors">Capturas</a>
+      <a href="#demo" class="link-u hover:text-ink-800 transition-colors">En vivo</a>
+      <a href="#colaboraciones" class="link-u hover:text-ink-800 transition-colors">Colaboraciones</a>
+      <a href="#material" class="link-u hover:text-ink-800 transition-colors">Material</a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HERO ───────────────────────────────────────────────────────────────── -->
+<header class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 pt-24 pb-32 sm:pt-40 sm:pb-48">
+    <div class="grid grid-cols-12 gap-6 sm:gap-10">
+
+      <!-- Left column — meta -->
+      <div class="col-span-12 sm:col-span-3 fade d-1">
+        <div class="text-[11px] uppercase tracking-widest-2 text-ink-500 mb-3">EPS0270 — TFG</div>
+        <div class="num text-[11px] tracking-wider text-ink-400">
+          MMXXVI / I
+        </div>
+      </div>
+
+      <!-- Right column — title -->
+      <div class="col-span-12 sm:col-span-9">
+        <h1 class="fade d-2 display font-sans font-light text-[clamp(3rem,8vw,7.5rem)] leading-[0.92] tracking-tightest text-ink">
+          DermApIxel<span class="text-ink-300">.</span>
+        </h1>
+
+        <p class="fade d-3 mt-10 font-serif italic text-2xl sm:text-3xl leading-snug text-ink-700 max-w-3xl">
+          Evaluación de modelos fundacionales para dermatología clínica.
+        </p>
+
+        <p class="fade d-4 mt-12 max-w-2xl text-base sm:text-lg leading-relaxed text-ink-600">
+          Evaluación homogénea e independiente de hasta catorce modelos fundacionales con pesos públicos &mdash; con PanDerm y DermLIP como referencia &mdash; sobre doce datasets armonizados por una ontología clínica de tres niveles, un dataset propio en español validado por dermatóloga en activo (DermapixelAI&nbsp;1.0), la adaptación Dermapixel&nbsp;R0 y un prototipo clínico multicanal en producción.
+        </p>
+
+        <div class="fade d-5 mt-16 flex flex-wrap gap-8 text-sm">
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/blob/main/MemoriaTFG.pdf"
+             class="link-u font-medium text-ink-900">
+            Leer la memoria <span class="text-ink-400 ml-1">↗</span>
+          </a>
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/wiki"
+             class="link-u text-ink-500 hover:text-ink-900 transition-colors">
+            Wiki del proyecto
+          </a>
+          <a href="https://dermapixel.eu"
+             class="link-u text-ink-500 hover:text-ink-900 transition-colors">
+            Prototipo en vivo ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ─── METADATOS ───────────────────────────────────────────────────────────── -->
+<section class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-10 text-sm">
+      <div>
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-2">Estudiante</div>
+        <div class="text-ink-900">Antonio Contestí Coll</div>
+        <div class="text-ink-500 text-xs mt-1 font-mono">antonio.contesti1<wbr>@estudiant.uib.cat</div>
+      </div>
+      <div>
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-2">Tutor</div>
+        <div class="text-ink-900">Dr. Javier Varona Gómez</div>
+        <div class="text-ink-500 text-xs mt-1 font-mono">xavi.varona@uib.es</div>
+      </div>
+      <div>
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-2">Colaboración clínica</div>
+        <div class="text-ink-900">Dra. Rosa Taberner</div>
+        <div class="text-ink-500 text-xs mt-1">H. Univ. Son Llàtzer</div>
+      </div>
+      <div>
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-2">Línea internacional</div>
+        <div class="text-ink-900">Dr. Siyuan Yan</div>
+        <div class="text-ink-500 text-xs mt-1">Monash University, Melbourne</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NUMBERS ────────────────────────────────────────────────────────────── -->
+<section class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-20 sm:py-28">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-y-12 md:gap-0">
+      <div class="md:rule-left md:pl-10">
+        <div class="num display font-light text-6xl sm:text-7xl tracking-tightest text-ink">14</div>
+        <div class="mt-3 text-[11px] uppercase tracking-widest-2 text-ink-500">Modelos fundacionales</div>
+      </div>
+      <div class="md:rule-left md:pl-10">
+        <div class="num display font-light text-6xl sm:text-7xl tracking-tightest text-ink">12</div>
+        <div class="mt-3 text-[11px] uppercase tracking-widest-2 text-ink-500">Datasets armonizados</div>
+      </div>
+      <div class="md:rule-left md:pl-10">
+        <div class="num display font-light text-6xl sm:text-7xl tracking-tightest text-ink">11</div>
+        <div class="mt-3 text-[11px] uppercase tracking-widest-2 text-ink-500">Módulos del prototipo</div>
+      </div>
+      <div class="md:rule-left md:pl-10">
+        <div class="num display font-light text-6xl sm:text-7xl tracking-tightest text-ink">1089</div>
+        <div class="mt-3 text-[11px] uppercase tracking-widest-2 text-ink-500">Imágenes DermapixelAI 1.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRABAJO / APORTACIONES ─────────────────────────────────────────────── -->
+<section id="trabajo" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-24">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">01 — Trabajo</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          Tres contribuciones que <span class="font-serif italic text-ink-700">circulan juntas</span>.
+        </h2>
+      </div>
+    </div>
+
+    <div class="space-y-px">
+      <article class="grid grid-cols-12 gap-6 sm:gap-10 py-12 rule-top">
+        <div class="col-span-12 sm:col-span-3">
+          <div class="index-num text-[11px] tracking-wider text-ink-500">A · EVALUACIÓN</div>
+        </div>
+        <div class="col-span-12 sm:col-span-9">
+          <h3 class="text-xl sm:text-2xl font-medium leading-snug text-ink mb-4 tracking-tighter-2">
+            Evaluación comparativa homogénea e independiente
+          </h3>
+          <p class="text-ink-600 leading-relaxed max-w-2xl">
+            Hasta catorce modelos fundacionales con pesos públicos evaluados <em class="font-serif italic">in situ</em> sobre un conjunto común de tareas &mdash; clasificación, segmentación, recuperación de casos y clasificación <em class="font-serif italic">zero-shot</em> guiada por texto &mdash; y de datasets armonizados por una ontología clínica L1/L2/L3, con auditoría del solapamiento entre el corpus de preentrenamiento y los conjuntos de evaluación. No hay un modelo universalmente superior: hay especialización por tarea.
+          </p>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-12 gap-6 sm:gap-10 py-12 rule-top">
+        <div class="col-span-12 sm:col-span-3">
+          <div class="index-num text-[11px] tracking-wider text-ink-500">B · DATOS</div>
+        </div>
+        <div class="col-span-12 sm:col-span-9">
+          <h3 class="text-xl sm:text-2xl font-medium leading-snug text-ink mb-4 tracking-tighter-2">
+            DermapixelAI 1.0: dataset clínico en español
+          </h3>
+          <p class="text-ink-600 leading-relaxed max-w-2xl">
+            Dataset clínico en castellano con texto narrativo asociado a cada caso (1&nbsp;089 imágenes, 672 casos con imagen), entregado con documentación formal tipo <em class="font-serif italic">datasheet</em> y licencia CC&nbsp;BY-NC-SA&nbsp;4.0. Construido sobre el archivo Dermapixel de la Dra.&nbsp;Taberner, con ontología jerárquica L1/L2/L3 mapeada a SNOMED&nbsp;CT y CIE-10 y validación experta del diagnóstico.
+          </p>
+        </div>
+      </article>
+
+      <article class="grid grid-cols-12 gap-6 sm:gap-10 py-12 rule-top rule-bottom">
+        <div class="col-span-12 sm:col-span-3">
+          <div class="index-num text-[11px] tracking-wider text-ink-500">C · ADAPTACIÓN</div>
+        </div>
+        <div class="col-span-12 sm:col-span-9">
+          <h3 class="text-xl sm:text-2xl font-medium leading-snug text-ink mb-4 tracking-tighter-2">
+            Dermapixel R0 e interpretabilidad por conceptos
+          </h3>
+          <p class="text-ink-600 leading-relaxed max-w-2xl">
+            Adaptación propia que demuestra que un modelo fundacional puede especializarse al castellano con recursos modestos: una rama supervisada LoRA L2 (desplegada como módulo M9) y una rama contrastiva en español (SpanDerm-CLIP) que documenta con honestidad sus límites &mdash; <em class="font-serif italic">no</em> desplegada porque no generaliza en uso real. Se complementa con interpretabilidad por Sparse Autoencoders y un diccionario de conceptos clínicos definido con la Dra.&nbsp;Taberner.
+          </p>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── PROTOTIPO ──────────────────────────────────────────────────────────── -->
+<section id="prototipo" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-20">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">02 — Prototipo</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          <span class="font-serif italic text-ink-700">DermApIxel</span>: once módulos AI en producción.
+        </h2>
+        <p class="mt-8 text-ink-600 leading-relaxed max-w-2xl">
+          Aplicación clínica en producción <em class="font-serif italic">end-to-end</em> sobre <a href="https://dermapixel.eu" class="link-u text-ink-900">dermapixel.eu</a>: once módulos (M1–M11) más el buscador M4-bis, un asistente conversacional multicanal (web, WhatsApp y voz) y un selector de tres modos de diagnóstico (determinista, híbrido IA-asistido e interpretación IA máxima) sobre una misma red de seguridad clínica.
+        </p>
+        <p class="mt-5 text-ink-600 leading-relaxed max-w-2xl">
+          Distinguido con la <strong class="font-medium text-ink">Beca de Innovación e Inteligencia Artificial de la AEDV</strong> (10&nbsp;000&nbsp;€, 53.<sup>er</sup> Congreso Nacional de Dermatología y Venereología, Maspalomas, mayo de 2026) para su puesta en producción.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-ink-200">
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M1</div>
+        <div class="text-base font-medium text-ink mb-1">Clasificación HAM</div>
+        <div class="text-xs text-ink-500 leading-relaxed">PanDerm Large FT · 7 clases</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M2</div>
+        <div class="text-base font-medium text-ink mb-1">Segmentación</div>
+        <div class="text-xs text-ink-500 leading-relaxed">MedSAM2 + U-Net · corrección experta</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M3</div>
+        <div class="text-base font-medium text-ink mb-1">Conceptos SAE</div>
+        <div class="text-xs text-ink-500 leading-relaxed">SAE Large · 32 conceptos / imagen</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M4</div>
+        <div class="text-base font-medium text-ink mb-1">RAG visual Derm1M</div>
+        <div class="text-xs text-ink-500 leading-relaxed">FAISS · casos similares</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M4-bis</div>
+        <div class="text-base font-medium text-ink mb-1">Recuperación en español</div>
+        <div class="text-xs text-ink-500 leading-relaxed">Imagen→imagen · archivo Dermapixel</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M5</div>
+        <div class="text-base font-medium text-ink mb-1">Razonamiento LLM</div>
+        <div class="text-xs text-ink-500 leading-relaxed">Proveedores intercambiables</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M6</div>
+        <div class="text-base font-medium text-ink mb-1">Zero-shot DermLIP</div>
+        <div class="text-xs text-ink-500 leading-relaxed">Clase abierta · glosario ES→EN</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M7</div>
+        <div class="text-base font-medium text-ink mb-1">Clasificador jerárquico</div>
+        <div class="text-xs text-ink-500 leading-relaxed">L1/L2/L3 merged43 + TTA</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M8</div>
+        <div class="text-base font-medium text-ink mb-1">Sondeo melanoma</div>
+        <div class="text-xs text-ink-500 leading-relaxed">SigLIP-Large · voto del consenso</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M9</div>
+        <div class="text-base font-medium text-ink mb-1">Dermapixel R0</div>
+        <div class="text-xs text-ink-500 leading-relaxed">PanDerm + LoRA r=16 · cabeza L2 ES</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M10</div>
+        <div class="text-base font-medium text-ink mb-1">Lista de los 7 puntos</div>
+        <div class="text-xs text-ink-500 leading-relaxed">Seven-Point Checklist · Argenziano</div>
+      </div>
+      <div class="bg-paper p-8 hover:bg-white transition-colors">
+        <div class="index-num text-[10px] tracking-widest text-ink-400 mb-4">M11</div>
+        <div class="text-base font-medium text-ink mb-1">Ensemble de consenso</div>
+        <div class="text-xs text-ink-500 leading-relaxed">Banner de 5 módulos · urgencia</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CAPTURAS / SLIDER ──────────────────────────────────────────────────── -->
+<section id="capturas" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-16">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">03 — Capturas</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          El sistema, <span class="font-serif italic text-ink-700">en imágenes</span>.
+        </h2>
+      </div>
+    </div>
+
+    <div class="slider relative" data-slider>
+      <div class="slider-viewport overflow-hidden border border-ink-200 bg-paper" style="aspect-ratio: 16 / 10; max-height: 75vh;">
+        <div class="slider-track flex h-full transition-transform duration-700 ease-out" data-slider-track style="will-change: transform;">
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_consenso.png" alt="DermApIxel — veredicto y banner de consenso" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_ensemble.png" alt="DermApIxel — consenso del ensemble M11" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_seg.png" alt="DermApIxel — segmentación MedSAM2 + U-Net" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_ragES.png" alt="DermApIxel — casos similares del archivo (M4-bis)" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_7puntos.png" alt="DermApIxel — Lista de los 7 puntos (M10)" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_zeroshot.png" alt="DermApIxel — zero-shot abierto (M6)" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_razonamiento.png" alt="DermApIxel — razonamiento clínico (M5)" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_chatweb.png" alt="DermApIxel — asistente conversacional web" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_whatsapp.png" alt="DermApIxel — asistente por WhatsApp" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_annotation.png" alt="DermApIxel — Annotation Studio de conceptos" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_historial.png" alt="DermApIxel — historial de casos" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+          <div class="slider-slide flex items-center justify-center" style="min-width:100%; height:100%;"><img src="screenshots/proto_datasets.png" alt="DermApIxel — datasets de anotación" loading="lazy" style="max-width:100%; max-height:100%; object-fit:contain;"></div>
+        </div>
+      </div>
+
+      <button class="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-paper/90 backdrop-blur border border-ink-200 rounded-full flex items-center justify-center text-ink-700 hover:border-ink-900 hover:text-ink transition-colors" data-slider-prev aria-label="Anterior">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 bg-paper/90 backdrop-blur border border-ink-200 rounded-full flex items-center justify-center text-ink-700 hover:border-ink-900 hover:text-ink transition-colors" data-slider-next aria-label="Siguiente">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <div class="flex justify-center items-center gap-3 mt-6 sm:mt-8" data-slider-dots></div>
+
+      <div class="flex justify-center mt-3">
+        <span class="index-num text-[10px] tracking-widest-2 text-ink-400" data-slider-counter>01 / 12</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  const sliders = document.querySelectorAll('[data-slider]');
+  sliders.forEach(slider => {
+    const track = slider.querySelector('[data-slider-track]');
+    const slides = track.querySelectorAll('.slider-slide');
+    const prevBtn = slider.querySelector('[data-slider-prev]');
+    const nextBtn = slider.querySelector('[data-slider-next]');
+    const dotsContainer = slider.querySelector('[data-slider-dots]');
+    const counter = slider.querySelector('[data-slider-counter]');
+    const total = slides.length;
+    let current = 0;
+    let interval = null;
+
+    const pad = (n) => String(n).padStart(2, '0');
+
+    // dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.setAttribute('aria-label', 'Imagen ' + (i + 1));
+      d.className = 'transition-all duration-300';
+      d.style.cssText = 'width:24px;height:1px;background:#d4d4d4;border:0;padding:0;cursor:pointer;';
+      d.addEventListener('click', () => { goTo(i); restart(); });
+      dotsContainer.appendChild(d);
+    });
+    const dots = dotsContainer.querySelectorAll('button');
+
+    function goTo(i) {
+      current = (i + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach((d, j) => { d.style.background = j === current ? '#0a0a0a' : '#d4d4d4'; d.style.height = j === current ? '2px' : '1px'; });
+      if (counter) counter.textContent = pad(current + 1) + ' / ' + pad(total);
+    }
+
+    function start() { interval = setInterval(() => goTo(current + 1), 6000); }
+    function stop() { if (interval) { clearInterval(interval); interval = null; } }
+    function restart() { stop(); start(); }
+
+    prevBtn.addEventListener('click', () => { goTo(current - 1); restart(); });
+    nextBtn.addEventListener('click', () => { goTo(current + 1); restart(); });
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+
+    // keyboard
+    slider.tabIndex = 0;
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { goTo(current - 1); restart(); }
+      else if (e.key === 'ArrowRight') { goTo(current + 1); restart(); }
+    });
+
+    goTo(0);
+    start();
+  });
+})();
+</script>
+
+<!-- ─── EN PRODUCCIÓN ──────────────────────────────────────────────────────── -->
+<section id="demo" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-16">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">04 — En vivo</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          El sistema, <span class="font-serif italic text-ink-700">en producción</span>.
+        </h2>
+        <p class="mt-4 text-sm text-ink-500 max-w-xl">Prototipo clínico DermApIxel en producción end-to-end: carga de imagen, análisis multimodal con los once módulos AI conectados, banner de consenso de cinco clasificadores, diagnóstico jerárquico, recuperación de casos similares del archivo Dermapixel y asistente conversacional multicanal con razonamiento clínico en lenguaje natural.</p>
+      </div>
+    </div>
+
+    <a href="https://dermapixel.eu" class="group block relative border border-ink-200 bg-ink-900 overflow-hidden" style="aspect-ratio: 16 / 9; max-height: 75vh;">
+      <img src="screenshots/proto_consenso.png" alt="Vista de análisis del prototipo DermApIxel en producción" loading="lazy" class="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" style="object-fit: cover; object-position: top;">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <span class="bg-paper/95 backdrop-blur px-8 py-4 text-sm font-medium text-ink-900 border border-ink-200 group-hover:translate-y-[-2px] transition-transform">
+          Abrir el prototipo en dermapixel.eu <span class="text-ink-400 ml-1">↗</span>
+        </span>
+      </div>
+    </a>
+
+    <div class="flex justify-between items-baseline mt-3 text-[10px] uppercase tracking-widest-2 text-ink-400">
+      <span class="index-num">dermapixel.eu · web · WhatsApp · voz</span>
+      <span class="index-num">DGX Spark · ARM64 · on-premise</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── COLABORACIONES ─────────────────────────────────────────────────────── -->
+<section id="colaboraciones" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-20">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">05 — Colaboraciones</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          Un trabajo <span class="font-serif italic text-ink-700">a tres bandas</span>.
+        </h2>
+      </div>
+    </div>
+
+    <div class="space-y-px">
+      <div class="grid grid-cols-12 gap-6 sm:gap-10 py-10 rule-top items-start">
+        <div class="col-span-3 sm:col-span-2 index-num text-[11px] tracking-wider text-ink-400">i</div>
+        <div class="col-span-9 sm:col-span-3">
+          <div class="text-[11px] uppercase tracking-widest-2 text-ink-400 mb-2">Dirección académica</div>
+          <div class="text-lg font-medium text-ink">UIB</div>
+        </div>
+        <div class="col-span-12 sm:col-span-7">
+          <p class="text-ink-600 leading-relaxed">
+            <strong class="font-medium text-ink">Dr. Javier Varona Gómez</strong> dirige el TFG en la Escola Politècnica Superior de la Universitat de les Illes Balears.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-6 sm:gap-10 py-10 rule-top items-start">
+        <div class="col-span-3 sm:col-span-2 index-num text-[11px] tracking-wider text-ink-400">ii</div>
+        <div class="col-span-9 sm:col-span-3">
+          <div class="text-[11px] uppercase tracking-widest-2 text-ink-400 mb-2">Validación clínica</div>
+          <div class="text-lg font-medium text-ink">H. Son Llàtzer</div>
+        </div>
+        <div class="col-span-12 sm:col-span-7">
+          <p class="text-ink-600 leading-relaxed">
+            <strong class="font-medium text-ink">Dra. Rosa Taberner</strong>, dermatóloga del Hospital Universitari Son Llàtzer y autora del blog Dermapixel, construye junto al autor la ontología jerárquica, valida los diagnósticos del dataset DermapixelAI 1.0, y es la evaluadora clínica de referencia del prototipo en producción.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-6 sm:gap-10 py-10 rule-top rule-bottom items-start">
+        <div class="col-span-3 sm:col-span-2 index-num text-[11px] tracking-wider text-ink-400">iii</div>
+        <div class="col-span-9 sm:col-span-3">
+          <div class="text-[11px] uppercase tracking-widest-2 text-ink-400 mb-2">Línea internacional</div>
+          <div class="text-lg font-medium text-ink">Monash</div>
+        </div>
+        <div class="col-span-12 sm:col-span-7">
+          <p class="text-ink-600 leading-relaxed">
+            <strong class="font-medium text-ink">Dr. Siyuan Yan</strong> (Monash University, Melbourne), autor de PanDerm, DermLIP y DermFM-Zero, colabora con el autor en la extensión del trabajo sobre casuística hispanohablante. Línea de continuación tras el TFG.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── MATERIAL ───────────────────────────────────────────────────────────── -->
+<section id="material" class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-20">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">06 — Material</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          Todo está <span class="font-serif italic text-ink-700">disponible</span>.
+        </h2>
+        <p class="mt-8 text-ink-600 leading-relaxed max-w-2xl">
+          El material complementario reproducible se organiza en directorios de responsabilidad disjunta:
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/repro" class="link-u text-ink-900">repro</a>,
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/tables" class="link-u text-ink-900">tables</a>,
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/datasheet" class="link-u text-ink-900">datasheet</a>,
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/ablations" class="link-u text-ink-900">ablations</a>,
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/sae" class="link-u text-ink-900">sae</a>,
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/llm" class="link-u text-ink-900">llm</a> y
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/tree/main/prototype" class="link-u text-ink-900">prototype</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-px">
+      <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/blob/main/MemoriaTFG.pdf"
+         class="group grid grid-cols-12 gap-6 sm:gap-10 py-8 rule-top items-baseline">
+        <div class="col-span-2 sm:col-span-1 index-num text-[11px] tracking-wider text-ink-400">01</div>
+        <div class="col-span-10 sm:col-span-7">
+          <div class="text-lg sm:text-xl font-medium text-ink group-hover:text-ink-500 transition-colors">Memoria académica</div>
+          <div class="text-xs uppercase tracking-widest-2 text-ink-400 mt-1">PDF · 97 páginas con apéndices</div>
+        </div>
+        <div class="hidden sm:block col-span-3 text-right text-sm text-ink-400 group-hover:text-ink transition-colors font-medium">
+          MemoriaTFG.pdf
+        </div>
+        <div class="col-span-12 sm:col-span-1 text-right text-ink-400 group-hover:translate-x-1 group-hover:text-ink transition-all">↗</div>
+      </a>
+
+      <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/wiki"
+         class="group grid grid-cols-12 gap-6 sm:gap-10 py-8 rule-top items-baseline">
+        <div class="col-span-2 sm:col-span-1 index-num text-[11px] tracking-wider text-ink-400">02</div>
+        <div class="col-span-10 sm:col-span-7">
+          <div class="text-lg sm:text-xl font-medium text-ink group-hover:text-ink-500 transition-colors">Wiki del proyecto</div>
+          <div class="text-xs uppercase tracking-widest-2 text-ink-400 mt-1">Documentación navegable página a página</div>
+        </div>
+        <div class="hidden sm:block col-span-3 text-right text-sm text-ink-400 group-hover:text-ink transition-colors font-medium">
+          dermapixel-tfg-EPS0270/wiki
+        </div>
+        <div class="col-span-12 sm:col-span-1 text-right text-ink-400 group-hover:translate-x-1 group-hover:text-ink transition-all">↗</div>
+      </a>
+
+      <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270"
+         class="group grid grid-cols-12 gap-6 sm:gap-10 py-8 rule-top items-baseline">
+        <div class="col-span-2 sm:col-span-1 index-num text-[11px] tracking-wider text-ink-400">03</div>
+        <div class="col-span-10 sm:col-span-7">
+          <div class="text-lg sm:text-xl font-medium text-ink group-hover:text-ink-500 transition-colors">Material complementario reproducible</div>
+          <div class="text-xs uppercase tracking-widest-2 text-ink-400 mt-1">repro · tables · datasheet · ablations · sae · llm · prototype</div>
+        </div>
+        <div class="hidden sm:block col-span-3 text-right text-sm text-ink-400 group-hover:text-ink transition-colors font-medium">
+          github.com / tcontesti
+        </div>
+        <div class="col-span-12 sm:col-span-1 text-right text-ink-400 group-hover:translate-x-1 group-hover:text-ink transition-all">↗</div>
+      </a>
+
+      <a href="https://dermapixel.eu"
+         class="group grid grid-cols-12 gap-6 sm:gap-10 py-8 rule-top rule-bottom items-baseline">
+        <div class="col-span-2 sm:col-span-1 index-num text-[11px] tracking-wider text-ink-400">04</div>
+        <div class="col-span-10 sm:col-span-7">
+          <div class="text-lg sm:text-xl font-medium text-ink group-hover:text-ink-500 transition-colors">Prototipo en producción</div>
+          <div class="text-xs uppercase tracking-widest-2 text-ink-400 mt-1">DermApIxel · once módulos AI · multicanal</div>
+        </div>
+        <div class="hidden sm:block col-span-3 text-right text-sm text-ink-400 group-hover:text-ink transition-colors font-medium">
+          dermapixel.eu
+        </div>
+        <div class="col-span-12 sm:col-span-1 text-right text-ink-400 group-hover:translate-x-1 group-hover:text-ink transition-all">↗</div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── CITA ───────────────────────────────────────────────────────────────── -->
+<section class="border-b border-ink-200">
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10 mb-16">
+      <div class="col-span-12 sm:col-span-3">
+        <div class="index-num text-[11px] tracking-wider text-ink-400">07 — Citación</div>
+      </div>
+      <div class="col-span-12 sm:col-span-9">
+        <h2 class="display font-light text-4xl sm:text-5xl leading-[1.05] tracking-tighter-2 text-ink max-w-2xl">
+          Si este trabajo te resulta <span class="font-serif italic text-ink-700">útil</span>.
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6 sm:gap-10">
+      <div class="col-span-12 sm:col-span-3"></div>
+      <div class="col-span-12 sm:col-span-9">
+        <div class="font-mono text-xs sm:text-sm leading-loose text-ink-700 max-w-3xl whitespace-pre-wrap">@thesis{contesti2026dermapixel,
+  <span class="text-ink-400">author</span>      = "Contestí Coll, Antonio",
+  <span class="text-ink-400">title</span>       = "Dermapixel: Evaluación de modelos fundacionales para Dermatología Clínica",
+  <span class="text-ink-400">school</span>      = "Escola Politècnica Superior, UIB",
+  <span class="text-ink-400">year</span>        = "2026",
+  <span class="text-ink-400">type</span>        = "Trabajo de Fin de Grado",
+  <span class="text-ink-400">address</span>     = "Palma de Mallorca, Spain",
+  <span class="text-ink-400">note</span>        = "Código TFG EPS0270"
+}</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="max-w-screen-xl mx-auto px-6 sm:px-10 py-16">
+    <div class="grid grid-cols-12 gap-6 sm:gap-10">
+      <div class="col-span-12 sm:col-span-6">
+        <div class="display font-light text-3xl sm:text-4xl tracking-tighter-2 text-ink">DermApIxel.</div>
+        <div class="text-xs uppercase tracking-widest-2 text-ink-400 mt-3">TFG EPS0270 · UIB 2025—2026</div>
+      </div>
+      <div class="col-span-6 sm:col-span-3">
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-3">Licencia</div>
+        <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/blob/main/LICENSE" class="link-u text-sm text-ink-700 hover:text-ink-900">CC BY-NC 4.0</a>
+        <div class="text-xs text-ink-500 mt-2 leading-relaxed">Dataset DermapixelAI 1.0 bajo CC BY-NC-SA 4.0. El material de terceros conserva su licencia original.</div>
+      </div>
+      <div class="col-span-6 sm:col-span-3">
+        <div class="text-[10px] uppercase tracking-widest-2 text-ink-400 mb-3">Enlaces</div>
+        <div class="space-y-1 text-sm">
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270" class="link-u block text-ink-700 hover:text-ink-900">GitHub</a>
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/wiki" class="link-u block text-ink-700 hover:text-ink-900">Wiki</a>
+          <a href="https://github.com/tcontesti/dermapixel-tfg-EPS0270/blob/main/MemoriaTFG.pdf" class="link-u block text-ink-700 hover:text-ink-900">Memoria</a>
+          <a href="https://dermapixel.eu" class="link-u block text-ink-700 hover:text-ink-900">Prototipo (dermapixel.eu)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

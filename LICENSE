@@ -1,0 +1,60 @@
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+
+Copyright (c) 2026 Antonio Contestí Coll
+Universitat de les Illes Balears (UIB) — Escola Politècnica Superior
+
+This work is licensed under the Creative Commons
+Attribution-NonCommercial 4.0 International License.
+
+You are free to:
+
+  Share — copy and redistribute the material in any medium or format.
+  Adapt — remix, transform, and build upon the material.
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any
+  reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+
+  NonCommercial — You may not use the material for commercial purposes.
+
+  No additional restrictions — You may not apply legal terms or
+  technological measures that legally restrict others from doing anything
+  the license permits.
+
+To view a full copy of this license, visit:
+https://creativecommons.org/licenses/by-nc/4.0/
+
+──────────────────────────────────────────────────────────────────────
+
+Scope of this license:
+
+  - The thesis document (PDF in MemoriaTFG.pdf) is licensed under
+    CC BY-NC 4.0.
+  - The original author's complementary material (repro/, tables/,
+    datasheet/ documentation, ablations/, sae/, llm/, prototype/,
+    code/, ai-statement/ and the docs/ landing page) is licensed under
+    CC BY-NC 4.0 for academic and non-commercial use.
+  - The DermapixelAI 1.0 dataset is distributed separately under
+    Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+    International (CC BY-NC-SA 4.0). See datasheet/ for the full
+    delivery document, citation and conditions of availability. The
+    dataset itself is NOT redistributed in this repository.
+  - The figures and screenshots that contain no identifiable patient
+    information are licensed under CC BY-NC 4.0.
+  - Third-party material (e.g. base models PanDerm, DermLIP, SAM2 /
+    MedSAM2, SigLIP, BiomedCLIP, DINOv2, MedGemma; datasets such as
+    HAM10000, ISIC, BCN20000, PAD-UFES-20, DDI, Derm7pt, Dermnet,
+    MSKCC, HIBA, Fitzpatrick17k, SkinCon, Derm1M) retains its original
+    license. This work only references and evaluates such material; it
+    does not redistribute it.
+
+──────────────────────────────────────────────────────────────────────
+
+Citation:
+
+  Contestí Coll, A. (2026). Dermapixel: Evaluación de modelos
+  fundacionales para Dermatología Clínica. Bachelor's Thesis (EPS0270),
+  Universitat de les Illes Balears, Palma de Mallorca, Spain.

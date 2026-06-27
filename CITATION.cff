@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "Si utilizas este trabajo, por favor cítalo como se indica a continuación."
+title: "Dermapixel: Evaluación de modelos fundacionales para Dermatología Clínica"
+type: thesis
+authors:
+  - family-names: "Contestí Coll"
+    given-names: "Antonio"
+    affiliation: "Escola Politècnica Superior, Universitat de les Illes Balears"
+abstract: >-
+  Trabajo de Fin de Grado (código EPS0270) que evalúa de forma homogénea e
+  independiente hasta catorce modelos fundacionales con pesos públicos
+  (con PanDerm y DermLIP como referencia) sobre tareas dermatológicas
+  armonizadas mediante una ontología clínica de tres niveles; presenta el
+  dataset clínico en castellano DermapixelAI 1.0, la adaptación Dermapixel R0
+  y el prototipo clínico DermApIxel en producción.
+keywords:
+  - "modelos fundacionales"
+  - "dermatología clínica"
+  - "PanDerm"
+  - "DermLIP"
+  - "evaluación empírica"
+  - "ontología"
+  - "equidad"
+  - "dataset en español"
+version: "v7"
+year: 2026
+license: CC-BY-NC-4.0
+url: "https://github.com/tcontesti/dermapixel-tfg-EPS0270"
+repository-code: "https://github.com/tcontesti/dermapixel-tfg-EPS0270"
+institution:
+  name: "Escola Politècnica Superior, Universitat de les Illes Balears"
+  address: "Palma de Mallorca, Spain"
+notes: >-
+  Código TFG EPS0270. Tutor: Dr. Javier Varona Gómez. Colaboración clínica:
+  Dra. Rosa Taberner (Hospital Universitari Son Llàtzer). Prototipo en
+  producción: https://dermapixel.eu
