@@ -1,0 +1,28 @@
+# Material reproducible del TFG EPS0270 — DermapixelAI.
+# Dependencias mínimas de los scripts de experimentos. No todos los scripts
+# necesitan todos los paquetes; instala según la tarea que vayas a ejecutar.
+#
+# Los pesos de los modelos base (PanDerm, DermLIP, SAM2/MedSAM2, SigLIP,
+# BiomedCLIP, DINOv2, MedGemma) y los datasets de terceros NO se incluyen ni
+# se instalan aquí: obtenlos de sus publicaciones/repositorios oficiales.
+
+# --- Núcleo (evaluación, ajuste fino, SAE) ---
+torch>=2.1
+torchvision>=0.16
+timm>=0.9.16
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+scipy>=1.10
+pillow>=10.0
+tqdm>=4.66
+
+# --- Recuperación / vision-language (FAISS, zero-shot, RAG) ---
+faiss-cpu>=1.7.4
+open_clip_torch>=2.24
+transformers>=4.40
+
+# --- Prototipo / servidor de inferencia (pipeline_remote, server_remote) ---
+fastapi>=0.110
+uvicorn>=0.29
+pika>=1.3            # cliente RabbitMQ (worker asíncrono)
