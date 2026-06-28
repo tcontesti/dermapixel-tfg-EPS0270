@@ -147,6 +147,10 @@ PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros, 8,3 
 
 El entorno de ejecución se fija explícitamente. Las semillas de `torch`, `numpy` y `random` se inicializan a 0 en los protocolos de *fine-tuning* y segmentación, y el parámetro `random_state` se fija a 42 en los basados en `scikit-learn`. La variable `WANDB_MODE` se fija a `disabled` y `CUDA_VISIBLE_DEVICES` a `0`. La especificación completa del entorno se documenta en el archivo `environment.yml` del repositorio.
 
+Para los experimentos sobre DermapixelAI 1.0 se distinguen dos usos de semilla. El protocolo Dermapixel R0 (cabeza L2 con LoRA) reporta sobre el conjunto `{42, 43, 44}` (media y desviación entre semillas); la persistencia de *checkpoints* para el prototipo congela únicamente la semilla 42 con el fin de fijar un artefacto reproducible.
+
+**Normalización de imagen.** Los módulos basados en PanDerm comparten la misma transformación de evaluación: `Resize(256)` → `CenterCrop(224)` → `ToTensor` → `Normalize` con la media y desviación estándar de ImageNet (`mean = (0,485, 0,456, 0,406)`, `std = (0,229, 0,224, 0,225)`). En *train* se sustituye el `Resize`/`CenterCrop` por `RandomResizedCrop` más volteos horizontal/vertical y `ColorJitter`, según la receta de cada experimento (sección A.4). La segmentación SAM2.1 emplea la normalización `uniform_05` declarada en su comando de la sección A.3.
+
 ## A.6 Checkpoints publicados
 
 | *Checkpoint* | Modelo base | Tamaño | Métrica de referencia |
@@ -159,3 +163,61 @@ El entorno de ejecución se fija explícitamente. Las semillas de `torch`, `nump
 | `medgemma_27b_lora_ham10000.pth` | MedGemma 27B + LoRA | ~320 MB | Acc HAM10000 0,802 |
 
 El acceso a los *checkpoints* se realiza mediante el repositorio de releases del proyecto, sujeto a la licencia declarada en el documento de entrega (ver [`datasheet/`](../datasheet/README.md)). La verificación de integridad se realiza por hash SHA-256 publicado junto a cada *checkpoint*.
+
+## A.7 Artefactos del prototipo y recetas de construcción
+
+Esta sección documenta los artefactos reproducibles que alimentan el prototipo **DermApIxel** ([dermapixel.eu](https://dermapixel.eu)). El prototipo integra los módulos **M1–M11 más M4-bis**; su descripción funcional completa figura en [`prototype/README.md`](../prototype/README.md) y en el capítulo correspondiente de [`MemoriaTFG.pdf`](../MemoriaTFG.pdf). Aquí se recogen únicamente las recetas necesarias para reconstruir los artefactos de inferencia a partir del código publicado, sobre el servidor GPU on-prem (NVIDIA DGX Spark, chip GB10, aarch64). Todas las rutas se expresan de forma genérica relativa al directorio de proyecto `~/panderm/`.
+
+### A.7.1 Módulo M4-bis: índice FAISS de recuperación visual en castellano
+
+M4-bis es la **búsqueda visual desplegada en producción**: opera **imagen→imagen** sobre los *embeddings* de imagen de PanDerm Large indexados con FAISS. Sustituye, para el caso de uso real, a la rama contrastiva texto→imagen de Dermapixel R0 (SpanDerm-CLIP), que **no se desplegó** porque su métrica favorable no generaliza a régimen de consulta real (la *split* es limpia, disjunta por caso e imagen, lo que descarta contaminación como causa).
+
+Receta de construcción (script de evidencia: `build_m4bis_faiss.py`):
+
+| Componente | Configuración |
+|---|---|
+| Encoder de imagen | PanDerm Large (1 024 dim), *embeddings* precomputados |
+| Normalización del vector | L2-normalize por fila (similitud coseno vía producto interno) |
+| Índice | FAISS `IndexFlatIP` (búsqueda exacta por producto interno) |
+| Conjunto indexado | 874 *embeddings* de entrenamiento de DermapixelAI 1.0 (más 36 de test, para validación interna) |
+| Metadatos por vector | Información clínica del caso y texto clínico en castellano (`case_text`) |
+| Salida | `~/panderm/output/m4bis_faiss_dermapixel/` (`faiss_index_train.bin`, `metadata_train.json`, e índices/metadatos de test) |
+| Latencia *warm* | ~0,5 ms por consulta *top-k* (orden de magnitud reportado en la memoria) |
+
+### A.7.2 Persistencia de *checkpoints* del prototipo
+
+Los módulos M9 (cabeza L2 castellana de Dermapixel R0) y M10 (multitarea *Seven-Point Checklist* + melanoma) se persisten para el servicio de inferencia mediante `persist_models_for_prototype.py`, que reejecuta la lógica de entrenamiento con semilla 42 y guarda el *best state* seleccionado por mejor BAcc de validación. Cada artefacto se acompaña de su mapeo de etiquetas y de sus métricas de test:
+
+- M9: `best_seed42.pth` (`state_dict` del encoder con LoRA más cabeza FC L2), `best_seed42_l2_mapping.json`, `best_seed42_metrics.json`. El *checkpoint slim* resultante (sólo pesos LoRA y cabeza, ≈524 K parámetros) ocupa ~2,3 MB tras `slim_checkpoints.py`.
+- M10: `best_model.pth` (ocho cabezas más LoRA), `best_concept_mapping.json`, `best_metrics.json`.
+
+La política general de *checkpoints* (selección por mejor validación, verificación SHA-256, releases) es la descrita en la sección A.6; esta subsección sólo añade la variante de semilla única para los artefactos en producción.
+
+## A.8 Inventario de scripts de evidencia (DermapixelAI 1.0)
+
+La tabla siguiente traza cada tarea experimental sobre DermapixelAI 1.0 y cada artefacto del prototipo a su **script real** y a su salida principal verificada en el repositorio de pipeline. Los nombres de fichero se conservan tal cual para facilitar la trazabilidad.
+
+| Tarea / artefacto | Script | Salida principal |
+|---|---|---|
+| Análisis exploratorio del dataset | `dermapixel_eda.py` | `eda/eda_report.md` |
+| Sondeo lineal (L1/L2/L3) | `dermapixel_lp_eval.py` | `dermapixel_v1_lp_summary.csv` |
+| Zero-shot DermLIP | `dermapixel_zs_eval.py` | `dermapixel_v1_zs_summary.csv` |
+| Zero-shot jerárquico | `dermapixel_hierarchical_zs.py` | `dermapixel_v1_hierzs_summary.csv` |
+| *k*-NN sobre FAISS | `dermapixel_faiss_knn.py` | `dermapixel_v1_faiss_summary.csv` |
+| Baselines DINOv2 / CLIP-L | `dermapixel_dinov2_clipl.py` | `dermapixel_v1_extra_summary.csv` |
+| Ajuste fino L1 | `dermapixel_ft_l1.py` | `dermapixel_v1_ft_l1_summary.csv` |
+| Ajuste fino L2 / L3 | `dermapixel_ft_l2l3.py` | `dermapixel_v1_ft_l2_summary.csv`, `dermapixel_v1_ft_l3_summary.csv` |
+| Ajuste fino con *focal loss* | `dermapixel_focal_loss.py` | `dermapixel_v1_focal_summary.csv` |
+| TTA | `dermapixel_tta_eval.py` | `dermapixel_v1_tta_summary.csv` |
+| Ensemble | `dermapixel_ensemble_eval.py` | `dermapixel_v1_ensemble_summary.csv` |
+| Evaluación A·B·E (k-NN *k*∈{1,5,10}; MLP 2 capas con *class weighting*; CV 5-fold *case-aware* sobre el LP) | `dermapixel_abe_eval.py` | `dermapixel_v1_abe_summary.csv` |
+| Dermapixel R0, cabeza L2 LoRA (multisemilla) | `dermapixel_spanderm_v0_multiseed.py` | `dermapixel_v1_spanderm_v0_multiseed_summary.csv` |
+| Auditoría de *leakage* MD5 | `dermapixel_md5_audit.py` | `dermapixel_v1_md5_report.md` |
+| *Seven-Point Checklist* + SAE (E1–E4) | `derm7pt_sae_e1.py` … `derm7pt_sae_e4.py` | `q4_derm7pt/{report,e2_report,e3_report}.md`, `q4_derm7pt/e4_summary.csv` |
+| Construcción del índice M4-bis | `build_m4bis_faiss.py` | `~/panderm/output/m4bis_faiss_dermapixel/` |
+| Persistencia de M9 y M10 para el prototipo | `persist_models_for_prototype.py` | `best_seed42.pth`, `derm7pt_sae_e4/best_model.pth` |
+| Adelgazamiento de *checkpoints* | `slim_checkpoints.py` | *checkpoints slim* (M9 ~2,3 MB) |
+| Integración de módulos (M4-bis, M9, M10, M11) | `prototype_m4bis_faiss.py`, `prototype_m9_spanderm.py`, `prototype_m10_concepts.py`, `prototype_m11_ensemble.py` | módulos del servicio de inferencia |
+| Motor de inferencia y servidor | `pipeline_remote.py`, `server_remote.py` | servicio de inferencia (M1–M11 + M4-bis) |
+
+El ensemble M11 (`prototype_m11_ensemble.py`) combina las probabilidades de M1, M7, M9 y M4-bis por niveles L1/L2/L3 con pesos derivados de las AUROC reportadas en el capítulo de resultados; el detalle de los pesos y del *banner* de consenso figura en [`prototype/README.md`](../prototype/README.md). Las cifras agregadas y sus intervalos de confianza están en [`tables/`](../tables/README.md).

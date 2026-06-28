@@ -1,6 +1,6 @@
 # Anexo B — Tablas detalladas de resultados
 
-> Material complementario del TFG EPS0270. Corresponde al antiguo Anexo B de la memoria. Recoge desgloses y tablas adicionales al capítulo de resultados: cifras por clase de sondeo lineal y ajuste fino sobre HAM10000 y PAD-UFES-20, caracterización por fototipo cutáneo en la formulación de 114 patologías sobre Fitzpatrick17k, y la tabla extendida de evaluación cruzada Light↔Dark.
+> Material complementario del TFG EPS0270. Corresponde al antiguo Anexo B de la memoria. Recoge desgloses y tablas adicionales al capítulo de resultados: el sondeo lineal completo por dataset y modelo (incluido Kappa de Cohen), el contraste sondeo lineal frente a ajuste fino y la curva de eficiencia en etiquetas, cifras por clase sobre HAM10000 y PAD-UFES-20, la caracterización por fototipo cutáneo en la formulación de 114 patologías sobre Fitzpatrick17k, la tabla extendida de evaluación cruzada Light↔Dark, la comparativa de segmentación por arquitectura *promptable*, el test de DeLong desglosado por *endpoint* y el clasificador unificado jerárquico M7. Todas las cifras trazan al capítulo de Resultados y a los anexos de la memoria ([`MemoriaTFG.pdf`](../MemoriaTFG.pdf)); no se introduce ningún resultado adicional.
 
 ## B.1 Desglose por clase sobre HAM10000 (GPT-4o zero-shot)
 
@@ -184,3 +184,141 @@ Retirar la caja-*prompt* cuesta 7,5 pp de Dice, entre seis y siete veces más qu
 | HAM10000 | 0,883 | 0,888 | +0,5 | 0,967 | 0,954 | -1,3 |
 | PAD-UFES-20 | 0,690 | 0,772 | +8,2 | 0,895 | 0,949 | +5,4 |
 | DDI | 0,818 | 0,847 | +2,9 | 0,774 | 0,860 | +8,6 |
+
+## B.9 Sondeo lineal de PanDerm sobre los diez datasets externos (tabla completa)
+
+Sondeo lineal (sin reajustar el codificador) de PanDerm Base y Large sobre los diez datasets externos, con las cinco métricas del cuerpo (`tab:lp-panderm`): *accuracy* (Acc), *balanced accuracy* (BAcc), AUROC, F1 ponderada (W-F1) y coeficiente kappa de Cohen. Mejor valor por dataset y métrica en **negrita**. El asterisco (*) marca Dermnet, único dataset con solapamiento exacto frente a Derm1M (100 % por hash MD5; HIBA y MSKCC presentan 0 coincidencias). Los intervalos de confianza celda a celda figuran en [`bootstrap-ci.md`](./bootstrap-ci.md).
+
+| Dataset | Modelo | Acc | BAcc | AUROC | W-F1 | Kappa |
+|---|---|---:|---:|---:|---:|---:|
+| HAM10000 | Base | 0,853 | 0,381 | 0,892 | 0,829 | 0,709 |
+| HAM10000 | Large | **0,888** | **0,575** | **0,954** | **0,880** | **0,814** |
+| BCN20000 | Base | 0,659 | 0,292 | 0,855 | 0,615 | 0,447 |
+| BCN20000 | Large | **0,702** | **0,382** | **0,903** | **0,676** | **0,527** |
+| PAD-UFES-20 | Base | 0,725 | 0,510 | 0,913 | 0,692 | 0,369 |
+| PAD-UFES-20 | Large | **0,772** | **0,642** | **0,949** | **0,760** | **0,527** |
+| Dermnet* | Base | 0,450 | 0,381 | 0,888 | 0,432 | 0,437 |
+| Dermnet* | Large | **0,550** | **0,495** | **0,931** | **0,540** | **0,555** |
+| WSI patches | Base | 0,781 | 0,640 | 0,976 | 0,774 | 0,842 |
+| WSI patches | Large | **0,868** | **0,792** | **0,991** | **0,871** | **0,896** |
+| DDI | Base | **0,847** | 0,714 | 0,827 | 0,836 | 0,482 |
+| DDI | Large | **0,847** | **0,764** | **0,860** | **0,846** | **0,535** |
+| Derm7pt clín. | Base | 0,762 | 0,675 | 0,808 | 0,736 | 0,397 |
+| Derm7pt clín. | Large | **0,798** | **0,732** | **0,869** | **0,784** | **0,506** |
+| Derm7pt dermo. | Base | 0,818 | 0,749 | 0,841 | 0,811 | 0,528 |
+| Derm7pt dermo. | Large | **0,836** | **0,766** | **0,858** | **0,829** | **0,570** |
+| HIBA | Base | 0,883 | 0,595 | 0,894 | 0,853 | 0,275 |
+| HIBA | Large | **0,904** | **0,701** | **0,942** | **0,892** | **0,494** |
+| MSKCC | Base | 0,721 | **0,654** | 0,746 | 0,720 | 0,309 |
+| MSKCC | Large | **0,746** | 0,644 | **0,751** | **0,732** | **0,316** |
+| **Media** | Base | 0,750 | 0,559 | 0,865 | 0,730 | — |
+| **Media** | Large | **0,791** | **0,649** | **0,901** | **0,781** | — |
+
+PanDerm Large supera a Base en cuatro de las cinco métricas (mejoras medias de +4,1 pp Acc, +9,0 pp BAcc y +3,6 pp AUROC); la única excepción es la BAcc de MSKCC (−1,0 pp). La media agregada resume la tendencia, pero no constituye un *ranking* absoluto: cada dataset es un problema distinto.
+
+## B.10 Sondeo lineal frente a ajuste fino (PanDerm Base)
+
+Comparación del sondeo lineal (LP) con el ajuste fino supervisado (FT) de PanDerm Base sobre cuatro datasets de tamaño dispar (`tab:ft-panderm`). Sobre HAM10000 el FT incorpora *test-time augmentation* con cinco augmentaciones deterministas. ΔBAcc en puntos porcentuales respecto al LP. Mejor valor por dataset en **negrita**.
+
+| Dataset | Modo | Acc | BAcc | AUROC | W-F1 | ΔBAcc |
+|---|---|---:|---:|---:|---:|---:|
+| HAM10000 | LP | 0,853 | 0,381 | 0,892 | 0,829 | — |
+| HAM10000 | FT | **0,920** | **0,852** | **0,978** | **0,923** | +47,1 |
+| PAD-UFES-20 | LP | 0,725 | 0,510 | 0,913 | 0,692 | — |
+| PAD-UFES-20 | FT | **0,755** | **0,704** | **0,935** | **0,757** | +19,4 |
+| DDI | LP | **0,847** | **0,714** | **0,827** | **0,836** | — |
+| DDI | FT | 0,774 | 0,693 | 0,682 | 0,780 | −2,1 |
+| MSKCC | LP | 0,721 | 0,654 | **0,746** | 0,720 | — |
+| MSKCC | FT | **0,731** | **0,684** | 0,719 | **0,735** | +3,0 |
+
+El ajuste fino mejora con datos abundantes (HAM10000 +47,1 pp BAcc; PAD-UFES-20 +19,4 pp) y es contraproducente con pocos (DDI −2,1 pp, compatible con sobreajuste; MSKCC marginal). Regla operativa: *dataset* grande → ajuste fino; pocos datos → codificador congelado.
+
+## B.11 Eficiencia en etiquetas (sondeo lineal con PanDerm Large)
+
+Rendimiento bajo submuestreos estratificados crecientes del conjunto de entrenamiento (`tab:label-eff`). N_train: tamaño efectivo del subconjunto. Mejor valor por columna y dataset en **negrita**.
+
+| % entrenam. | N_train | Acc | BAcc | AUROC | W-F1 |
+|---|---:|---:|---:|---:|---:|
+| *HAM10000* | | | | | |
+| 1 % | 82 | 0,850 | 0,406 | 0,918 | 0,828 |
+| 5 % | 410 | 0,870 | 0,481 | 0,932 | 0,855 |
+| 10 % | 820 | 0,875 | 0,480 | 0,939 | 0,863 |
+| 20 % | 1 641 | 0,882 | 0,547 | 0,951 | 0,873 |
+| 50 % | 4 103 | **0,894** | **0,589** | 0,952 | **0,887** |
+| 100 % | 8 207 | 0,888 | 0,575 | **0,954** | 0,880 |
+| *PAD-UFES-20* | | | | | |
+| 1 % | 14 | 0,740 | 0,599 | 0,907 | 0,727 |
+| 5 % | 74 | 0,751 | 0,632 | 0,919 | 0,742 |
+| 10 % | 149 | 0,738 | 0,593 | 0,923 | 0,724 |
+| 20 % | 298 | 0,748 | 0,587 | 0,931 | 0,728 |
+| 50 % | 746 | 0,757 | 0,611 | 0,941 | 0,742 |
+| 100 % | 1 493 | **0,772** | **0,642** | **0,949** | **0,760** |
+
+La AUROC satura muy pronto (con el 1 % de HAM10000, 82 imágenes, ya alcanza 0,918; en PAD-UFES-20 bastan 14 imágenes para el 95,5 % de la AUROC final), mientras que la BAcc sigue mejorando con el volumen por ser más sensible a las clases minoritarias. Cifras de una única partición y semilla por nivel.
+
+## B.12 Segmentación: comparativa por arquitectura *promptable* (ISIC2018, N=1000)
+
+Cinco arquitecturas *promptable* evaluadas de forma pareada sobre el test canónico de ISIC2018 (N = 1 000, blindado) bajo régimen común (ajuste fino del *decoder* y *promptable encoder*, codificador visual congelado, *prompt* de *bounding box* de referencia; `tab:seg-arquitecturas`). Todas las diferencias son significativas al test de Wilcoxon pareado (p < 10⁻⁶). Mejor Dice en **negrita**.
+
+| Modelo | Arquitectura | Preentr. | Params | Dice | Latencia |
+|---|---|---|---:|---:|---:|
+| MedSAM2-tiny | SAM2 | médico | 39 M | **0,9556** | 26 ms |
+| SAM2.1-tiny | SAM2 | general | 39 M | 0,9517 | 26 ms |
+| SAM2.1-Large | SAM2 | general | 224 M | 0,9503 | 96 ms |
+| SAM-Med2D | SAM | médico | 271 M | 0,9465 | 20 ms |
+| MedSAM v1 | SAM | médico | 94 M | 0,9458 | 74 ms |
+
+Tres conclusiones: (1) la generación SAM2 aporta más que el preentrenamiento médico (los tres SAM2 superan a los SAM v1); (2) el preentrenamiento médico añade una mejora menor, solo dentro de la misma generación; (3) en régimen *box-prompted* el tamaño del *backbone* aporta poco: SAM2.1-tiny iguala a SAM2.1-Large con 5,7× menos parámetros. La mejor configuración (MedSAM2-tiny, 0,9556) combina generación SAM2 y preentrenamiento médico en el *backbone* más compacto. La arquitectura mueve ~1,0 pp y el preentrenamiento médico ~0,4 pp, frente a los 7,5 pp que cuesta retirar la caja-*prompt* (ver B.N.1).
+
+## B.13 Test de DeLong por *endpoint* (AUROC binaria de detección de malignidad)
+
+El contraste de DeLong se aplica a tres *endpoints* binarios. La potencia estadística suficiente para separar modelos solo se alcanza en **Fitzpatrick17k** (226 positivos); en HAM10000 (70 melanomas) y DermapixelAI 1.0 (58 malignos) la falta de potencia impide concluir, lo que **no** equivale a ausencia de efecto. La matriz completa de p-valores pareados del *endpoint* 1 figura en B.8. IC95 % por la varianza de DeLong. Mejor valor por tabla en **negrita**.
+
+### B.13.1 Endpoint 1 — malignidad sobre Fitzpatrick17k (N=1658, 226 malignos)
+
+| Modelo | AUROC | IC95 % (DeLong) |
+|---|---:|---|
+| PanDerm Large | **0,9488** | [0,9350, 0,9626] |
+| DermLIP v2 | 0,9452 | [0,9307, 0,9598] |
+| PanDerm Base | 0,9296 | [0,9130, 0,9463] |
+| DINOv2 ViT-L/14 | 0,9150 | [0,8932, 0,9367] |
+| BiomedCLIP | 0,8915 | [0,8672, 0,9158] |
+
+PanDerm Large y DermLIP v2 son estadísticamente indistinguibles (ΔAUROC = 0,0036, p = 0,55), pero ambos superan de forma significativa a los generalistas y a PanDerm Base (p ≤ 7,3×10⁻³ en los seis contrastes). Tras la corrección de Holm, siete de los diez contrastes se mantienen significativos.
+
+### B.13.2 Endpoint 2 — melanoma sobre HAM10000 (N=1232, 70 melanomas)
+
+| Modelo | AUROC | IC95 % (DeLong) |
+|---|---:|---|
+| PanDerm Large | **0,9523** | [0,9314, 0,9733] |
+| SigLIP-Large | 0,9495 | [0,9245, 0,9745] |
+| DermLIP v2 | 0,9463 | [0,9246, 0,9681] |
+
+Los tres codificadores alcanzan AUROC ~0,95 con diferencias < 0,006; ningún contraste pareado resulta significativo tras la corrección de Holm (p_Holm = 1,0 en los tres). El detalle de calibración de estas mismas probabilidades (ECE y *Brier*) está en [`calibracion-melanoma-ham.md`](./calibracion-melanoma-ham.md).
+
+### B.13.3 Endpoint 3 — malignidad sobre DermapixelAI 1.0 (validación cruzada *out-of-fold*, N=1062, 58 malignos)
+
+Protocolo distinto del de los *endpoints* train→test: el *split* de test canónico es de tamaño limitado para inferencia binaria (N = 36, solo 3 positivos), por lo que se estima por validación cruzada *out-of-fold* de cinco pliegues sobre el dataset completo, con DeLong pareado sobre las predicciones agrupadas y corrección de Holm.
+
+| Modelo | AUROC (OOF) | IC95 % (DeLong) |
+|---|---:|---|
+| DermLIP v2 | **0,8946** | [0,8472, 0,9421] |
+| PanDerm Large | 0,8632 | [0,8075, 0,9189] |
+| PanDerm Base | 0,8630 | [0,8097, 0,9163] |
+| CLIP-L | 0,8536 | [0,7926, 0,9146] |
+| DINOv2 | 0,8469 | [0,7980, 0,8958] |
+
+DermLIP v2 obtiene el mejor valor puntual, pero con 58 positivos ningún par alcanza significación tras Holm. La conclusión sólida no es coronar un modelo, sino constatar que toda la familia de codificadores dermatológicos supera de forma consistente a los generalistas.
+
+## B.14 Clasificador unificado jerárquico M7 (DermapixelAI 1.0)
+
+M7 es PanDerm Large *fine-tuned* sobre las 43 clases L3 de la ontología unificada multi-dataset (*merged43*), entrenado con *weighted sampling* sobre los siete datasets viables del *mapping* ontológico. La inferencia aplica *Test-Time Augmentation* (TTA) con cinco augmentaciones (original, simetría horizontal, simetría vertical, rotación 90° y 270°) promediando probabilidades *softmax*; la salida se proyecta jerárquicamente a L1 y L2 garantizando consistencia *top-down*. Cifras sobre el conjunto de test fijo de DermapixelAI 1.0.
+
+| Nivel | Métrica | Valor |
+|---|---|---:|
+| L1 | Accuracy | 0,947 |
+| L2 | Accuracy | 0,819 |
+| L3 | Accuracy | 0,797 |
+| L3 | BAcc | 0,818 |
+
+La TTA aporta +4,72 pp de BAcc L3 respecto a la inferencia simple; la latencia *warm* es de ~80 ms. Este módulo es la base del *tab* `UNIF` del frontend del prototipo, con vista jerárquica L1/L2/L3 y *badge* de melanoma ([`../prototype/README.md`](../prototype/README.md)).

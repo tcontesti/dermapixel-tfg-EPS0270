@@ -1,6 +1,8 @@
 # Anexo F — Sparse Autoencoders y diccionario de conceptos clínicos
 
 > Material complementario del TFG EPS0270. Corresponde al antiguo Anexo F de la memoria. Documenta el módulo de interpretabilidad conceptual basado en Sparse Autoencoders (SAE) sobre las representaciones de PanDerm Large, su evaluación frente al diccionario SkinCon y la propuesta de extensión con conceptos clínicos adicionales validados por la Dra. R. Taberner.
+>
+> Este módulo se materializa en el prototipo [dermapixel.eu](https://dermapixel.eu) como componente **M3** (conceptos clínicos derivados del SAE Large), uno de los módulos M1–M11 de inferencia descritos en [`../prototype/README.md`](../prototype/README.md). El texto íntegro del capítulo figura en [`../MemoriaTFG.pdf`](../MemoriaTFG.pdf).
 
 ## F.1 Motivación
 
@@ -62,7 +64,7 @@ Cada *feature* del SAE puede actuar como predictor para más de un concepto rela
 
 ### Rendimiento agregado del CBM
 
-Sobre los 22 conceptos de SkinCon con cobertura suficiente, el protocolo *CBM-Selected* (regresión logística entrenada sobre 134 *features* del SAE Large correlacionadas con cada concepto) alcanza AUROC media de 0,880. El protocolo de comparación *LP-Direct* (regresión logística sobre el *embedding* crudo de 1 024 dimensiones de PanDerm Large, sin SAE) alcanza AUROC media de 0,864 sobre los mismos conceptos. CBM-Selected supera a LP-Direct en 16 de los 22 conceptos evaluados (figura `fig_skincon_cbm.png`: once conceptos superan AUROC 0,80, máximos en *pedunculated* 0,929 y *friable* 0,913).
+Sobre los 22 conceptos de SkinCon con cobertura suficiente, el protocolo *CBM-Selected* (regresión logística entrenada sobre 134 *features* del SAE Large correlacionadas con cada concepto) alcanza AUROC media de 0,880. El protocolo de comparación *LP-Direct* (regresión logística sobre el *embedding* crudo de 1 024 dimensiones de PanDerm Large, sin SAE) alcanza AUROC media de 0,864 sobre los mismos conceptos. CBM-Selected supera a LP-Direct en 16 de los 22 conceptos evaluados (once conceptos superan AUROC 0,80, máximos en *pedunculated* 0,929 y *friable* 0,913). Este comportamiento —las *features* dispersas preservan, y en la mayoría de conceptos exceden, el poder predictivo de la representación densa subyacente— sostiene el uso del SAE Large como módulo de interpretabilidad M3 del prototipo dermapixel.eu, que expone los conceptos clínicos por imagen al clínico (véase [`../prototype/README.md`](../prototype/README.md)).
 
 ## F.5 Propuesta de extensión: quince conceptos clínicos adicionales
 
@@ -87,6 +89,8 @@ La revisión clínica de la Dra. R. Taberner sobre DermapixelAI 1.0 ha identific
 | Otros | Bordes geográficos | Vitíligo segmentario |
 
 La incorporación de estos quince conceptos constituye una línea de continuación inmediata, condicionada al muestreo de ~200 imágenes anotadas por concepto para entrenar el clasificador lineal sobre las activaciones del SAE Large.
+
+Sobre esta base, la Dra. R. Taberner está definiendo en una plataforma de anotación autocontenida un vocabulario dermatoscópico propio en castellano, más amplio que las escalas clásicas: una matriz que asocia 37 estructuras dermatoscópicas (retículo pigmentado, velo blanco-azulado, telangiectasias arboriformes, lagunas rojas, estructuras en hoja de arce, lágrimas amarillas o el signo del ala delta, entre otras) con 15 diagnósticos, indicando qué buscar en cada uno. Este vocabulario ampliado aún no se ha empleado para entrenar (trabajo en curso); su finalidad es que, en el futuro, las explicaciones del modelo se expresen en los mismos términos que un dermatólogo emplearía ante el paciente.
 
 ## F.6 Limitaciones del módulo SAE
 
@@ -171,11 +175,16 @@ AUROC efectiva max(AUROC, 1−AUROC) de la mejor *feature* (top-1) y promedio de
 | blue_whitish_veil | 195 | 816 | 0,746 | 0,721 |
 | vascular_structures | 188 | 823 | **0,823** | **0,782** |
 
-### F.N.2 Sondeo lineal directo frente a CBM jerárquico (Derm7pt, N_test=395, 100 melanomas)
+La AUROC efectiva de la mejor *feature* por criterio se sitúa entre 0,68 y 0,82, con máximo en *vascular structures* (0,823). El alineamiento no descansa en una única «neurona mágica»: la diferencia entre el mejor *feature* (top-1) y el promedio de los diez mejores (top-10) no excede 0,043 de AUROC en ningún criterio, lo que indica que cada concepto se reparte sobre un grupo coherente de *features*. Una inspección cualitativa de *features* representativas de dirección positiva alcanza *precision*@5 = 1,0 (las cinco imágenes que más activan el *feature* comparten el concepto) en cuatro criterios del *Seven-Point Checklist* —estructuras vasculares (#4740, AUROC 0,785), retículo pigmentado (#2040, 0,742), velo azul-blanquecino (#14541, 0,722) y estrías (#1967, 0,680)—. Las cifras de detalle por criterio figuran en los scripts de evidencia `derm7pt_sae_e1`.
 
-| Arquitectura | Acc@1 | BAcc | AUROC | W-F1 | Kappa |
-|---|---|---|---|---|---|
-| Sondeo lineal directo (SAE → melanoma) | 0,841 | 0,735 | **0,890** | 0,829 | 0,527 |
-| CBM (SAE → 7 conceptos → melanoma) | 0,825 | 0,681 | **0,832** | 0,801 | 0,440 |
+### F.N.2 Sondeo lineal directo, CBM jerárquico y *fine-tuning* multitarea (Derm7pt, N_test=395, ≈98 melanomas)
 
-La pérdida de 5,8 pp de AUROC cuantifica el coste de razonar exclusivamente mediante conceptos explícitos.
+Comparativa sobre la tarea binaria melanoma/no-melanoma entre el sondeo lineal directo sobre las 16 384 *features* del SAE Large, el *Concept Bottleneck* de siete conceptos y el *fine-tuning* multitarea LoRA (r = 16 sobre los dos últimos bloques de PanDerm Large, ocho cabezas paralelas). Mismo *split* oficial de test. AUROC en negrita.
+
+| Método | Params entr. | Acc@1 | BAcc | AUROC | W-F1 | Kappa |
+|---|---:|---|---|---|---|---|
+| Sondeo lineal directo (SAE → melanoma) | 16 K | 0,841 | 0,735 | **0,890** | 0,829 | 0,527 |
+| CBM (SAE → 7 conceptos → melanoma) | ~120 | 0,825 | 0,681 | **0,832** | 0,801 | 0,440 |
+| **Multitarea LoRA (8 salidas)** | 0,56 M | **0,841** | **0,804** | **0,891** | **0,843** | **0,590** |
+
+La pérdida de 5,8 pp de AUROC del CBM (0,890 → 0,832) cuantifica el coste de razonar exclusivamente mediante conceptos explícitos. El *fine-tuning* multitarea LoRA recupera ese margen: con solo 0,56 M parámetros entrenables (0,18 % del modelo) alcanza AUROC 0,891 —equivalente al sondeo lineal directo (0,890) y +5,9 pp sobre el CBM— al tiempo que entrega los siete conceptos en la misma pasada, sin coste apreciable de precisión.

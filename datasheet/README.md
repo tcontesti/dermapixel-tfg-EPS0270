@@ -9,6 +9,8 @@
 - **Fecha de cierre de la versión 1.0:** mayo de 2026.
 - **Identificador persistente (DOI):** pendiente de asignación en el momento de la publicación efectiva del dataset. El depósito formal se realiza en **Zenodo** (https://zenodo.org) bajo licencia CC BY-NC-SA 4.0 con DOI permanente y citable, complementado con el repositorio de la UIB cuando éste habilite el alojamiento de datasets binarios de tamaño equivalente.
 - **Cita corta:** *Taberner, R. y Contestí Coll, A. (2026). DermapixelAI 1.0: dataset dermatológico clínico en castellano. Versión 1.0.*
+- **Ontología:** taxonomía diagnóstica jerárquica de tres niveles —4 categorías etiológicas L1, 43 subcategorías L2 y 367 diagnósticos L3— con códigos SNOMED CT y CIE-10 asociados a cada entrada L3.
+- **Volumen:** 1 089 imágenes vinculadas a 672 casos con imagen (669 retenidos en el *split* de producción) sobre 698 casos catalogados en el archivo original. Rango temporal 2011–2026.
 
 ## E.2 Procedencia y autoría
 
@@ -77,19 +79,58 @@ La integridad reproducible se verifica en dos niveles: (i) el manifiesto interno
 
 **¿Qué representa cada instancia?** Una imagen dermatológica asociada a un caso clínico publicado en el archivo Dermapixel.
 
-**¿Cuántas instancias hay?** 1 089 imágenes vinculadas a 672 casos con imagen —de los cuales 669 se retienen en el *split* de producción— sobre 698 casos catalogados en total.
+**¿Cuántas instancias hay?** 1 089 imágenes vinculadas a 672 casos con imagen —de los cuales 669 se retienen en el *split* de producción— sobre 698 casos catalogados en total. Los 26 casos restantes carecen de imagen efectiva (`num_images_in_dataset = 0`) y se conservan en `cases.csv` por trazabilidad; los tres casos que separan los 672 con imagen de los 669 retenidos se pierden por duplicado exacto MD5 de imagen entre entradas distintas del blog. Cada caso aporta una media de 1,63 imágenes (mediana 2, máximo 5).
 
-**¿Es el dataset un subconjunto de uno mayor?** Se construye a partir del archivo público del blog Dermapixel, de composición más amplia (publicaciones y elementos no clínicos: banners, ilustraciones, fotografías de eventos) que se filtran durante la construcción.
+**Desglose por modalidad.** La fotografía clínica predomina con claridad; el subconjunto dermatoscópico, reducido, es suficiente para análisis exploratorios específicos.
 
-**¿Qué información acompaña a cada imagen?** Modalidad, diagnóstico L1/L2/L3, identificador de caso, texto narrativo asociado en castellano, campos de validación experta y particionado en train/val/test.
+| Modalidad | N |
+|---|---:|
+| clinical | 1 036 |
+| dermoscopy | 49 |
+| histology | 2 |
+| ultrasound | 1 |
+| wood_lamp | 1 |
+| **Total (`dataset.csv`)** | **1 089** |
 
-**¿Hay etiquetas o ground-truth?** Sí. El diagnóstico L3 está mapeado a la ontología jerárquica con revisión experta. `rosa_verified` marca las imágenes adicionalmente validadas visualmente por la Dra. Taberner.
+**Distribución por categoría etiológica L1.** La fila «(sin asignar)» recoge las 19 imágenes cuyo mapeo ontológico no se ha completado (todas con `label_source = raw`).
 
-**¿Hay información que se haya eliminado?** Se han eliminado las imágenes asociadas a la pista de solución de los casos del blog (susceptibles de inducir *leakage*) y las imágenes no dermatológicas detectadas durante la auditoría de modalidad.
+| Categoría L1 | N | % |
+|---|---:|---:|
+| Patología inflamatoria | 544 | 49,9 |
+| Patología tumoral | 276 | 25,3 |
+| Patología infecciosa | 259 | 23,8 |
+| Genodermatosis | 11 | 1,0 |
+| (sin asignar) | 19 | — |
+| **Total** | **1 089** | **100,0** |
+
+A nivel intermedio, 38 de las 43 subcategorías L2 del vocabulario están representadas con al menos una imagen; a nivel de hoja, 250 de los 367 diagnósticos L3 (cobertura efectiva del 68,1 %). La distribución L3 presenta una cola larga pronunciada: el 77,2 % de las clases L3 efectivas dispone de cinco imágenes o menos y un cuarto cuenta con una única imagen. El desglose completo por L2/L3, la cola larga y la distribución temporal figuran en [`ablations/pipeline-dataset.md`](../ablations/pipeline-dataset.md).
+
+**¿Es el dataset un subconjunto de uno mayor?** Se construye a partir del archivo público del blog Dermapixel, de composición más amplia (publicaciones y elementos no clínicos: banners, ilustraciones, fotografías de eventos) que se filtran durante la construcción. Una auditoría MD5 frente a trece datasets dermatológicos de referencia (HAM10000, BCN20000, ISIC2017/2018, Derm7pt, PH2, PAD-UFES, DDI, Dermnet, Fitzpatrick17k, HIBA, MSKCC, Derm1M) confirmó solapamiento nulo (0 imágenes coincidentes), por lo que el material es original y no reproduce ningún corpus público preexistente.
+
+**¿Qué información acompaña a cada imagen?** Cada fila de `dataset.csv` reúne, además de la imagen: modalidad (`image_type`), diagnóstico jerárquico (`ontology_l1`, `ontology_l2`, `ontology_l3`), identificador de caso (`case_id`), año (`year`), hash de integridad (`md5`), partición (`split`), texto narrativo en castellano asociado al caso (`case_text`) y los tres campos de validación experta (`label_source`, `diagnosis_source`, `rosa_verified`). El texto narrativo tiene una longitud mediana de 223 palabras por caso (cuartiles 175 y 271).
+
+**¿Hay etiquetas o ground-truth?** Sí. El diagnóstico L3 está mapeado a la ontología jerárquica con revisión experta. Los tres campos de validación **no son intercambiables** y deben declararse con precisión en cualquier comunicación derivada:
+
+| Campo | Valor de referencia | Cobertura | Significado |
+|---|---|---:|---|
+| `label_source` | `ontology` | 97,89 % | Etiqueta L3 final mapeada a la ontología y validada con revisión experta. Es la cifra que el TFG asocia a «validación experta del dataset». |
+| `diagnosis_source` | `expert_v3` | 98,38 % | Razonamiento textual del diagnóstico respaldado por la tercera revisión experta de la Dra. Taberner. |
+| `rosa_verified` | `True` | 84,39 % | *Flag* operativo: la imagen pasó revisión visual explícita como ejemplo representativo del diagnóstico asignado. |
+
+**¿Hay información que se haya eliminado?** El pipeline descartó 80 imágenes del candidato original, documentadas en `excluded_images.csv`: 35 `not_found` (páginas no recuperables), 19 `not_derm_user_confirmed`, 10 `md5_matches_solution` (fuga directa con el panel de solución del blog, susceptible de inducir *leakage*), 9 `dermoscopy_pending`, 6 `dedup_same_md5` y 1 `not_derm_visual_review`.
+
+**Particiones canónicas (case-aware).** Cada `case_id` está íntegro en un único *split*: ninguna imagen de un caso se reparte entre conjuntos, lo que previene la fuga de información. La composición L1 no es perfectamente estratificada (Genodermatosis carece de representación en `test`), lo que limita la granularidad de la evaluación a niveles ontológicos profundos sobre los *splits* oficiales.
+
+| Split | N (`dataset.csv`) |
+|---|---:|
+| train | 891 |
+| val | 157 |
+| test | 41 |
+| **Total** | **1 089** |
 
 ### Proceso de recogida / Preprocesamiento
 
-Detalle del pipeline en [`ablations/pipeline-dataset.md`](../ablations/pipeline-dataset.md): hash MD5 por imagen para integridad; deduplicación exacta; mapeo ontológico con revisión experta; particionado case-aware.
+Detalle del pipeline en [`ablations/pipeline-dataset.md`](../ablations/pipeline-dataset.md): hash MD5 por imagen para integridad; deduplicación exacta; mapeo ontológico con revisión experta; particionado case-aware. La caracterización completa del dataset se documenta además en la memoria del trabajo, [`MemoriaTFG.pdf`](../MemoriaTFG.pdf).
 
 ### Usos previstos
 

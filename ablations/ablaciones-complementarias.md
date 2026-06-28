@@ -102,7 +102,7 @@ CLIP-L-336 alcanza la mejor AUROC sobre L2 (0,826 frente a 0,793 de PanDerm Larg
 | L3 | k-NN k=5 *majority* | **0,214** | **0,210** | 0,615 |
 | L3 | k-NN k=20 *weighted* | 0,214 | 0,210 | 0,719 |
 
-El *retrieval* k-NN supera al sondeo lineal paramétrico sobre el régimen de cola larga severa L3 (224 clases efectivas, 3,5 muestras/clase media en *train*): +3,5 pp Acc@1 (0,179 → 0,214) y +2,6 pp BAcc (0,184 → 0,210) con k = 5 y votación por mayoría. Sobre L2, k-NN con k = 20 empata en BAcc (0,265) y mejora Acc@1 en +2,8 pp (0,250 → 0,278). Sobre L1, k-NN pierde respecto al LP paramétrico (−4,9 pp BAcc, −4,8 pp AUROC). La AUROC global del k-NN es sistemáticamente inferior a la del LP (diferencias entre −4,8 y −9,3 pp), atribuible a que la estimación de probabilidad por frecuencia relativa de vecinos no es densa sobre el conjunto de clases. Coherente con la arquitectura del módulo M4 del prototipo (*retrieval* sobre Derm1M), que emplea el mismo principio de similitud coseno como soporte conceptual.
+El *retrieval* k-NN supera al sondeo lineal paramétrico sobre el régimen de cola larga severa L3 (224 clases efectivas, 3,5 muestras/clase media en *train*): +3,5 pp Acc@1 (0,179 → 0,214) y +2,6 pp BAcc (0,184 → 0,210) con k = 5 y votación por mayoría. Sobre L2, k-NN con k = 20 empata en BAcc (0,265) y mejora Acc@1 en +2,8 pp (0,250 → 0,278). Sobre L1, k-NN pierde respecto al LP paramétrico (−4,9 pp BAcc, −4,8 pp AUROC). La AUROC global del k-NN es sistemáticamente inferior a la del LP (diferencias entre −4,8 y −9,3 pp), atribuible a que la estimación de probabilidad por frecuencia relativa de vecinos no es densa sobre el conjunto de clases. Coherente con la arquitectura del módulo M4 del prototipo (*retrieval* sobre Derm1M), que emplea el mismo principio de similitud coseno como soporte conceptual. La búsqueda de casos similares en producción la resuelve M4-bis (imagen→imagen, PanDerm Large + FAISS).
 
 ## J.8 Zero-shot jerárquico: cascada L1→L2→L3 con propagación de errores
 
@@ -128,7 +128,7 @@ Tablas reportadas aquí para no fragmentar la argumentación del capítulo de re
 | PanDerm LP | Codificador congelado + regresión logística | §4.10 |
 | DermLIP zero-shot | Modelo visión-lenguaje externo (sin cabeza entrenada) | §4.11 |
 | Dermapixel R0 (cabeza superv. L2) | Rama supervisada con adaptación LoRA r=16 | §4.12 |
-| Dermapixel R0 (rama contrastiva) | Rama CLIP-style castellana zero-shot open | §4.13 |
+| Dermapixel R0 (rama contrastiva) | Rama CLIP-style castellana (SpanDerm-CLIP), zero-shot de clase abierta; **no desplegada** | §4.13 |
 
 ### J.N.2 LoRA frente a ajuste fino denso sobre L2 (DermapixelAI 1.0, N_test=36)
 
@@ -148,13 +148,16 @@ Tablas reportadas aquí para no fragmentar la argumentación del capítulo de re
 | LP supervisado vs. zero-shot, L1 | BAcc | +29,4 pp |
 | LP supervisado vs. zero-shot, L3 | BAcc | +10,5 pp |
 
-### J.N.4 Recuperación cross-modal i2t R@5 de la rama contrastiva de Dermapixel R0 (107 pares validación, rich-caption)
+### J.N.4 Recuperación cross-modal i2t R@5 de la rama contrastiva de Dermapixel R0
 
-| Versión | i2t R@5 absoluto | Referencia azar | Lift sobre azar |
-|---|---|---|---|
-| v2 | **0,654** | 0,047 | **14,0×** |
-| v4 | 0,579 | 0,047 | 12,4× |
-| v5 | 0,505 | 0,047 | 10,8× |
+En su régimen más favorable (validación, descripciones ricas `llm_case_summary`, checkpoint v2) la recuperación texto→imagen alcanza i2t R@5 = **0,654** sobre los 107 pares (imagen, descripción rica): el caso correcto aparece entre los cinco primeros en el 65,4 % de las consultas, frente a una referencia de azar de ≈ 0,047 (≈ 5/107) sobre ese conjunto. Dentro de ese régimen v2 es el mejor *checkpoint* recuperando, aunque v4 sea el mejor clasificando (zero-shot L3 Acc@1 = 0,247), lo que confirma que clasificar y buscar no son el mismo objetivo. La trayectoria completa por versión (v1→v5) figura en el material reproducible.
+
+| Régimen de medición | i2t R@5 | Azar | Lift |
+|---|---:|---:|---:|
+| Validación, *rich-caption*, checkpoint v2 (107 pares) | **0,654** | ≈0,047 | ≈14× |
+| Uso real: consulta corta, imágenes *held-out*, archivo completo (~1 000 img) | ≈0,02 | ≈0,005 | orden de azar |
+
+**Esta cifra no generaliza y la rama no se despliega.** El 0,654 caracteriza únicamente el escenario de validación con texto rico. Medida como se usaría en producción —consulta corta de usuario, imágenes *held-out* no vistas en entrenamiento y archivo completo de ~1 000 imágenes— la recuperación se desploma al orden del azar (i2t R@5 ≈ 0,02 frente a un azar de ≈ 0,005). El experimento demuestra la viabilidad técnica de un espacio dual texto-imagen en castellano —la arquitectura entrena, converge y es recuperable en validación con texto rico—, no un buscador útil. En consecuencia, SpanDerm-CLIP (la rama contrastiva de Dermapixel R0) **no se despliega**; en producción la búsqueda de casos similares la resuelve **M4-bis** (imagen→imagen, PanDerm Large + FAISS).
 
 ### J.N.5 Combinación de codificadores sobre DermapixelAI 1.0 (`tab:dermapixel-ensemble`)
 

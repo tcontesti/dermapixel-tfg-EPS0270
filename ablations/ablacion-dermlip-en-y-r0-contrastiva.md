@@ -97,7 +97,7 @@ Los logits *zero-shot* de la rama contrastiva están severamente sobreconfiados.
 |---|---:|---:|---:|
 | L3 (v4) | 0,7262 | 0,0213 | 0,4165 |
 
-La reducción del ECE es del −97 % sobre L3 con un único parámetro escalar (figura `fig_spanderm_calibration.png`). Sin calibración post-hoc, las probabilidades de un sistema CLIP-style *zero-shot* castellano no son interpretables como confianza clínica, por lo que el despliegue debe incorporar este escalado como capa final ajustado sobre el archivo de destino.
+La reducción del ECE es del −97 % sobre L3 con un único parámetro escalar (figura `fig_spanderm_calibration.png`). La misma calibración escalar aplicada sobre el *checkpoint* v3 reproduce el patrón (ECE L3 0,662 → 0,035, τ = 0,542 sobre los mismos 107 pares de validación / 101 de test), lo que confirma que la sobreconfianza es estructural de la formulación CLIP-style con InfoNCE y no un artefacto del *checkpoint* v4. Sin calibración post-hoc, las probabilidades de un sistema CLIP-style *zero-shot* castellano no son interpretables como confianza clínica, por lo que el despliegue debe incorporar este escalado como capa final ajustado sobre el archivo de destino.
 
 ### Diagnóstico cuantitativo del techo sobre L2
 
@@ -111,18 +111,42 @@ Rama contrastiva de Dermapixel R0 *zero-shot* L2 frente a las dos referencias in
 
 La cabeza supervisada cerrada con LoRA alcanza Acc@1 0,250 sobre L2, frente a 0,133 de la rama contrastiva *zero-shot open-class* (v2) sobre las 23 clases efectivas del test per-case. La diferencia operativa es la capacidad de la rama contrastiva de aceptar consultas textuales libres en castellano sin fijar el vocabulario.
 
+### Recuperación cross-modal: régimen favorable frente a uso real
+
+La rama contrastiva define un espacio dual texto-imagen recuperable, pero su capacidad de recuperación depende críticamente del régimen de medición. Las dos tablas siguientes contrastan ambos extremos; la mejor recuperación corresponde a la iteración v2 (*checkpoint* `epoch_007`).
+
+**Régimen favorable** — partición de *validación*, consulta de descripción clínica rica (`llm_case_summary`), N = 107 pares. Recuperación imagen→texto (i2t R@k):
+
+| i2t R@ | v1 | v2 (e7) | v3 (best.pt) |
+|---|---:|---:|---:|
+| R@1 | 0,009 | 0,262 | 0,168 |
+| R@5 | 0,084 | **0,654** | 0,533 |
+| R@10 | 0,140 | 0,785 | 0,729 |
+
+**Régimen de uso real** — partición de *test held-out*, recuperación a nivel de par sobre las 1 578 parejas (imagen, texto) de 98 imágenes no vistas (iteración v3):
+
+| Métrica | i2t | t2i |
+|---|---:|---:|
+| R@1 | 0,0044 | 0,0013 |
+| R@5 | 0,0203 | 0,0082 |
+| R@10 | 0,0431 | 0,0203 |
+
+El contraste es de dos órdenes de magnitud: la i2t R@5 cae de **0,654** (validación, texto rico) a **0,0203** (test, par a par), un nivel cercano al azar (≈ 0,005 sobre un archivo de ≈ 1 000 imágenes). El pico 0,654 equivale a un *lift* de **14,0×** sobre el azar de la partición de validación (5/107 = 0,0467); en uso real ese *lift* sobre el archivo completo es marginal. El desplome **no** se debe a contaminación: la partición es disjunta por caso e imagen (verificada limpia), de modo que el régimen favorable sólo refleja que la alineación contrastiva recupera con fiabilidad **únicamente** cuando la consulta es una descripción larga homóloga a las *captions* de entrenamiento, no una consulta corta de usuario sobre el archivo completo. Esta es la evidencia cuantitativa de que la rama **no está desplegada**; la búsqueda visual en producción la cubre M4-bis (imagen→imagen, PanDerm Large + FAISS; ver [`../prototype/README.md`](../prototype/README.md)).
+
 ### Síntesis de las cinco iteraciones
 
-Régimen evaluativo *zero-shot* L3 sobre 101 imágenes de test (54 clases L3 representadas), *H6 hybrid* v30_r70 (30 % prototipos visuales + 70 % texto rico) aplicado de forma homogénea. v4 queda a 0,0025 del objetivo fijado a priori de 0,25 acc@1 L3 (dentro del ruido). v5 confirma negativamente que la escala externa genérica con *captions* sintéticas no supera v4. Las cifras Linear Probing BAcc L2 absolutas para v4 (0,1860) y v5 (0,2871) quedan registradas en el material de experimentos del proyecto; el delta relativo +54,4 % queda confirmado.
+Régimen evaluativo *zero-shot* L3 sobre 101 imágenes de test (54 clases L3 representadas), *H6 hybrid* v30_r70 (30 % prototipos visuales + 70 % texto rico) aplicado de forma homogénea. v4 queda a 0,0025 del objetivo fijado a priori de 0,25 acc@1 L3 (dentro del ruido). v5 confirma negativamente que la escala externa genérica con *captions* sintéticas no supera v4. Las cifras Linear Probing BAcc L2 absolutas para v4 (0,1860) y v5 (0,2871) quedan registradas en el material de experimentos del proyecto; el delta relativo +54,4 % queda confirmado. La referencia del *encoder* congelado (v2/v3) es 0,187: la *image-LoRA* de doce bloques de v4 no eleva la separabilidad lineal sobre el congelado (0,186 ≈ 0,187) —su ganancia *zero-shot* proviene del *ensemble* híbrido texto-visual, no de las *features*—, y sólo la escala externa de v5 la sube a 0,287 sin trasladarse a mejor *zero-shot*. La columna *Lift i2t R@5* se mide íntegra en el régimen favorable de validación con texto rico (véase la subsección anterior); no representa recuperación desplegable.
 
 | Versión | LoRA texto | LoRA visual | acc@1 L3 | Lift i2t R@5 | LP BAcc L2 | Notas |
 |---|---|---|---:|---|---:|---|
-| v1 | — | — | 0,1782 | — | — | Baseline e5 *full FT* |
-| v2 | r=16, α=32 | — | 0,1980 | **14,0×** | — | Pico retrieval rich |
-| v3 | r=16, α=32 | r=16, últ. 4/24 | 0,1980 | — | — | Image-LoRA infradotado |
+| v1 | — | — | 0,1782 | 1,8× | — | Baseline e5 *full FT* |
+| v2 | r=16, α=32 | — | 0,1980 | **14,0×** | 0,187 | Pico retrieval rich |
+| v3 | r=16, α=32 | r=16, últ. 4/24 | 0,1980 | 11,4× | 0,187 | Image-LoRA infradotado |
 | v4 | r=32, α=64 | r=32, últ. 12/24 | **0,2475** | 12,4× | 0,1860 | A 0,0025 del objetivo |
 | v5 | r=32, α=64 | r=32, últ. 12/24 | 0,2079 | 10,8× | 0,2871 | FLAT: escala externa (+54,4 % relativo sobre v4) |
 
 *Nota histórica.* Los valores *rich-only baseline* (~30–80 palabras/clase) fueron 0,1287 (v1), 0,1386 (v2) y 0,1089 (v3); la transición al régimen *H6 hybrid* homogéneo permite la comparativa cross-*checkpoint*.
+
+> **Importante — sobre el *Lift i2t* R@5.** Las cifras de recuperación de la tabla (pico **14,0×** en v2, equivalente a i2t R@5 = 0,654) corresponden al régimen de **validación con descripciones ricas** (`llm_case_summary`, *checkpoint* `epoch_007`) y caracterizan un escenario favorable, **no** el rendimiento de un buscador en uso real. Sobre el test *held-out* y con consulta corta, la recuperación cae a un nivel **cercano al azar** (i2t R@5 ≈ 0,02, frente a un azar de ≈ 0,005 sobre un archivo de ≈ 1 000 imágenes; desglose numérico en la subsección «Recuperación cross-modal: régimen favorable frente a uso real»). La partición es disjunta por caso e imagen, lo que descarta la contaminación como causa. Deben leerse como evidencia de la **viabilidad técnica** del espacio dual texto-imagen, no como capacidad de recuperación desplegable. La rama contrastiva **no está desplegada**; la búsqueda visual en producción la cubre **M4-bis** (imagen→imagen, PanDerm Large + FAISS).
 
 El experimento articula tres ejes. La capacidad arquitectónica (v3→v4) es la palanca efectiva: el cuello de botella reside en el *image encoder*, no en la formulación textual. La escala externa (v5) queda *flat-to-negative*. El eje de supervisión conceptual —anotaciones del *Seven-Point Checklist* o del Grupo A (ver [`sae/`](../sae/README.md))— queda abierto como línea de aprendizaje activo dirigido. El experimento valida la utilidad de PanDerm Large para tareas castellanas más allá del LP/FT supervisado (v4 a 0,0025 del umbral objetivo L3 0,25) y establece una metodología reproducible para evaluaciones CLIP-style sobre archivos privados de pequeña escala.

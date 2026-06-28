@@ -20,7 +20,7 @@ Proceso iterativo de seis pasos:
 
 **(v) Particionado.** Asignación a `train`, `val` o `test` bajo regla *case-aware*: todas las imágenes de un mismo caso clínico van al mismo split.
 
-**(vi) Auditoría de integridad.** Verificación final de hashes MD5, ausencia de imágenes corruptas, consistencia carpetas/`dataset.csv`. Toda modificación se acompaña de *backup* y registro de auditoría (`audit_log.txt` y `excluded_images.csv`).
+**(vi) Auditoría de integridad.** Verificación final de hashes MD5, ausencia de imágenes corruptas, consistencia carpetas/`dataset.csv`. Toda modificación se acompaña de *backup* y registro de auditoría (`audit_log.txt` y `excluded_images.csv`). La auditoría incluye además una verificación de no-solapamiento por hash MD5 frente a los catálogos de los datasets de referencia empleados en preentrenamiento y evaluación (Derm1M, HAM10000, BCN20000, entre otros): **0 coincidencias sobre 507 657 imágenes catalogadas**, lo que descarta contaminación cruzada con los corpus externos y fuga hacia los conjuntos de evaluación zero-shot.
 
 La versión 1.0 contiene 1 089 imágenes vinculadas a 669 casos clínicos con identificador único resoluble, sobre un total de 698 casos catalogados en el archivo original (672 disponen de imagen efectiva antes de la deduplicación MD5; los tres casos restantes se pierden por duplicado exacto de imagen entre entradas distintas del blog).
 
