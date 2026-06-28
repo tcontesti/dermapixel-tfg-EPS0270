@@ -9,12 +9,12 @@ los checkpoints en disco para integrar al servicio dermapixel-server.
 
 Outputs:
   $DERMAPIXEL_ROOT/output/dermapixel_v1_spanderm_v0_multiseed/
-    ├── best_seed42.pth            (state_dict completo encoder LoRA + cabeza FC L2)
+    ├── best_seed42.pth            (state_dict completo encoder LoRA + head FC L2)
     ├── best_seed42_l2_mapping.json (id↔nombre L2)
     └── best_seed42_metrics.json   (métricas test del best val checkpoint)
 
   $DERMAPIXEL_ROOT/output/derm7pt_sae_e4/
-    ├── best_model.pth             (state_dict 8 cabezas + LoRA)
+    ├── best_model.pth             (state_dict 8 heads + LoRA)
     ├── best_concept_mapping.json  (CRIT_VALS por concepto)
     └── best_metrics.json          (AUROC melanoma + por concepto)
 
@@ -218,7 +218,7 @@ def train_spanderm():
     lora_params = [p for n, p in model.named_parameters()
                    if p.requires_grad and "lora" in n.lower()]
     n_trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"  Trainable: {n_trainable/1e6:.2f} M params (LoRA + cabeza FC)")
+    print(f"  Trainable: {n_trainable/1e6:.2f} M params (LoRA + head FC)")
 
     optimizer = torch.optim.AdamW([
         {"params": head_params, "lr": LR_HEAD_SP},

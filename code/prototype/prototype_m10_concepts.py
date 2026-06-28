@@ -149,7 +149,7 @@ def classify_m10(model, meta, image_pil, device, tta=True):
 
     Args:
         tta: si True, aplica 5 augmentations (orig + hflip + vflip + rot90 + rot270)
-             y promedia softmax de las 8 cabezas. Consistente con M1/M7/M9.
+             y promedia softmax de las 8 heads. Consistente con M1/M7/M9.
 
     Returns:
         dict con: concepts (lista 7), melanoma {prob, pred}, latency_ms

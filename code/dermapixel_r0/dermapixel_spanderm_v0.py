@@ -8,7 +8,7 @@ dermapixel_spanderm_v0.py · SpanDerm v0 — LoRA L2 + ranking L3
 
 Arquitectura:
   - Encoder PanDerm Large (1024-d) con LoRA r=16 alpha=32 sobre blocks.22-23
-  - Cabeza FC 1024 → 38 clases L2 (consolidación queratinización)
+  - Head FC 1024 → 38 clases L2 (consolidación queratinización)
   - Ranking L3 derivado: similitud coseno sobre prototipos L3 calculados
     como media de embeddings train por clase (250 clases globales)
 
@@ -112,7 +112,7 @@ class DermaSet(Dataset):
 
 
 # -----------------------------------------------------------------------------
-# Modelo: encoder PanDerm Large + LoRA + cabeza L2
+# Modelo: encoder PanDerm Large + LoRA + head L2
 # -----------------------------------------------------------------------------
 
 class SpanDermV0(nn.Module):

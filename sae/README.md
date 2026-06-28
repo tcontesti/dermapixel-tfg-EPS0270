@@ -100,7 +100,7 @@ Sobre esta base, la Dra. R. Taberner está definiendo en una plataforma de anota
 
 ## F.7 Tablas de detalle del experimento Derm7pt
 
-### E2 — Cabeza intermedia del CBM (pesos por concepto)
+### E2 — Head intermedia del CBM (pesos por concepto)
 
 AUROC binario sobre el conjunto de test Derm7pt (N_test = 395) por concepto del *Seven-Point Checklist*, y peso aprendido por el meta-clasificador logístico para la predicción binaria melanoma/no-melanoma. Pesos ordenados de mayor a menor importancia relativa.
 
@@ -114,7 +114,7 @@ AUROC binario sobre el conjunto de test Derm7pt (N_test = 395) por concepto del 
 | dots_and_globules | 0,723 | +1,41 |
 | pigment_network | 0,901 | +1,04 |
 
-La AUROC binaria de la cabeza intermedia se sitúa en [0,723, 0,906]. *blue whitish veil* y *regression structures* tienen el mayor peso relativo para la decisión final (+2,54 y +2,07), jerarquía que coincide cualitativamente con el peso clínico del *Seven-Point Checklist*.
+La AUROC binaria de la head intermedia se sitúa en [0,723, 0,906]. *blue whitish veil* y *regression structures* tienen el mayor peso relativo para la decisión final (+2,54 y +2,07), jerarquía que coincide cualitativamente con el peso clínico del *Seven-Point Checklist*.
 
 ### E3 — Cruce de los 16 conceptos del Grupo A con el Seven-Point Checklist
 
@@ -143,7 +143,7 @@ De los 16 conceptos del Grupo A, 11 admiten *mapping* operativo (directo en tres
 
 ### E4 — Comparativa concepto a concepto: LP separado vs. fine-tuning multitarea
 
-AUROC binaria *present*/*absent* por concepto sobre el conjunto de test Derm7pt (N_test = 395). Comparativa entre sondeo lineal separado por concepto sobre las activaciones SAE Large (E2 LP separado) y las siete cabezas conceptuales del *fine-tuning* multitarea LoRA (E4). Δ en puntos porcentuales.
+AUROC binaria *present*/*absent* por concepto sobre el conjunto de test Derm7pt (N_test = 395). Comparativa entre sondeo lineal separado por concepto sobre las activaciones SAE Large (E2 LP separado) y las siete heads conceptuales del *fine-tuning* multitarea LoRA (E4). Δ en puntos porcentuales.
 
 | Concepto | E2 LP separado | E4 multitarea | Δ |
 |---|---:|---:|---:|
@@ -155,7 +155,7 @@ AUROC binaria *present*/*absent* por concepto sobre el conjunto de test Derm7pt 
 | regression_structures | 0,818 | 0,791 | −2,7 pp |
 | dots_and_globules | 0,723 | 0,725 | +0,2 pp |
 
-Las cabezas conceptuales del régimen multitarea (E4) pierden entre 1 y 3 pp de AUROC binaria frente al sondeo lineal separado (E2) en seis de los siete conceptos, con máximo de −2,7 pp en *regression structures*: degradación menor que confirma que el aprendizaje conjunto de melanoma y conceptos no compromete la calidad conceptual.
+Las heads conceptuales del régimen multitarea (E4) pierden entre 1 y 3 pp de AUROC binaria frente al sondeo lineal separado (E2) en seis de los siete conceptos, con máximo de −2,7 pp en *regression structures*: degradación menor que confirma que el aprendizaje conjunto de melanoma y conceptos no compromete la calidad conceptual.
 
 ## F.N Tablas desplazadas del cuerpo (condensación paper-style v6)
 
@@ -179,7 +179,7 @@ La AUROC efectiva de la mejor *feature* por criterio se sitúa entre 0,68 y 0,82
 
 ### F.N.2 Sondeo lineal directo, CBM jerárquico y *fine-tuning* multitarea (Derm7pt, N_test=395, ≈98 melanomas)
 
-Comparativa sobre la tarea binaria melanoma/no-melanoma entre el sondeo lineal directo sobre las 16 384 *features* del SAE Large, el *Concept Bottleneck* de siete conceptos y el *fine-tuning* multitarea LoRA (r = 16 sobre los dos últimos bloques de PanDerm Large, ocho cabezas paralelas). Mismo *split* oficial de test. AUROC en negrita.
+Comparativa sobre la tarea binaria melanoma/no-melanoma entre el sondeo lineal directo sobre las 16 384 *features* del SAE Large, el *Concept Bottleneck* de siete conceptos y el *fine-tuning* multitarea LoRA (r = 16 sobre los dos últimos bloques de PanDerm Large, ocho heads paralelas). Mismo *split* oficial de test. AUROC en negrita.
 
 | Método | Params entr. | Acc@1 | BAcc | AUROC | W-F1 | Kappa |
 |---|---:|---|---|---|---|---|

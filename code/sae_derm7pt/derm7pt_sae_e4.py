@@ -8,13 +8,13 @@ derm7pt_sae_e4.py · E4 · Fine-tuning multitarea PanDerm Large
 
 Réplica conceptual de Kawahara et al. 2019 con encoder fundacional:
   - Encoder PanDerm Large (1024d) con LoRA r=16 últimas 2 capas (igual SpanDerm v0)
-  - 8 cabezas:
-     7 cabezas conceptos (clasificación multi-clase por criterio Derm7pt)
-     1 cabeza melanoma binario
-  - Loss: suma de CE de las 8 cabezas (weighted opcional)
+  - 8 heads:
+     7 heads conceptos (clasificación multi-clase por criterio Derm7pt)
+     1 head melanoma binario
+  - Loss: suma de CE de las 8 heads (weighted opcional)
 
 Splits oficiales: train 413, val 203, test 395
-Métricas multitarea + AUROC test por cabeza + bootstrap IC95%
+Métricas multitarea + AUROC test por head + bootstrap IC95%
 
 Comparativa con E2 (CBM sobre SAE) y baselines.
 

@@ -4,11 +4,11 @@
 # Rutas configurables por entorno: DERMAPIXEL_ROOT (def. ./data).
 # =============================================================================
 """
-dermapixel_ft_l1.py · Fine-tuning PanDerm Large cabeza L1 sobre DermapixelAI 1.0
+dermapixel_ft_l1.py · Fine-tuning PanDerm Large head L1 sobre DermapixelAI 1.0
 
 Protocolo:
   - Encoder PanDerm Large (1024-d), últimas 2 capas descongeladas
-  - Cabeza FC 1024 → 4 (L1: Patología inflamatoria/infecciosa/tumoral/Genodermatosis)
+  - Head FC 1024 → 4 (L1: Patología inflamatoria/infecciosa/tumoral/Genodermatosis)
   - 10 épocas, AdamW, lr_head=1e-3, lr_encoder=1e-5, weight_decay=1e-4
   - BS=16, cosine warmup 1 época
   - Augmentations train: RandomResizedCrop 224, hflip, vflip, ColorJitter
@@ -111,7 +111,7 @@ class DermaSet(Dataset):
 
 
 # -----------------------------------------------------------------------------
-# Modelo: encoder PanDerm Large + cabeza FC
+# Modelo: encoder PanDerm Large + head FC
 # -----------------------------------------------------------------------------
 
 class PanDermClassifier(nn.Module):

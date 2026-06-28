@@ -5,7 +5,7 @@
 # =============================================================================
 """
 slim_checkpoints.py · Reduce los checkpoints SpanDerm v0 + E4 al mínimo
-necesario: solo LoRA adapters + cabezas FC (encoder PanDerm Large se carga
+necesario: solo LoRA adapters + heads FC (encoder PanDerm Large se carga
 aparte desde weights/weights/panderm_large.pth).
 
 Reduce tamaño de 1.2 GB → ~2-3 MB por checkpoint.
@@ -22,12 +22,12 @@ E4     = ROOT / "output" / "derm7pt_sae_e4"
 
 
 def slim_state_dict(state_dict):
-    """Conserva solo claves de LoRA y cabezas FC."""
+    """Conserva solo claves de LoRA y heads FC."""
     kept = {}
     for k, v in state_dict.items():
         k_lower = k.lower()
         # LoRA: cualquier key con "lora" o "lora_a"/"lora_b"
-        # Cabeza FC: keys que empiezan por "head" o "heads_concept" o "head_mel"
+        # Head FC: keys que empiezan por "head" o "heads_concept" o "head_mel"
         if ("lora" in k_lower
             or k.startswith("head.")
             or k.startswith("heads_concept")

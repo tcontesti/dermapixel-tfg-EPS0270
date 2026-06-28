@@ -97,16 +97,16 @@ python -m classification.zs_eval \
 
 ## A.4 Configuraciones de entrenamiento por experimento
 
-### Configuración del protocolo Dermapixel R0 (cabeza supervisada L2) sobre PanDerm Large con adaptación LoRA
+### Configuración del protocolo Dermapixel R0 (head supervisada L2) sobre PanDerm Large con adaptación LoRA
 
-Los 524 288 parámetros entrenables corresponden a 39 K en la cabeza FC 1024 → 38 y 485 K en los ocho módulos LoRA insertados en las capas lineales de los dos últimos bloques de transformer.
+Los 524 288 parámetros entrenables corresponden a 39 K en la head FC 1024 → 38 y 485 K en los ocho módulos LoRA insertados en las capas lineales de los dos últimos bloques de transformer.
 
 | Componente | Configuración |
 |---|---|
 | Encoder base | PanDerm Large (1 024 dim, 303,85 M params, congelado) |
 | LoRA | r = 16, α = 32, *dropout* 0,1 |
 | Capas adaptadas | `blocks.22` y `blocks.23`: `attn.qkv`, `attn.proj`, `mlp.fc1`, `mlp.fc2` (8 capas) |
-| Cabeza supervisada | FC 1024 → 38 (L2 con queratinización consolidada) |
+| Head supervisada | FC 1024 → 38 (L2 con queratinización consolidada) |
 | Parámetros entrenables | 524 288 (0,17 % del total) |
 | Optimizador | AdamW, lr_head = 10⁻³, lr_LoRA = 5 × 10⁻⁴, wd = 10⁻⁴ |
 | *Scheduler* | Cosine con *warmup* de una época |
@@ -131,11 +131,11 @@ Entrenadas sobre DermapixelAI 1.0. Las versiones v1–v4 comparten el mismo *spl
 
 ### Receta de ajuste fino denso parcial sobre DermapixelAI 1.0
 
-PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros, 8,3 % del encoder) más cabeza *fully-connected*.
+PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros, 8,3 % del encoder) más head *fully-connected*.
 
 | Componente | Configuración |
 |---|---|
-| Optimizador | AdamW, lr_cabeza = 10⁻³, lr_encoder = 10⁻⁵, wd = 10⁻⁴ |
+| Optimizador | AdamW, lr_head = 10⁻³, lr_encoder = 10⁻⁵, wd = 10⁻⁴ |
 | *Scheduler* | Cosine con *warmup* de una época |
 | *Batch size* | 16 |
 | Épocas | 10 |
@@ -147,7 +147,7 @@ PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros, 8,3 
 
 El entorno de ejecución se fija explícitamente. Las semillas de `torch`, `numpy` y `random` se inicializan a 0 en los protocolos de *fine-tuning* y segmentación, y el parámetro `random_state` se fija a 42 en los basados en `scikit-learn`. La variable `WANDB_MODE` se fija a `disabled` y `CUDA_VISIBLE_DEVICES` a `0`. La especificación completa del entorno se documenta en el archivo `environment.yml` del repositorio.
 
-Para los experimentos sobre DermapixelAI 1.0 se distinguen dos usos de semilla. El protocolo Dermapixel R0 (cabeza L2 con LoRA) reporta sobre el conjunto `{42, 43, 44}` (media y desviación entre semillas); la persistencia de *checkpoints* para el prototipo congela únicamente la semilla 42 con el fin de fijar un artefacto reproducible.
+Para los experimentos sobre DermapixelAI 1.0 se distinguen dos usos de semilla. El protocolo Dermapixel R0 (head L2 con LoRA) reporta sobre el conjunto `{42, 43, 44}` (media y desviación entre semillas); la persistencia de *checkpoints* para el prototipo congela únicamente la semilla 42 con el fin de fijar un artefacto reproducible.
 
 **Normalización de imagen.** Los módulos basados en PanDerm comparten la misma transformación de evaluación: `Resize(256)` → `CenterCrop(224)` → `ToTensor` → `Normalize` con la media y desviación estándar de ImageNet (`mean = (0,485, 0,456, 0,406)`, `std = (0,229, 0,224, 0,225)`). En *train* se sustituye el `Resize`/`CenterCrop` por `RandomResizedCrop` más volteos horizontal/vertical y `ColorJitter`, según la receta de cada experimento (sección A.4). La segmentación SAM2.1 emplea la normalización `uniform_05` declarada en su comando de la sección A.3.
 
@@ -186,10 +186,10 @@ Receta de construcción (script de evidencia: `build_m4bis_faiss.py`):
 
 ### A.7.2 Persistencia de *checkpoints* del prototipo
 
-Los módulos M9 (cabeza L2 castellana de Dermapixel R0) y M10 (multitarea *Seven-Point Checklist* + melanoma) se persisten para el servicio de inferencia mediante `persist_models_for_prototype.py`, que reejecuta la lógica de entrenamiento con semilla 42 y guarda el *best state* seleccionado por mejor BAcc de validación. Cada artefacto se acompaña de su mapeo de etiquetas y de sus métricas de test:
+Los módulos M9 (head L2 castellana de Dermapixel R0) y M10 (multitarea *Seven-Point Checklist* + melanoma) se persisten para el servicio de inferencia mediante `persist_models_for_prototype.py`, que reejecuta la lógica de entrenamiento con semilla 42 y guarda el *best state* seleccionado por mejor BAcc de validación. Cada artefacto se acompaña de su mapeo de etiquetas y de sus métricas de test:
 
-- M9: `best_seed42.pth` (`state_dict` del encoder con LoRA más cabeza FC L2), `best_seed42_l2_mapping.json`, `best_seed42_metrics.json`. El *checkpoint slim* resultante (sólo pesos LoRA y cabeza, ≈524 K parámetros) ocupa ~2,3 MB tras `slim_checkpoints.py`.
-- M10: `best_model.pth` (ocho cabezas más LoRA), `best_concept_mapping.json`, `best_metrics.json`.
+- M9: `best_seed42.pth` (`state_dict` del encoder con LoRA más head FC L2), `best_seed42_l2_mapping.json`, `best_seed42_metrics.json`. El *checkpoint slim* resultante (sólo pesos LoRA y head, ≈524 K parámetros) ocupa ~2,3 MB tras `slim_checkpoints.py`.
+- M10: `best_model.pth` (ocho heads más LoRA), `best_concept_mapping.json`, `best_metrics.json`.
 
 La política general de *checkpoints* (selección por mejor validación, verificación SHA-256, releases) es la descrita en la sección A.6; esta subsección sólo añade la variante de semilla única para los artefactos en producción.
 
@@ -211,7 +211,7 @@ La tabla siguiente traza cada tarea experimental sobre DermapixelAI 1.0 y cada a
 | TTA | `dermapixel_tta_eval.py` | `dermapixel_v1_tta_summary.csv` |
 | Ensemble | `dermapixel_ensemble_eval.py` | `dermapixel_v1_ensemble_summary.csv` |
 | Evaluación A·B·E (k-NN *k*∈{1,5,10}; MLP 2 capas con *class weighting*; CV 5-fold *case-aware* sobre el LP) | `dermapixel_abe_eval.py` | `dermapixel_v1_abe_summary.csv` |
-| Dermapixel R0, cabeza L2 LoRA (multisemilla) | `dermapixel_spanderm_v0_multiseed.py` | `dermapixel_v1_spanderm_v0_multiseed_summary.csv` |
+| Dermapixel R0, head L2 LoRA (multisemilla) | `dermapixel_spanderm_v0_multiseed.py` | `dermapixel_v1_spanderm_v0_multiseed_summary.csv` |
 | Auditoría de *leakage* MD5 | `dermapixel_md5_audit.py` | `dermapixel_v1_md5_report.md` |
 | *Seven-Point Checklist* + SAE (E1–E4) | `derm7pt_sae_e1.py` … `derm7pt_sae_e4.py` | `q4_derm7pt/{report,e2_report,e3_report}.md`, `q4_derm7pt/e4_summary.csv` |
 | Construcción del índice M4-bis | `build_m4bis_faiss.py` | `~/panderm/output/m4bis_faiss_dermapixel/` |

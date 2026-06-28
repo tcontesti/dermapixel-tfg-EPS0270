@@ -99,7 +99,7 @@ Reparto de las 250 clases L3 efectivas según número de imágenes por clase (fi
 | 21+ imgs | 7 | 2,8 |
 | **Total** | **250** | **100,0** |
 
-El 77,2 % de las 250 clases L3 dispone de cinco imágenes o menos, y un cuarto (25,6 %) cuenta con una única imagen. Esto condiciona la viabilidad de un clasificador con cabeza directa a 250 clases L3 y justifica la estrategia de cabeza L2 con ranking L3 por prototipos.
+El 77,2 % de las 250 clases L3 dispone de cinco imágenes o menos, y un cuarto (25,6 %) cuenta con una única imagen. Esto condiciona la viabilidad de un clasificador con head directa a 250 clases L3 y justifica la estrategia de head L2 con ranking L3 por prototipos.
 
 ## C.8 Particionado en train, validación y test
 

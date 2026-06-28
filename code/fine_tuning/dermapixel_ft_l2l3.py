@@ -8,7 +8,7 @@ dermapixel_ft_l2l3.py · Fine-tuning PanDerm Large completo sobre L2 y L3
 
 Misma arquitectura y protocolo que dermapixel_ft_l1.py (§4.11 FT L1):
   - Encoder PanDerm Large, últimas 2 capas descongeladas (25M trainable)
-  - Cabeza FC 1024 → N_CLS (38 L2 / 224 L3)
+  - Head FC 1024 → N_CLS (38 L2 / 224 L3)
   - 10 épocas, AdamW lr_head=1e-3, lr_encoder=1e-5, weight_decay=1e-4
   - BS 16, cosine warmup 1 ép, class_weight balanced
   - Augmentations train: RandomResizedCrop, hflip, vflip(0.3), ColorJitter

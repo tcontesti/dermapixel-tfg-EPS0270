@@ -215,7 +215,7 @@ def main():
           f"| **CBM** (SAE → 7 cpts → mel) | {cbm_metrics['Acc@1']:.4f} | {cbm_metrics['BAcc']:.4f} | "
           f"**{cbm_metrics['AUROC']:.4f}** | {cbm_metrics['W-F1']:.4f} | {cbm_metrics['Kappa']:.4f} |",
           "",
-          "## AUROC por concepto (cabeza intermedia)",
+          "## AUROC por concepto (head intermedia)",
           "",
           "| Concepto | AUROC test |",
           "|---|---:|",
