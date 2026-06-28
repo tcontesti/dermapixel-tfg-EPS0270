@@ -1,6 +1,6 @@
 # Anexo J — Ablaciones complementarias sobre DermapixelAI 1.0
 
-> Material complementario del TFG EPS0270. Corresponde al antiguo Anexo J de la memoria. Recoge estudios complementarios sobre DermapixelAI 1.0 que confirman, sin desplazarla, la línea experimental principal: validación del etiquetado, tres variantes de clasificación sobre *embeddings* congelados (cabezas alternativas, función de pérdida y *Test-Time Augmentation*) y dos extensiones con codificadores generalistas y arquitecturas de inferencia alternativas. Ninguno modifica las conclusiones del cuerpo principal.
+> Material complementario del TFG EPS0270. Corresponde al antiguo Anexo J de la memoria. Recoge estudios complementarios sobre DermapixelAI 1.0 que confirman, sin desplazarla, la línea experimental principal: validación del etiquetado, tres variantes de clasificación sobre *embeddings* congelados (heads alternativas, función de pérdida y *Test-Time Augmentation*) y dos extensiones con codificadores generalistas y arquitecturas de inferencia alternativas. Ninguno modifica las conclusiones del cuerpo principal.
 
 ## J.1 Validación del procedimiento de etiquetado: subestudio rosa_verified
 
@@ -30,22 +30,22 @@ Ranking del nivel L3 por prototipos coseno (media de las representaciones de ent
 | Acc@5 | 0,296 | 0,026 | ×15 |
 | BAcc | 0,148 | 0,000 | — |
 
-## J.3 Cabezas alternativas sobre embeddings congelados
+## J.3 Heads alternativas sobre embeddings congelados
 
-Sobre los mismos *embeddings* de PanDerm Large del split fijo (N_train = 874, N_test = 36 en L1/L2, N_test = 28 en L3) se evalúan tres cabezas adicionales: k-vecinos más cercanos con distancia coseno (k = 10), perceptrón multicapa con una capa oculta de 512 unidades y *dropout* 0,3 (MLP 512), y regresión logística con `class_weight='balanced'` (LogReg *balanced*). AUROC *one-vs-rest* por nivel. Mejor por nivel en **negrita**.
+Sobre los mismos *embeddings* de PanDerm Large del split fijo (N_train = 874, N_test = 36 en L1/L2, N_test = 28 en L3) se evalúan tres heads adicionales: k-vecinos más cercanos con distancia coseno (k = 10), perceptrón multicapa con una capa oculta de 512 unidades y *dropout* 0,3 (MLP 512), y regresión logística con `class_weight='balanced'` (LogReg *balanced*). AUROC *one-vs-rest* por nivel. Mejor por nivel en **negrita**.
 
-| Cabeza | L1 (4 cls) | L2 (38 cls) | L3 (224 cls) |
+| Head | L1 (4 cls) | L2 (38 cls) | L3 (224 cls) |
 |---|---:|---:|---:|
 | LP (referencia) | 0,796 | 0,793 | 0,813 |
 | kNN k=10 | 0,752 | 0,698 | 0,694 |
 | MLP 512 | **0,817** | **0,812** | **0,827** |
 | LogReg *balanced* | 0,797 | 0,800 | 0,810 |
 
-El MLP de 512 unidades alcanza la mejor AUROC sobre los tres niveles, con incrementos modestos pero consistentes sobre la cabeza lineal: +2,1 pp en L1 (0,796 → 0,817), +1,9 pp en L2 (0,793 → 0,812) y +1,4 pp en L3 (0,813 → 0,827). La cabeza k-NN queda por debajo de las paramétricas en los tres niveles, por insuficiente densidad local para N_train = 874 frente a un vocabulario de 224 clases L3. La elección de la regresión logística estándar como cabeza primaria se mantiene defendible: la mejora absoluta del MLP no compensa la pérdida de interpretabilidad lineal ni la mayor sensibilidad a la inicialización aleatoria.
+El MLP de 512 unidades alcanza la mejor AUROC sobre los tres niveles, con incrementos modestos pero consistentes sobre la head lineal: +2,1 pp en L1 (0,796 → 0,817), +1,9 pp en L2 (0,793 → 0,812) y +1,4 pp en L3 (0,813 → 0,827). La head k-NN queda por debajo de las paramétricas en los tres niveles, por insuficiente densidad local para N_train = 874 frente a un vocabulario de 224 clases L3. La elección de la regresión logística estándar como head primaria se mantiene defendible: la mejora absoluta del MLP no compensa la pérdida de interpretabilidad lineal ni la mayor sensibilidad a la inicialización aleatoria.
 
 ## J.4 Función de pérdida: Cross-Entropy frente a Focal
 
-La cola larga severa (77 % de las clases L3 con ≤ 5 ejemplos, 3,9 muestras por clase de media en *train*) motiva contrastar la entropía cruzada estándar con *Focal Loss* (Lin et al. 2017, factor (1−p_t)^γ). Sobre los *embeddings* congelados del split fijo se reentrena la cabeza lineal con *Focal Loss* bajo dos parámetros de focalización (γ ∈ {1,0, 2,0, 5,0}) y dos regímenes de ponderación (`class_weight = None` vs `balanced`), optimizada con LBFGS. Mejor por columna y nivel en **negrita**.
+La cola larga severa (77 % de las clases L3 con ≤ 5 ejemplos, 3,9 muestras por clase de media en *train*) motiva contrastar la entropía cruzada estándar con *Focal Loss* (Lin et al. 2017, factor (1−p_t)^γ). Sobre los *embeddings* congelados del split fijo se reentrena la head lineal con *Focal Loss* bajo dos parámetros de focalización (γ ∈ {1,0, 2,0, 5,0}) y dos regímenes de ponderación (`class_weight = None` vs `balanced`), optimizada con LBFGS. Mejor por columna y nivel en **negrita**.
 
 | Nivel | Pérdida | Acc@1 | BAcc | AUROC |
 |---|---|---:|---:|---:|
@@ -63,7 +63,7 @@ La cola larga severa (77 % de las clases L3 con ≤ 5 ejemplos, 3,9 muestras por
 
 ## J.5 Aumento en tiempo de inferencia (TTA)
 
-Se replica el protocolo de TTA sobre la cabeza lineal entrenada sobre los *embeddings* de PanDerm Large: para cada imagen de test se extraen los cinco *embeddings* de las cinco augmentaciones deterministas (original, simetría horizontal, simetría vertical, rotación 90°, rotación 270°, omitiendo 180°), cada uno se evalúa con la cabeza lineal y las cinco distribuciones se promedian antes del *argmax*. Mejor por par en **negrita**.
+Se replica el protocolo de TTA sobre la head lineal entrenada sobre los *embeddings* de PanDerm Large: para cada imagen de test se extraen los cinco *embeddings* de las cinco augmentaciones deterministas (original, simetría horizontal, simetría vertical, rotación 90°, rotación 270°, omitiendo 180°), cada uno se evalúa con la head lineal y las cinco distribuciones se promedian antes del *argmax*. Mejor por par en **negrita**.
 
 | Nivel | Modo | Acc@1 | Acc@3 | BAcc | AUROC |
 |---|---|---:|---:|---:|---:|
@@ -78,7 +78,7 @@ El patrón es consistente: TTA degrada Acc@1, BAcc y AUROC en magnitudes pequeñ
 
 ## J.6 Codificadores generalistas no médicos: DINOv2 y CLIP-L
 
-Dos codificadores fuera del dominio biomédico bajo sondeo lineal congelado, sobre el mismo split fijo. DINOv2 ViT-L (`vit_large_patch14_dinov2.lvd142m`, embedding 1 024-D, CLS), auto-supervisado visual generalista de Meta sobre LVD-142M; CLIP-L-336 (OpenAI, ViT-L/14 resolución 336), contrastivo texto-imagen sobre 400 millones de pares web, embedding proyectado de 768-D. Cabeza: regresión logística L-BFGS con C = 1,0 y max_iter = 5 000. Mejor por columna y nivel en **negrita**.
+Dos codificadores fuera del dominio biomédico bajo sondeo lineal congelado, sobre el mismo split fijo. DINOv2 ViT-L (`vit_large_patch14_dinov2.lvd142m`, embedding 1 024-D, CLS), auto-supervisado visual generalista de Meta sobre LVD-142M; CLIP-L-336 (OpenAI, ViT-L/14 resolución 336), contrastivo texto-imagen sobre 400 millones de pares web, embedding proyectado de 768-D. Head: regresión logística L-BFGS con C = 1,0 y max_iter = 5 000. Mejor por columna y nivel en **negrita**.
 
 | Encoder | BAcc L1 | AUROC L1 | BAcc L2 | AUROC L2 | BAcc L3 | AUROC L3 |
 |---|---:|---:|---:|---:|---:|---:|
@@ -126,8 +126,8 @@ Tablas reportadas aquí para no fragmentar la argumentación del capítulo de re
 | Sistema | Qué es | Sección cuerpo |
 |---|---|---|
 | PanDerm LP | Codificador congelado + regresión logística | §4.10 |
-| DermLIP zero-shot | Modelo visión-lenguaje externo (sin cabeza entrenada) | §4.11 |
-| Dermapixel R0 (cabeza superv. L2) | Rama supervisada con adaptación LoRA r=16 | §4.12 |
+| DermLIP zero-shot | Modelo visión-lenguaje externo (sin head entrenada) | §4.11 |
+| Dermapixel R0 (head superv. L2) | Rama supervisada con adaptación LoRA r=16 | §4.12 |
 | Dermapixel R0 (rama contrastiva) | Rama CLIP-style castellana (SpanDerm-CLIP), zero-shot de clase abierta; **no desplegada** | §4.13 |
 
 ### J.N.2 LoRA frente a ajuste fino denso sobre L2 (DermapixelAI 1.0, N_test=36)
@@ -161,7 +161,7 @@ En su régimen más favorable (validación, descripciones ricas `llm_case_summar
 
 ### J.N.5 Combinación de codificadores sobre DermapixelAI 1.0 (`tab:dermapixel-ensemble`)
 
-Tabla desplazada del cuerpo (§4.10). Cabeza logística por codificador (PanDerm Base, PanDerm Large, DermLIP v2; protocolo de sondeo lineal) sobre los *embeddings* congelados, frente a cinco estrategias de combinación, en el mismo test fijo por nivel. Cifra-ancla en el cuerpo: ningún codificador lidera simultáneamente los tres niveles (L1 mejor con la combinación avg Large+DermLIP, AUROC 0,817; L2 con DermLIP v2 individual, AUROC 0,860; L3 con PanDerm Large individual, AUROC 0,813). Mejor por columna y nivel en **negrita**.
+Tabla desplazada del cuerpo (§4.10). Head logística por codificador (PanDerm Base, PanDerm Large, DermLIP v2; protocolo de sondeo lineal) sobre los *embeddings* congelados, frente a cinco estrategias de combinación, en el mismo test fijo por nivel. Cifra-ancla en el cuerpo: ningún codificador lidera simultáneamente los tres niveles (L1 mejor con la combinación avg Large+DermLIP, AUROC 0,817; L2 con DermLIP v2 individual, AUROC 0,860; L3 con PanDerm Large individual, AUROC 0,813). Mejor por columna y nivel en **negrita**.
 
 | Nivel | Estrategia | Acc@1 | Acc@3 | BAcc | AUROC |
 |---|---|---:|---:|---:|---:|
@@ -189,7 +189,7 @@ Tabla desplazada del cuerpo (§4.10). Cabeza logística por codificador (PanDerm
 
 ### J.N.6 Ajuste fino parcial multinivel del codificador (`tab:dermapixel-ft-multilevel`)
 
-Tabla desplazada del cuerpo (§4.12). PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros entrenables) y cabeza *fully-connected*, sobre los tres niveles ontológicos. Test fijo N_test = 36 en L1/L2 y N_test = 28 en L3. La cabeza L2 dimensiona 1 024 → 37 (37 clases L2 efectivas en *train*; 38 nominales). Entre corchetes, IC95 % por *bootstrap* estratificado (1 000 remuestreos). Cifra-ancla en el cuerpo: el ajuste fino parcial alcanza la mejor BAcc en L1 (0,622, +18,2 pp sobre el sondeo lineal congelado) y la mejor AUROC en L2 (0,852). Mejor por columna en **negrita**.
+Tabla desplazada del cuerpo (§4.12). PanDerm Large con las dos últimas capas descongeladas (25,2 M parámetros entrenables) y head *fully-connected*, sobre los tres niveles ontológicos. Test fijo N_test = 36 en L1/L2 y N_test = 28 en L3. La head L2 dimensiona 1 024 → 37 (37 clases L2 efectivas en *train*; 38 nominales). Entre corchetes, IC95 % por *bootstrap* estratificado (1 000 remuestreos). Cifra-ancla en el cuerpo: el ajuste fino parcial alcanza la mejor BAcc en L1 (0,622, +18,2 pp sobre el sondeo lineal congelado) y la mejor AUROC en L2 (0,852). Mejor por columna en **negrita**.
 
 | Nivel | Acc@1 | Acc@3 | BAcc | AUROC |
 |---|---|---|---|---|

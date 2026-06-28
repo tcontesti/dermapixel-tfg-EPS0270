@@ -56,7 +56,7 @@ La verificación de solapamiento con Derm1M se realizó a nivel de fuente: las f
 
 ## I.7 Material complementario de la rama contrastiva
 
-### Cabeza supervisada L2: best-checkpoint frente a últimas épocas
+### Head supervisada L2: best-checkpoint frente a últimas épocas
 
 Sobre el test L2 (N_test = 36, 38 clases con queratinización consolidada). Cifras: media ± desviación estándar sobre tres semillas ({42, 43, 44}). *Best val* aplica selección por máxima BAcc de validación; *últimas 5 ép.* promedia las cinco épocas finales sin selección. Mejor por fila en **negrita**.
 
@@ -106,10 +106,10 @@ Rama contrastiva de Dermapixel R0 *zero-shot* L2 frente a las dos referencias in
 | Sistema | Régimen | Acc@1 L2 | Observaciones |
 |---|---|---:|---|
 | LP PanDerm Large (referencia) | Supervisado L2 cerrado | 0,250 | 38 clases, N_test = 36 |
-| Dermapixel R0 cabeza L2 | Supervisado L2 cerrado | 0,250 | 38 clases, N_test = 36 |
+| Dermapixel R0 head L2 | Supervisado L2 cerrado | 0,250 | 38 clases, N_test = 36 |
 | **Dermapixel R0 contrastivo v2** | *Zero-shot* open | **0,133** | 23 clases efectivas, N_test = 101 |
 
-La cabeza supervisada cerrada con LoRA alcanza Acc@1 0,250 sobre L2, frente a 0,133 de la rama contrastiva *zero-shot open-class* (v2) sobre las 23 clases efectivas del test per-case. La diferencia operativa es la capacidad de la rama contrastiva de aceptar consultas textuales libres en castellano sin fijar el vocabulario.
+La head supervisada cerrada con LoRA alcanza Acc@1 0,250 sobre L2, frente a 0,133 de la rama contrastiva *zero-shot open-class* (v2) sobre las 23 clases efectivas del test per-case. La diferencia operativa es la capacidad de la rama contrastiva de aceptar consultas textuales libres en castellano sin fijar el vocabulario.
 
 ### Recuperación cross-modal: régimen favorable frente a uso real
 

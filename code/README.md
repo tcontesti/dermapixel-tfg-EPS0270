@@ -34,8 +34,8 @@ Código de los experimentos del TFG EPS0270, **sanitizado para repositorio públ
 ### `fine_tuning/` — Ajuste fino
 | Script | Qué hace | Entradas | Salida | Produce |
 |---|---|---|---|---|
-| `dermapixel_ft_l1.py` | *Fine-tuning* de la cabeza L1 sobre PanDerm | dataset, pesos PanDerm | `dermapixel_v1_ft_l1/` | FT multinivel (cap. DermapixelAI) |
-| `dermapixel_ft_l2l3.py` | *Fine-tuning* de las cabezas L2 y L3 | dataset, pesos PanDerm | `dermapixel_v1_ft_{l2,l3}/` | FT multinivel |
+| `dermapixel_ft_l1.py` | *Fine-tuning* de la head L1 sobre PanDerm | dataset, pesos PanDerm | `dermapixel_v1_ft_l1/` | FT multinivel (cap. DermapixelAI) |
+| `dermapixel_ft_l2l3.py` | *Fine-tuning* de las heads L2 y L3 | dataset, pesos PanDerm | `dermapixel_v1_ft_{l2,l3}/` | FT multinivel |
 | `dermapixel_focal_loss.py` | Ablación de función de pérdida (*focal* vs CE) | dataset, embeddings | `dermapixel_v1_focal/` | ablación de pérdida (J.4) |
 
 ### `tta_ensemble/` — Aumento en test y ensembles
@@ -55,6 +55,7 @@ Código de los experimentos del TFG EPS0270, **sanitizado para repositorio públ
 |---|---|---|---|---|
 | `dermapixel_spanderm_v0.py` | Adaptación supervisada LoRA L2 castellana (rama desplegada como M9) | dataset, pesos PanDerm | `dermapixel_v1_spanderm_v0/` | [Dermapixel R0](../ablations/ablacion-dermlip-en-y-r0-contrastiva.md) |
 | `dermapixel_spanderm_v0_multiseed.py` | Repetición multi-semilla {42,43,44} para reporte con desviación | dataset, pesos PanDerm | `dermapixel_v1_spanderm_v0_multiseed/` | tabla L2 de R0 (media ± desv.) |
+| `dermapixel_aug_oof.py` | Ablación R0-AUG: *augmentation* de *train* sobre encoder congelado, 5-fold OOF *case-aware* (resultado FLAT) | dataset, embeddings/pesos PanDerm | `dermapixel_v1_aug/` | [Ablación R0-AUG](../ablations/ablacion-r0-augmentation.md) |
 
 ### `retrieval/` — Recuperación visual del prototipo
 | Script | Qué hace | Entradas | Salida | Produce |
@@ -80,8 +81,8 @@ Código de los experimentos del TFG EPS0270, **sanitizado para repositorio públ
 | Script | Qué hace |
 |---|---|
 | `prototype_m4bis_faiss.py` | Módulo M4-bis: recuperación imagen→imagen sobre el archivo en castellano |
-| `prototype_m9_spanderm.py` | Módulo M9: cabeza L2 castellana (PanDerm + LoRA) |
-| `prototype_m10_concepts.py` | Módulo M10: *Seven-Point Checklist* + cabeza de melanoma |
+| `prototype_m9_spanderm.py` | Módulo M9: head L2 castellana (PanDerm + LoRA) |
+| `prototype_m10_concepts.py` | Módulo M10: *Seven-Point Checklist* + head de melanoma |
 | `prototype_m11_ensemble.py` | Módulo M11: ensemble de consenso (banner de varios clasificadores) |
 | `pipeline_remote.py` | Motor de inferencia que integra los módulos M1–M11 |
 | `server_remote.py` | Servidor FastAPI que expone el pipeline (HTTP + *worker* RabbitMQ opcional) |
