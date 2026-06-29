@@ -1,0 +1,418 @@
+{
+  "fuente": "DERMATOSCOPIA-ESTRUCTURAS.xlsx — Dra. R. Taberner (HUSLL)",
+  "descripcion": "Verdad de terreno conceptual dermatoscopica para validar las features del SAE Large.",
+  "alcance": "Solo enfermedades dermatoscopicas (no aplica a diagnosticos clinicos no dermatoscopicos).",
+  "enfermedades": [
+    "NEVUS",
+    "NEVUS ACRAL",
+    "MELANOMA",
+    "LÉNTIGO MALIGNO",
+    "CBC",
+    "BOWEN",
+    "Q. ACTÍNICA",
+    "CEC",
+    "QS",
+    "DERMATOFIBROMA",
+    "ANGIOMA",
+    "ANGIOQUERATOMA",
+    "ESCABIOSIS",
+    "LEISHMANIA",
+    "HIPERPLASIA SEBÁCEA"
+  ],
+  "asimetria": {
+    "anotacion": "si_no"
+  },
+  "colores": {
+    "anotacion": "si_no",
+    "deteccion": "automatica_por_algoritmo",
+    "valores": [
+      "NEGRO",
+      "MARRÓN CLARO",
+      "MARRÓN OSCURO",
+      "BLANCO",
+      "GRIS",
+      "ROJO",
+      "AMARILLO",
+      "NARANJA",
+      "VIOLÁCEO",
+      "AZUL",
+      "POLICROMO"
+    ]
+  },
+  "estructuras": [
+    {
+      "nombre": "RETÍCULO PIGMENTADO",
+      "anotacion": "tipico_atipico",
+      "enfermedades": [
+        "NEVUS",
+        "NEVUS ACRAL",
+        "MELANOMA",
+        "LÉNTIGO MALIGNO",
+        "DERMATOFIBROMA"
+      ]
+    },
+    {
+      "nombre": "GLÓBULOS MARRONES",
+      "anotacion": "tipico_atipico",
+      "enfermedades": [
+        "NEVUS",
+        "NEVUS ACRAL",
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "PATRÓN HOMOGÉNEO AZUL-GRIS",
+      "anotacion": "si_no",
+      "enfermedades": [
+        "NEVUS",
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "PROYECCIONES LINEALES/ PSEUDÓPODOS",
+      "anotacion": "tipico_atipico",
+      "enfermedades": [
+        "NEVUS",
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "MANCHA DE PIGMENTO",
+      "anotacion": "tipico_atipico",
+      "enfermedades": [
+        "NEVUS",
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "VELO BLANCO-AZULADO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "PSEUDORRETÍCULO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "LÉNTIGO MALIGNO",
+        "Q. ACTÍNICA",
+        "QS"
+      ]
+    },
+    {
+      "nombre": "ESTRUCTURAS ROMBOIDALES",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "LÉNTIGO MALIGNO",
+        "Q. ACTÍNICA"
+      ]
+    },
+    {
+      "nombre": "PATRÓN PARALELO AL SURCO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "NEVUS ACRAL"
+      ]
+    },
+    {
+      "nombre": "PATRÓN PARALELO A LA CRESTA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA"
+      ]
+    },
+    {
+      "nombre": "PATRÓN PARALELO EN CELOSÍA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "NEVUS ACRAL"
+      ]
+    },
+    {
+      "nombre": "PATRÓN FIBRILAR",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "NEVUS ACRAL"
+      ]
+    },
+    {
+      "nombre": "QUISTES DE MILLIUM",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "QS"
+      ]
+    },
+    {
+      "nombre": "TAPONES CÓRNEOS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "QS"
+      ]
+    },
+    {
+      "nombre": "ESTRUCTURAS EN HUELLA DACTILAR",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "QS"
+      ]
+    },
+    {
+      "nombre": "BORDE APOLILLADO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "QS"
+      ]
+    },
+    {
+      "nombre": "GRÁNULOS AZUL-GRIS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "LÉNTIGO MALIGNO",
+        "Q. ACTÍNICA",
+        "QS"
+      ]
+    },
+    {
+      "nombre": "VASOS EN HORQUILLA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "QS"
+      ]
+    },
+    {
+      "nombre": "LAGUNAS ROJAS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "ANGIOMA"
+      ]
+    },
+    {
+      "nombre": "LAGUNAS NEGRO-AZULADAS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "ANGIOQUERATOMA"
+      ]
+    },
+    {
+      "nombre": "PARCHE BLANCO CENTRAL",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "DERMATOFIBROMA"
+      ]
+    },
+    {
+      "nombre": "TELANGIECTASIAS ARBORIFORMES",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "ULCERACIÓN",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA",
+        "CBC",
+        "CEC"
+      ]
+    },
+    {
+      "nombre": "CRISÁLIDAS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA",
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "GRANDES NIDOS OVOIDES AZUL-GRIS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "GLÓBULOS AZUL-GRIS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "ESTRUCTURAS EN HOJA DE ARCE",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "ESTRUCTURAS EN RUEDA DE CARRO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "CBC"
+      ]
+    },
+    {
+      "nombre": "HIPERQUERATOSIS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "BOWEN",
+        "Q. ACTÍNICA",
+        "CEC"
+      ]
+    },
+    {
+      "nombre": "VASOS EN CORONA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "BOWEN",
+        "CEC",
+        "HIPERPLASIA SEBÁCEA"
+      ]
+    },
+    {
+      "nombre": "VASOS GLOMERULARES",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "Q. ACTÍNICA"
+      ]
+    },
+    {
+      "nombre": "PATRÓN EN FRESA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "Q. ACTÍNICA"
+      ]
+    },
+    {
+      "nombre": "VASOS LINEALES IRREGULARES",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA",
+        "CEC"
+      ]
+    },
+    {
+      "nombre": "VASOS POLIMORFOS (3 o más estruct. Vasc)",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "MELANOMA",
+        "CEC"
+      ]
+    },
+    {
+      "nombre": "LÁGRIMAS AMARILLAS",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "LEISHMANIA"
+      ]
+    },
+    {
+      "nombre": "PATRÓN EN ESTALLIDO DE ESTRELLAS BLANCO",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "LEISHMANIA"
+      ]
+    },
+    {
+      "nombre": "SIGNO DEL ALA DELTA",
+      "anotacion": "presencia",
+      "enfermedades": [
+        "ESCABIOSIS"
+      ]
+    }
+  ],
+  "por_enfermedad": {
+    "NEVUS": [
+      "RETÍCULO PIGMENTADO",
+      "GLÓBULOS MARRONES",
+      "PATRÓN HOMOGÉNEO AZUL-GRIS",
+      "PROYECCIONES LINEALES/ PSEUDÓPODOS",
+      "MANCHA DE PIGMENTO"
+    ],
+    "NEVUS ACRAL": [
+      "RETÍCULO PIGMENTADO",
+      "GLÓBULOS MARRONES",
+      "PATRÓN PARALELO AL SURCO",
+      "PATRÓN PARALELO EN CELOSÍA",
+      "PATRÓN FIBRILAR"
+    ],
+    "MELANOMA": [
+      "RETÍCULO PIGMENTADO",
+      "GLÓBULOS MARRONES",
+      "PATRÓN HOMOGÉNEO AZUL-GRIS",
+      "PROYECCIONES LINEALES/ PSEUDÓPODOS",
+      "MANCHA DE PIGMENTO",
+      "VELO BLANCO-AZULADO",
+      "PATRÓN PARALELO A LA CRESTA",
+      "ULCERACIÓN",
+      "CRISÁLIDAS",
+      "VASOS LINEALES IRREGULARES",
+      "VASOS POLIMORFOS (3 o más estruct. Vasc)"
+    ],
+    "LÉNTIGO MALIGNO": [
+      "RETÍCULO PIGMENTADO",
+      "PSEUDORRETÍCULO",
+      "ESTRUCTURAS ROMBOIDALES",
+      "GRÁNULOS AZUL-GRIS"
+    ],
+    "CBC": [
+      "TELANGIECTASIAS ARBORIFORMES",
+      "ULCERACIÓN",
+      "CRISÁLIDAS",
+      "GRANDES NIDOS OVOIDES AZUL-GRIS",
+      "GLÓBULOS AZUL-GRIS",
+      "ESTRUCTURAS EN HOJA DE ARCE",
+      "ESTRUCTURAS EN RUEDA DE CARRO"
+    ],
+    "BOWEN": [
+      "HIPERQUERATOSIS",
+      "VASOS EN CORONA"
+    ],
+    "Q. ACTÍNICA": [
+      "PSEUDORRETÍCULO",
+      "ESTRUCTURAS ROMBOIDALES",
+      "GRÁNULOS AZUL-GRIS",
+      "HIPERQUERATOSIS",
+      "VASOS GLOMERULARES",
+      "PATRÓN EN FRESA"
+    ],
+    "CEC": [
+      "ULCERACIÓN",
+      "HIPERQUERATOSIS",
+      "VASOS EN CORONA",
+      "VASOS LINEALES IRREGULARES",
+      "VASOS POLIMORFOS (3 o más estruct. Vasc)"
+    ],
+    "QS": [
+      "PSEUDORRETÍCULO",
+      "QUISTES DE MILLIUM",
+      "TAPONES CÓRNEOS",
+      "ESTRUCTURAS EN HUELLA DACTILAR",
+      "BORDE APOLILLADO",
+      "GRÁNULOS AZUL-GRIS",
+      "VASOS EN HORQUILLA"
+    ],
+    "DERMATOFIBROMA": [
+      "RETÍCULO PIGMENTADO",
+      "PARCHE BLANCO CENTRAL"
+    ],
+    "ANGIOMA": [
+      "LAGUNAS ROJAS"
+    ],
+    "ANGIOQUERATOMA": [
+      "LAGUNAS NEGRO-AZULADAS"
+    ],
+    "ESCABIOSIS": [
+      "SIGNO DEL ALA DELTA"
+    ],
+    "LEISHMANIA": [
+      "LÁGRIMAS AMARILLAS",
+      "PATRÓN EN ESTALLIDO DE ESTRELLAS BLANCO"
+    ],
+    "HIPERPLASIA SEBÁCEA": [
+      "VASOS EN CORONA"
+    ]
+  }
+}
