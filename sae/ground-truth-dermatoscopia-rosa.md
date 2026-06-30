@@ -8,6 +8,12 @@ Esta verdad de terreno aplica **solo a enfermedades dermatoscópicas** (las que 
 
 NEVUS, NEVUS ACRAL, MELANOMA, LÉNTIGO MALIGNO, CBC, BOWEN, Q. ACTÍNICA, CEC, QS, DERMATOFIBROMA, ANGIOMA, ANGIOQUERATOMA, ESCABIOSIS, LEISHMANIA, HIPERPLASIA SEBÁCEA.
 
+## Matriz visual (estructuras × diagnósticos)
+
+![Vocabulario dermatoscópico Dermapixel: matriz de 37 estructuras (filas) × 15 diagnósticos (columnas), coloreada por familia (melanocíticas, queratinocíticas/epiteliales, otras tumorales/vasculares, infecciosas). Cada celda marca qué estructura buscar en cada diagnóstico; «T/A» señala las estructuras con distinción típico/atípico.](fig_matriz_dermatoscopia_rosa.png)
+
+*Las columnas se agrupan por familia diagnóstica; «T/A» marca las estructuras pigmentadas con régimen típico/atípico. El detalle por celda está en las tablas siguientes y en [`dermatoscopia_estructuras_rosa.json`](dermatoscopia_estructuras_rosa.json).*
+
 ## Tres capas de anotación
 
 Cada lesión se describe con tres tipos de atributo, con semántica distinta:
