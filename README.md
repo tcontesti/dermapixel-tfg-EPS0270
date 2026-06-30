@@ -11,7 +11,7 @@ Repositorio reproducible y material complementario del Trabajo de Fin de Grado *
 
 El trabajo aporta tres contribuciones cerradas y reproducibles:
 
-1. **Evaluación comparativa homogénea e independiente** de hasta catorce modelos fundacionales con pesos públicos —con PanDerm (codificador visual) y DermLIP (vision-language) como referencia— sobre un conjunto común de tareas (clasificación, segmentación, recuperación de casos y clasificación *zero-shot* guiada por texto) y de datasets públicos armonizados mediante una ontología clínica de tres niveles (L1/L2/L3). Incluye la auditoría del solapamiento (*leakage*) entre el corpus de preentrenamiento y los conjuntos de evaluación.
+1. **Evaluación comparativa homogénea e independiente** de hasta catorce modelos fundacionales con pesos públicos —con PanDerm (codificador visual) y DermLIP (vision-language) como referencia— sobre un conjunto común de tareas (clasificación, segmentación, recuperación de casos y clasificación *zero-shot* guiada por texto) y de datasets públicos armonizados mediante una [ontología clínica de tres niveles (L1/L2/L3)](ontology/README.md). Incluye la auditoría del solapamiento (*leakage*) entre el corpus de preentrenamiento y los conjuntos de evaluación.
 2. **DermapixelAI 1.0**, un dataset clínico en castellano con texto narrativo asociado a cada caso (1 089 imágenes, 672 casos con imagen), entregado con documentación formal tipo *datasheet* y licencia CC BY-NC-SA 4.0.
 3. **Dermapixel R0**, una adaptación propia que demuestra que un modelo fundacional puede especializarse al castellano con recursos modestos (rama supervisada LoRA L2 desplegada como módulo M9; rama contrastiva SpanDerm-CLIP, estudiada y documentada pero **no** desplegada por no generalizar en uso real).
 
@@ -26,10 +26,12 @@ dermapixel-tfg-EPS0270/
 ├── repro/              Mapa de tareas, recetas de entrenamiento, semillas, normalizaciones y checkpoints
 ├── tables/             Tablas detalladas de resultados, IC bootstrap y calibración de melanoma (HAM10000)
 ├── datasheet/          Datasheet y documento de entrega del dataset DermapixelAI 1.0
+├── ontology/           Ontología clínica jerárquica L1/L2/L3 (Dra. Taberner) + mapeo de datasets
 ├── ablations/          Pipeline y caracterización del dataset, y ablaciones complementarias (incl. rama contrastiva)
 ├── sae/                Sparse Autoencoders y diccionario de conceptos clínicos
 ├── llm/                Comparación extendida de modelos de lenguaje multimodales
 ├── prototype/          Descripción del prototipo DermApIxel (módulos M1–M11)
+├── papers/             Preprints de los modelos de referencia (PanDerm, Derm1M, DermFM-Zero)
 ├── code/               Pipelines experimentales (en organización)
 ├── ai-statement/       Declaración de uso de herramientas de IA (Apéndice B de la memoria)
 ├── LICENSE             CC BY-NC 4.0 (material original del autor)

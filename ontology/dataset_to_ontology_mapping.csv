@@ -1,0 +1,288 @@
+dataset,original_class,count,mapped_level_1,mapped_level_2,mapped_level_3,mapping_confidence,notes
+HAM10000,nv,6705,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,HAM10000 abbrev nv=nevus
+HAM10000,mel,1113,Tumoral,Malignant tumors,Melanoma,high,HAM10000 abbrev mel=melanoma
+HAM10000,bkl,1099,Tumoral,Benign epithelial tumors,Seborrheic keratosis,high,HAM10000 abbrev bkl=benign keratosis-like
+HAM10000,bcc,514,Tumoral,Malignant tumors,Basal cell carcinoma,high,HAM10000 abbrev bcc
+HAM10000,akiec,327,Tumoral,Precancerous tumors,Actinic keratosis,high,HAM10000 abbrev akiec=actinic keratosis/intraepithelial carcinoma
+HAM10000,vasc,142,Tumoral,Vascular tumors,Capillary angioma,high,HAM10000 abbrev vasc=vascular lesion
+HAM10000,df,115,Tumoral,Benign tumors,Dermatofibroma,high,HAM10000 abbrev df=dermatofibroma
+BCN20000,nevus,4206,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,generic nevus
+BCN20000,melanoma,2857,Tumoral,Malignant tumors,Melanoma,exact,
+BCN20000,basal cell carcinoma,2809,Tumoral,Malignant tumors,Basal cell carcinoma,exact,
+BCN20000,seborrheic keratosis,929,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,
+BCN20000,actinic keratosis,737,Tumoral,Precancerous tumors,Actinic keratosis,high,actinic keratosis = AK
+BCN20000,squamous cell carcinoma,431,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,exact,
+BCN20000,solar lentigo,209,Tumoral,Benign epithelial tumors,Solar lentigo,exact,solar lentigo (corregido: era Melasma)
+BCN20000,dermatofibroma,124,Tumoral,Benign tumors,Dermatofibroma,exact,
+BCN20000,vascular lesion,111,Tumoral,Vascular tumors,Capillary angioma,high,generic vascular lesion → angioma
+DDI,melanocytic-nevi,119,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,melanocytic nevi plural
+DDI,seborrheic-keratosis,58,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,
+DDI,verruca-vulgaris,50,Infectious,Viral infections,Common wart,exact,
+DDI,basal-cell-carcinoma,39,Tumoral,Malignant tumors,Basal cell carcinoma,exact,
+DDI,epidermal-cyst,35,Tumoral,Benign epithelial tumors,Epidermal cyst,high,epidermal cyst=epidermoid cyst
+DDI,mycosis-fungoides,32,Tumoral,Hematologic tumors,Mycosis fungoides,exact,
+DDI,squamous-cell-carcinoma-in-situ,26,Tumoral,Malignant tumors,Bowen disease,high,SCC in situ = Bowen's disease
+DDI,dermatofibroma,22,Tumoral,Benign tumors,Dermatofibroma,exact,
+DDI,acrochordon,18,Tumoral,Benign tumors,Skin tag,high,acrochordon=skin tag
+DDI,squamous-cell-carcinoma,17,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,exact,
+DDI,dysplastic-nevus,16,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,exact,
+DDI,pyogenic-granuloma,14,Tumoral,Vascular tumors,Pyogenic granuloma,exact,
+DDI,seborrheic-keratosis-irritated,13,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,
+DDI,neurofibroma,12,Tumoral,Benign mesenchymal tumors,Neurofibroma,exact,
+DDI,angioma,11,Tumoral,Vascular tumors,Capillary angioma,exact,
+DDI,eccrine-poroma,10,Tumoral,Benign epithelial tumors,Poroma,high,eccrine poroma → Poroma
+DDI,squamous-cell-carcinoma-keratoacanthoma,8,Tumoral,Malignant tumors,Keratoacanthoma,high,SCC-keratoacanthoma subtype
+DDI,melanoma,7,Tumoral,Malignant tumors,Melanoma,exact,
+DDI,melanoma-acral-lentiginous,7,Tumoral,Malignant tumors,Melanoma,high,acral lentiginous subtype → melanoma
+DDI,nevus-lipomatosus-superficialis,6,Tumoral,Benign mesenchymal tumors,Lipoma,medium,nevus lipomatosus → Lipoma (closest); rare (<5)
+DDI,molluscum-contagiosum,6,Infectious,Viral infections,Molluscum contagiosum,exact,
+DDI,kaposi-sarcoma,6,Tumoral,Malignant tumors,Kaposi sarcoma,exact,
+DDI,melanoma-in-situ,6,Tumoral,Malignant tumors,Lentigo maligna,high,melanoma in situ → lentigo maligna
+DDI,blue-nevus,6,Tumoral,Benign melanocytic neoplasms,Blue nevus,exact,
+DDI,lipoma,6,Tumoral,Benign mesenchymal tumors,Lipoma,exact,
+DDI,inverted-follicular-keratosis,5,Tumoral,Benign epithelial tumors,Seborrheic keratosis,medium,inverted follicular keratosis → benign keratosis; rare (<5)
+DDI,prurigo-nodularis,5,Inflammatory,Eczema and dermatitis,Prurigo nodularis,exact,rare (<5)
+DDI,metastatic-carcinoma,5,Tumoral,Malignant tumors,Cutaneous metastases,exact,rare (<5)
+DDI,eczema-spongiotic-dermatitis,4,Inflammatory,Eczema and dermatitis,Atopic dermatitis,high,spongiotic dermatitis=eczema; rare (<5)
+DDI,solar-lentigo,4,Tumoral,Benign epithelial tumors,Solar lentigo,exact,solar lentigo (corregido: era Melasma)
+DDI,basal-cell-carcinoma-nodular,4,Tumoral,Malignant tumors,Basal cell carcinoma,high,nodular BCC subtype; rare (<5)
+DDI,actinic-keratosis,4,Tumoral,Precancerous tumors,Actinic keratosis,exact,rare (<5)
+DDI,benign-keratosis,3,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,rare (<5)
+DDI,arteriovenous-hemangioma,3,Tumoral,Vascular tumors,Capillary angioma,high,AV hemangioma → Angioma; rare (<5)
+DDI,hyperpigmentation,3,Inflammatory,Pigmentation disorders,Post-inflammatory hyperpigmentation,exact,rare (<5)
+DDI,abrasions-ulcerations-and-physical-injuries,3,Inflammatory,Exogenous agents,Pressure ulcer,high,physical injuries → wound/abrasion; rare (<5)
+DDI,trichilemmoma,3,Tumoral,Benign epithelial tumors,Seborrheic keratosis,medium,trichilemmoma → benign keratosis (closest); rare (<5)
+DDI,xanthogranuloma,2,Tumoral,Benign tumors,Juvenile xanthogranuloma,high,xanthogranuloma → juvenile xanthogranuloma; rare (<5)
+DDI,fibrous-papule,2,Tumoral,Vascular tumors,Angiofibroma,high,fibrous papule = angiofibroma of face; rare (<5)
+DDI,graft-vs-host-disease,2,Inflammatory,Drug eruptions,Other drug eruptions,medium,GVHD → drug eruption (closest inflammatory); rare (<5)
+DDI,condyloma-accuminatum,2,Infectious,Viral infections,Genital wart,exact,rare (<5)
+DDI,scar,2,Tumoral,Benign tumors,Hypertrophic scar,exact,rare (<5)
+DDI,foreign-body-granuloma,2,Inflammatory,Granulomatous dermatoses,Foreign body granuloma,high,foreign body granuloma; rare (<5)
+DDI,basal-cell-carcinoma-superficial,2,Tumoral,Malignant tumors,Basal cell carcinoma,high,superficial BCC subtype; rare (<5)
+DDI,trichofolliculoma,2,Infectious,Bacterial infections,Bacterial folliculitis,medium,"trichofolliculoma → follicular neoplasm, no exact match; rare (<5)"
+DDI,onychomycosis,2,Infectious,Fungal infections,Tinea unguium,exact,rare (<5)
+DDI,syringocystadenoma-papilliferum,2,Tumoral,Benign epithelial tumors,Syringoma,medium,syringocystadenoma → closest adnexal; rare (<5)
+DDI,acquired-digital-fibrokeratoma,2,Tumoral,Benign epithelial tumors,Acral fibrokeratoma,high,digital fibrokeratoma → digital fibroma; rare (<5)
+DDI,hematoma,1,Inflammatory,Vascular disorders,Ecchymosis,exact,rare (<5)
+DDI,leukemia-cutis,1,Tumoral,Hematologic tumors,Cutaneous B-cell lymphomas,medium,leukemia cutis → hematologic skin (closest); rare (<5)
+DDI,subcutaneous-t-cell-lymphoma,1,Tumoral,Hematologic tumors,Other cutaneous T-cell lymphomas,high,subcut T-cell lymphoma; rare (<5)
+DDI,lichenoid-keratosis,1,Tumoral,Benign epithelial tumors,Seborrheic keratosis,high,lichenoid keratosis=regressed SK; rare (<5)
+DDI,reactive-lymphoid-hyperplasia,1,Tumoral,Hematologic tumors,Cutaneous B-cell lymphomas,medium,pseudolymphoma → B-cell lymphoma (closest); rare (<5)
+DDI,coccidioidomycosis,1,Infectious,Fungal infections,Sporotrichosis,high,coccidioidomycosis=deep fungal; rare (<5)
+DDI,chondroid-syringoma,1,Tumoral,Benign epithelial tumors,Syringoma,medium,chondroid syringoma → syringoma family; rare (<5)
+DDI,sebaceous-carcinoma,1,Tumoral,Benign epithelial tumors,Sebaceous hyperplasia,medium,no exact match; mapped to sebaceous category; rare (<5)
+DDI,cellular-neurothekeoma,1,Tumoral,Benign mesenchymal tumors,Neurofibroma,medium,neural sheath tumor → neurofibroma; rare (<5)
+DDI,tinea-pedis,1,Infectious,Fungal infections,Tinea pedis,exact,rare (<5)
+DDI,clear-cell-acanthoma,1,Tumoral,Benign epithelial tumors,Seborrheic keratosis,medium,clear cell acanthoma → benign keratosis; rare (<5)
+DDI,abscess,1,Infectious,Bacterial infections,Abscess,exact,rare (<5)
+DDI,blastic-plasmacytoid-dendritic-cell-neoplasm,1,Tumoral,Hematologic tumors,Cutaneous B-cell lymphomas,low,BPDCN rare hematologic; no exact match; rare (<5)
+DDI,focal-acral-hyperkeratosis,1,Genodermatosis,Hereditary palmoplantar keratoderma,Hereditary palmoplantar keratoderma,medium,acral hyperkeratosis → keratoderma; rare (<5)
+DDI,pigmented-spindle-cell-nevus-of-reed,1,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,medium,Reed nevus → dysplastic nevus (closest melanocytic); rare (<5)
+DDI,glomangioma,1,Tumoral,Vascular tumors,Capillary angioma,medium,glomus tumor → vascular tumor; rare (<5)
+DDI,dermatomyositis,1,Inflammatory,Systemic and metabolic,Dermatomyositis,high,dermatomyositis → autoimmune dermatitis; rare (<5)
+DDI,keloid,1,Tumoral,Benign tumors,Keloid,exact,rare (<5)
+DDI,nodular-melanoma-(nm),1,Tumoral,Malignant tumors,Melanoma,high,nodular melanoma subtype; rare (<5)
+DDI,wart,1,Infectious,Viral infections,Common wart,high,wart=verruca vulgaris; rare (<5)
+DDI,neuroma,1,Tumoral,Benign mesenchymal tumors,Neurofibroma,medium,neuroma → neurofibroma (closest neural); rare (<5)
+DDI,morphea,1,Inflammatory,Connective tissue,Morphea,exact,rare (<5)
+DDI,epidermal-nevus,1,Tumoral,Benign epithelial tumors,Epidermal nevus,exact,rare (<5)
+DDI,verruciform-xanthoma,1,Tumoral,Benign tumors,Xanthoma,medium,verruciform xanthoma → xanthoma (closest); rare (<5)
+DDI,atypical-spindle-cell-nevus-of-reed,1,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,medium,atypical Reed nevus → dysplastic; rare (<5)
+DDI,folliculitis,1,Infectious,Bacterial infections,Bacterial folliculitis,exact,rare (<5)
+DDI,lymphocytic-infiltrations,1,Tumoral,Hematologic tumors,Pseudolymphoma,high,lymphocytic infiltrate; rare (<5)
+DDI,angioleiomyoma,1,Tumoral,Benign mesenchymal tumors,Lipoma,medium,soft tissue tumor → lipoma (closest benign mesenchymal); rare (<5)
+DDI,acral-melanotic-macule,1,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,acral melanotic macule → mucosal melanotic macule; rare (<5)
+Derm7pt-clin,1.1.3.,399,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.3=Clark/compound nevus
+Derm7pt-clin,3.2.,179,Tumoral,Malignant tumors,Melanoma,high,EDRA 3.2=melanoma
+Derm7pt-clin,1.1.7.,78,Tumoral,Benign melanocytic neoplasms,Blue nevus,high,EDRA 1.1.7=blue nevus
+Derm7pt-clin,3.2.1.,65,Tumoral,Malignant tumors,Melanoma,high,EDRA 3.2.1=melanoma in situ
+Derm7pt-clin,1.1.1.1.,33,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.1.1=dermal nevus
+Derm7pt-clin,1.1.5.,28,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,high,EDRA 1.1.5=Spitz/Reed nevus
+Derm7pt-clin,1.5.,17,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,medium,EDRA 1.5=combined/special nevus
+Derm7pt-clin,1.1.2.,17,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.2=junctional nevus
+Derm7pt-clin,1.1.4.,13,Tumoral,Benign melanocytic neoplasms,Congenital melanocytic nevus,high,EDRA 1.1.4=congenital nevus
+Derm7pt-clin,1.1.6.,6,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,high,EDRA 1.1.6=atypical/dysplastic nevus
+Derm7pt-clin,3.2.3.,2,Tumoral,Malignant tumors,Basal cell carcinoma,high,EDRA 3.2.3=BCC (per Derm7pt protocol)
+Derm7pt-derm,1.1.3.,399,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.3=Clark/compound nevus
+Derm7pt-derm,3.2.,183,Tumoral,Malignant tumors,Melanoma,high,EDRA 3.2=melanoma
+Derm7pt-derm,1.1.7.,78,Tumoral,Benign melanocytic neoplasms,Blue nevus,high,EDRA 1.1.7=blue nevus
+Derm7pt-derm,3.2.1.,65,Tumoral,Malignant tumors,Melanoma,high,EDRA 3.2.1=melanoma in situ
+Derm7pt-derm,1.5.,46,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,medium,EDRA 1.5=combined/special nevus
+Derm7pt-derm,1.1.1.1.,33,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.1.1=dermal nevus
+Derm7pt-derm,1.1.5.,28,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,high,EDRA 1.1.5=Spitz/Reed nevus
+Derm7pt-derm,1.1.2.,17,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,EDRA 1.1.2=junctional nevus
+Derm7pt-derm,1.1.4.,13,Tumoral,Benign melanocytic neoplasms,Congenital melanocytic nevus,high,EDRA 1.1.4=congenital nevus
+Derm7pt-derm,1.1.6.,6,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,high,EDRA 1.1.6=atypical/dysplastic nevus
+Derm7pt-derm,3.2.3.,4,Tumoral,Malignant tumors,Basal cell carcinoma,high,EDRA 3.2.3=BCC (per Derm7pt protocol)
+Dermnet,Psoriasis pictures Lichen Planus and related diseases,1757,Inflammatory,Psoriasis,Plaque psoriasis,medium,broad category; primary=psoriasis
+Dermnet,Seborrheic Keratoses and other Benign Tumors,1714,Tumoral,Benign epithelial tumors,Seborrheic keratosis,medium,broad category; primary=seb keratosis
+Dermnet,Tinea Ringworm Candidiasis and other Fungal Infections,1625,Infectious,Fungal infections,Tinea corporis,medium,broad category; primary=tinea/fungal
+Dermnet,Eczema Photos,1544,Inflammatory,Eczema and dermatitis,Atopic dermatitis,high,eczema category
+Dermnet,Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions,1437,Tumoral,Malignant tumors,Basal cell carcinoma,medium,broad malignant category; mixed AK+BCC+other
+Dermnet,Warts Molluscum and other Viral Infections,1358,Infectious,Viral infections,Common wart,medium,broad viral category; primary=warts
+Dermnet,Nail Fungus and other Nail Disease,1301,Infectious,Fungal infections,Tinea unguium,medium,broad nail category; primary=onychomycosis
+Dermnet,Acne and Rosacea Photos,1152,Inflammatory,Sebaceous glands,Acne,medium,broad category; mixed acne+rosacea
+Dermnet,Systemic Disease,758,Inflammatory,Systemic and metabolic,Dermatomyositis,low,very broad systemic; no direct match
+Dermnet,Light Diseases and Disorders of Pigmentation,711,Inflammatory,Pigmentation disorders,Post-inflammatory hyperpigmentation,medium,broad pigmentation category
+Dermnet,Atopic Dermatitis Photos,612,Inflammatory,Eczema and dermatitis,Atopic dermatitis,high,atopic dermatitis
+Dermnet,Vascular Tumors,603,Tumoral,Vascular tumors,Capillary angioma,high,vascular tumors → angioma
+Dermnet,Melanoma Skin Cancer Nevi and Moles,579,Tumoral,Malignant tumors,Melanoma,medium,broad category; mixed melanoma+nevi
+Dermnet,Bullous Disease Photos,561,Inflammatory,Blistering diseases,Bullous pemphigoid,high,bullous diseases
+Dermnet,Scabies Lyme Disease and other Infestations and Bites,539,Infectious,Infestations and bites,Scabies,medium,broad parasitic category; primary=scabies
+Dermnet,Lupus and other Connective Tissue diseases,525,Inflammatory,Systemic and metabolic,Lupus erythematosus,medium,broad connective tissue; primary=lupus
+Dermnet,Vasculitis Photos,521,Inflammatory,Systemic and metabolic,Vasculitis,medium,broad vasculitis category
+Dermnet,Herpes HPV and other STDs Photos,507,Infectious,Viral infections,Herpes simplex,medium,broad STD/viral; primary=herpes
+Dermnet,Exanthems and Drug Eruptions,505,Inflammatory,Drug eruptions,Other drug eruptions,high,exanthems and drug eruptions
+Dermnet,Cellulitis Impetigo and other Bacterial Infections,361,Infectious,Bacterial infections,Acute cellulitis,medium,broad bacterial; primary=cellulitis
+Dermnet,Poison Ivy Photos and other Contact Dermatitis,325,Inflammatory,Eczema and dermatitis,Allergic contact dermatitis,high,contact dermatitis category
+Dermnet,Hair Loss Photos Alopecia and other Hair Diseases,299,Inflammatory,Hair follicle disorders,Alopecia areata,medium,broad hair loss; primary=alopecia
+Dermnet,Urticaria Hives,265,Inflammatory,Humoral reactivity,Urticaria,high,urticaria/hives
+Fitzpatrick17k,basal cell carcinoma,257,Tumoral,Malignant tumors,Basal cell carcinoma,exact,
+Fitzpatrick17k,lichen planus,230,Inflammatory,Other inflammatory dermatoses,Lichen planus,exact,
+Fitzpatrick17k,squamous cell carcinoma,212,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,exact,
+Fitzpatrick17k,pityriasis rubra pilaris,175,Inflammatory,Other inflammatory dermatoses,Pityriasis rubra pilaris,exact,
+Fitzpatrick17k,scabies,138,Infectious,Infestations and bites,Scabies,exact,
+Fitzpatrick17k,porokeratosis actinic,127,Inflammatory,Acantholytic disorders,Porokeratosis,high,actinic porokeratosis=DSAP
+Fitzpatrick17k,nematode infection,126,Infectious,Parasitic infections,Cutaneous larva migrans,exact,
+Fitzpatrick17k,lupus erythematosus,108,Inflammatory,Systemic and metabolic,Lupus erythematosus,exact,
+Fitzpatrick17k,tungiasis,107,Infectious,Infestations and bites,Tungiasis,exact,
+Fitzpatrick17k,psoriasis,104,Inflammatory,Psoriasis,Plaque psoriasis,exact,
+Fitzpatrick17k,folliculitis,102,Infectious,Bacterial infections,Bacterial folliculitis,exact,
+Fitzpatrick17k,hailey hailey disease,97,Inflammatory,Acantholytic disorders,Hailey-Hailey disease,exact,
+Fitzpatrick17k,pityriasis rosea,95,Inflammatory,Other inflammatory dermatoses,Pityriasis rosea,exact,
+Fitzpatrick17k,neutrophilic dermatoses,90,Inflammatory,Neutrophilic dermatoses,Sweet syndrome,exact,
+Fitzpatrick17k,neurofibromatosis,86,Genodermatosis,Neurofibromatosis type 1,Neurofibromatosis type 1,exact,
+Fitzpatrick17k,melanoma,83,Tumoral,Malignant tumors,Melanoma,high,melanoma
+Fitzpatrick17k,mycosis fungoides,83,Tumoral,Hematologic tumors,Mycosis fungoides,exact,
+Fitzpatrick17k,pediculosis lids,77,Infectious,Infestations and bites,Scabies,medium,pediculosis=parasitic infestation → scabies (closest)
+Fitzpatrick17k,dariers disease,75,Inflammatory,Acantholytic disorders,Darier disease,exact,
+Fitzpatrick17k,papilomatosis confluentes and reticulate,74,Inflammatory,Other inflammatory dermatoses,Confluent and reticulated papillomatosis,exact,
+Fitzpatrick17k,prurigo nodularis,57,Inflammatory,Eczema and dermatitis,Prurigo nodularis,exact,
+Fitzpatrick17k,photodermatoses,53,Inflammatory,Exogenous agents,Photosensitivity,high,photodermatoses → PLE (most common)
+Fitzpatrick17k,seborrheic dermatitis,49,Inflammatory,Other inflammatory dermatoses,Seborrheic dermatitis,exact,
+Fitzpatrick17k,syringoma,48,Tumoral,Benign epithelial tumors,Syringoma,exact,
+Fitzpatrick17k,granuloma annulare,47,Inflammatory,Granulomatous dermatoses,Granuloma annulare,exact,
+Fitzpatrick17k,allergic contact dermatitis,43,Inflammatory,Eczema and dermatitis,Allergic contact dermatitis,exact,
+Fitzpatrick17k,kaposi sarcoma,43,Tumoral,Malignant tumors,Kaposi sarcoma,exact,
+Fitzpatrick17k,vitiligo,43,Inflammatory,Pigmentation disorders,Vitiligo,exact,
+Fitzpatrick17k,myiasis,42,Infectious,Infestations and bites,Arthropod bite,medium,myiasis (fly larvae) → insect bite (closest parasitic)
+Fitzpatrick17k,tuberous sclerosis,41,Genodermatosis,Tuberous sclerosis,Tuberous sclerosis,exact,
+Fitzpatrick17k,ehlers danlos syndrome,41,Genodermatosis,Pseudoxanthoma elasticum,Pseudoxanthoma elasticum,exact,
+Fitzpatrick17k,erythema multiforme,41,Inflammatory,Humoral reactivity,Erythema multiforme,exact,
+Fitzpatrick17k,scleroderma,39,Inflammatory,Connective tissue,Morphea,high,scleroderma localized=morphea
+Fitzpatrick17k,acrodermatitis enteropathica,39,Inflammatory,Eczema and dermatitis,Atopic dermatitis,medium,nutritional dermatitis → eczema (closest)
+Fitzpatrick17k,scleromyxedema,37,Inflammatory,Other inflammatory dermatoses,Cutaneous mucinosis,exact,
+Fitzpatrick17k,urticaria,35,Inflammatory,Humoral reactivity,Urticaria,exact,
+Fitzpatrick17k,sarcoidosis,33,Inflammatory,Systemic and metabolic,Sarcoidosis,exact,
+Fitzpatrick17k,juvenile xanthogranuloma,31,Tumoral,Benign tumors,Juvenile xanthogranuloma,exact,
+Fitzpatrick17k,fixed eruptions,28,Inflammatory,Drug eruptions,Fixed drug eruption,high,fixed eruptions=fixed drug eruption
+Fitzpatrick17k,erythema annulare centrifigum,27,Inflammatory,Systemic and metabolic,Erythema annulare centrifugum,exact,spelling variant
+Fitzpatrick17k,mucinosis,27,Inflammatory,Other inflammatory dermatoses,Cutaneous mucinosis,exact,
+Fitzpatrick17k,granuloma pyogenic,26,Tumoral,Vascular tumors,Pyogenic granuloma,exact,word order variant
+Fitzpatrick17k,lichen amyloidosis,26,Inflammatory,Systemic and metabolic,Amyloidosis,high,lichen amyloidosis → amyloidosis
+Fitzpatrick17k,acne,24,Inflammatory,Sebaceous glands,Acne,high,acne → acne vulgaris
+Fitzpatrick17k,actinic keratosis,24,Tumoral,Precancerous tumors,Actinic keratosis,exact,
+Fitzpatrick17k,keloid,23,Tumoral,Benign tumors,Keloid,exact,
+Fitzpatrick17k,acanthosis nigricans,22,Inflammatory,Systemic and metabolic,Acanthosis nigricans,exact,
+Fitzpatrick17k,neurotic excoriations,21,Inflammatory,Exogenous agents,Dermatitis artefacta,high,neurotic excoriations → factitial
+Fitzpatrick17k,necrobiosis lipoidica,21,Inflammatory,Systemic and metabolic,Necrobiosis lipoidica,exact,
+Fitzpatrick17k,cheilitis,20,Infectious,Fungal infections,Angular cheilitis,exact,
+Fitzpatrick17k,pityriasis lichenoides chronica,20,Inflammatory,Other inflammatory dermatoses,Pityriasis lichenoides,exact,
+Fitzpatrick17k,fordyce spots,20,Tumoral,Benign epithelial tumors,Sebaceous hyperplasia,high,Fordyce spots=ectopic sebaceous glands
+Fitzpatrick17k,behcets disease,20,Inflammatory,Systemic and metabolic,Vasculitis,exact,
+Fitzpatrick17k,erythema elevatum diutinum,18,Inflammatory,Neutrophilic dermatoses,Sweet syndrome,exact,
+Fitzpatrick17k,calcinosis cutis,17,Inflammatory,Systemic and metabolic,Calcinosis cutis,exact,
+Fitzpatrick17k,pilar cyst,16,Tumoral,Benign epithelial tumors,Trichilemmal cyst,exact,
+Fitzpatrick17k,dermatomyositis,15,Inflammatory,Systemic and metabolic,Dermatomyositis,high,dermatomyositis → autoimmune dermatitis
+Fitzpatrick17k,naevus comedonicus,15,Tumoral,Benign epithelial tumors,Comedo nevus,exact,
+Fitzpatrick17k,lichen simplex,15,Inflammatory,Eczema and dermatitis,Lichen simplex chronicus,high,lichen simplex=lichen simplex chronicus
+Fitzpatrick17k,hidradenitis,14,Inflammatory,Eccrine apocrine glands,Hidradenitis suppurativa,high,hidradenitis → hidradenitis suppurativa
+Fitzpatrick17k,porphyria,14,Inflammatory,Systemic and metabolic,Porphyria,exact,
+Fitzpatrick17k,langerhans cell histiocytosis,14,Tumoral,Hematologic tumors,Langerhans cell histiocytosis,exact,
+Fitzpatrick17k,ichthyosis vulgaris,13,Inflammatory,Keratinization disorders,Ichthyosis,high,ichthyosis vulgaris → ichthyosis
+Fitzpatrick17k,telangiectases,13,Tumoral,Vascular tumors,Telangiectasia,high,telangiectases → telangiectasia
+Fitzpatrick17k,rhinophyma,12,Inflammatory,Sebaceous glands,Rosacea,exact,
+Fitzpatrick17k,keratosis pilaris,12,Inflammatory,Eczema and dermatitis,Keratosis pilaris,exact,
+Fitzpatrick17k,aplasia cutis,12,Tumoral,Benign tumors,Hypertrophic scar,medium,aplasia cutis → scar (closest descriptive)
+Fitzpatrick17k,porokeratosis of mibelli,11,Inflammatory,Acantholytic disorders,Porokeratosis,exact,
+Fitzpatrick17k,factitial dermatitis,11,Inflammatory,Exogenous agents,Dermatitis artefacta,exact,
+Fitzpatrick17k,mucous cyst,10,Tumoral,Benign tumors,Mucoid cyst,high,mucous cyst=myxoid cyst=digital mucous cyst
+Fitzpatrick17k,milia,10,Inflammatory,Sebaceous glands,Neonatal milia,exact,
+Fitzpatrick17k,xeroderma pigmentosum,10,Genodermatosis,Epidermal differentiation disorders,Netherton syndrome,exact,
+Fitzpatrick17k,lymphangioma,10,Tumoral,Vascular malformations,Lymphatic malformation,exact,
+Fitzpatrick17k,erythema nodosum,9,Inflammatory,Subcutaneous tissue,Erythema nodosum,exact,
+Fitzpatrick17k,dermatofibroma,8,Tumoral,Benign tumors,Dermatofibroma,exact,
+Fitzpatrick17k,pilomatricoma,6,Tumoral,Benign epithelial tumors,Epidermal cyst,medium,pilomatricoma → epidermoid cyst (closest adnexal); rare (<5)
+Fitzpatrick17k,dyshidrotic eczema,6,Inflammatory,Eczema and dermatitis,Dyshidrotic eczema,high,dyshidrotic=dyshidrosiform; rare (<5)
+Fitzpatrick17k,tick bite,5,Infectious,Infestations and bites,Tick bite,exact,rare (<5)
+Fitzpatrick17k,lupus subacute,5,Inflammatory,Systemic and metabolic,Lupus erythematosus,high,subacute lupus → lupus erythematosus; rare (<5)
+Fitzpatrick17k,drug induced pigmentary changes,5,Inflammatory,Pigmentation disorders,Post-inflammatory hyperpigmentation,exact,rare (<5)
+Fitzpatrick17k,urticaria pigmentosa,4,Tumoral,Hematologic tumors,Mastocytosis,exact,rare (<5)
+Fitzpatrick17k,stasis edema,4,Inflammatory,Vascular disorders,Lymphedema,exact,rare (<5)
+Fitzpatrick17k,striae,3,Inflammatory,Atrophic disorders,Striae,exact,rare (<5)
+Fitzpatrick17k,rosacea,3,Inflammatory,Sebaceous glands,Rosacea,exact,rare (<5)
+Fitzpatrick17k,eczema,2,Inflammatory,Eczema and dermatitis,Atopic dermatitis,exact,rare (<5)
+Fitzpatrick17k,epidermal nevus,2,Tumoral,Benign epithelial tumors,Epidermal nevus,exact,rare (<5)
+Fitzpatrick17k,congenital nevus,2,Tumoral,Benign melanocytic neoplasms,Congenital melanocytic nevus,exact,rare (<5)
+Fitzpatrick17k,paronychia,2,Infectious,Bacterial infections,Bacterial paronychia,high,paronychia → bacterial paronychia; rare (<5)
+Fitzpatrick17k,perioral dermatitis,1,Inflammatory,Sebaceous glands,Perioral dermatitis,exact,rare (<5)
+Fitzpatrick17k,lyme disease,1,Infectious,Bacterial infections,Erythema migrans,exact,rare (<5)
+HIBA,nevus,608,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,generic nevus
+HIBA,basal cell carcinoma,344,Tumoral,Malignant tumors,Basal cell carcinoma,exact,
+HIBA,melanoma,261,Tumoral,Malignant tumors,Melanoma,exact,
+HIBA,squamous cell carcinoma,159,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,exact,
+HIBA,seborrheic keratosis,68,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,
+HIBA,actinic keratosis,63,Tumoral,Precancerous tumors,Actinic keratosis,high,AK
+HIBA,dermatofibroma,61,Tumoral,Benign tumors,Dermatofibroma,exact,
+HIBA,vascular lesion,51,Tumoral,Vascular tumors,Capillary angioma,high,generic vascular → angioma
+HIBA,solar lentigo,18,Tumoral,Benign epithelial tumors,Solar lentigo,exact,solar lentigo (corregido: era Melasma)
+HIBA,lichenoid keratosis,2,Tumoral,Benign epithelial tumors,Seborrheic keratosis,high,lichenoid keratosis=regressed SK; rare (<5)
+MSKCC,nevus,3510,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,generic nevus
+MSKCC,melanoma,1598,Tumoral,Malignant tumors,Melanoma,exact,
+MSKCC,basal cell carcinoma,1030,Tumoral,Malignant tumors,Basal cell carcinoma,exact,
+MSKCC,seborrheic keratosis,534,Tumoral,Benign epithelial tumors,Seborrheic keratosis,exact,
+MSKCC,squamous cell carcinoma,510,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,exact,
+MSKCC,actinic keratosis,321,Tumoral,Precancerous tumors,Actinic keratosis,high,AK
+MSKCC,acrochordon,296,Tumoral,Benign tumors,Skin tag,high,acrochordon=skin tag
+MSKCC,lichenoid keratosis,214,Tumoral,Benign epithelial tumors,Seborrheic keratosis,high,lichenoid keratosis=regressed SK
+MSKCC,solar lentigo,163,Tumoral,Benign epithelial tumors,Solar lentigo,exact,solar lentigo (corregido: era Melasma)
+MSKCC,lentigo NOS,139,Tumoral,Benign epithelial tumors,Solar lentigo,high,lentigo NOS (corregido: era Melasma)
+MSKCC,verruca,104,Infectious,Viral infections,Common wart,high,verruca → verruca vulgaris
+MSKCC,angioma,63,Tumoral,Vascular tumors,Capillary angioma,exact,
+MSKCC,dermatofibroma,55,Tumoral,Benign tumors,Dermatofibroma,exact,
+MSKCC,lentigo simplex,39,Tumoral,Benign epithelial tumors,Solar lentigo,high,lentigo simplex (corregido: era Melasma)
+MSKCC,melanoma metastasis,35,Tumoral,Malignant tumors,Cutaneous metastases,high,melanoma metastasis → metastatic carcinoma
+MSKCC,other,18,,,,exclude,heterogeneous 'other' category; not mappable
+MSKCC,scar,15,Tumoral,Benign tumors,Hypertrophic scar,exact,
+MSKCC,neurofibroma,14,Tumoral,Benign mesenchymal tumors,Neurofibroma,exact,
+MSKCC,angiokeratoma,12,Tumoral,Vascular tumors,Angiokeratoma,exact,
+MSKCC,atypical melanocytic proliferation,9,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,medium,atypical melanocytic → dysplastic nevus
+MSKCC,clear cell acanthoma,5,Tumoral,Benign epithelial tumors,Seborrheic keratosis,medium,clear cell acanthoma → benign keratosis; rare (<5)
+MSKCC,sebaceous hyperplasia,4,Tumoral,Benign epithelial tumors,Sebaceous hyperplasia,exact,rare (<5)
+MSKCC,pyogenic granuloma,2,Tumoral,Vascular tumors,Pyogenic granuloma,exact,rare (<5)
+MSKCC,angiofibroma or fibrous papule,2,Tumoral,Vascular tumors,Angiofibroma,high,angiofibroma/fibrous papule; rare (<5)
+MSKCC,AIMP,1,Tumoral,Benign melanocytic neoplasms,Dysplastic nevus,medium,AIMP=atypical intraepidermal melanocytic proliferation; rare (<5)
+MSKCC,nevus spilus,1,Tumoral,Benign melanocytic neoplasms,Nevus spilus,exact,rare (<5)
+MSKCC,sebaceous adenoma,1,Tumoral,Benign epithelial tumors,Sebaceous hyperplasia,medium,sebaceous adenoma → sebaceous hyperplasia; rare (<5)
+PAD-UFES,BCC,845,Tumoral,Malignant tumors,Basal cell carcinoma,high,PAD-UFES abbrev
+PAD-UFES,ACK,730,Tumoral,Precancerous tumors,Actinic keratosis,high,PAD-UFES abbrev ACK=actinic keratosis
+PAD-UFES,NEV,244,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,PAD-UFES abbrev
+PAD-UFES,SEK,235,Tumoral,Benign epithelial tumors,Seborrheic keratosis,high,PAD-UFES abbrev
+PAD-UFES,SCC,192,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,high,PAD-UFES abbrev
+PAD-UFES,MEL,52,Tumoral,Malignant tumors,Melanoma,high,PAD-UFES abbrev
+PATCH16,nontumor_skin_dermis_dermis,6732,,,,exclude,normal dermis tissue; no diagnosis
+PATCH16,nontumor_skin_subcutis_subcutis,4683,,,,exclude,normal subcutis tissue; no diagnosis
+PATCH16,tumor_skin_epithelial_sqcc,4389,Tumoral,Malignant tumors,Invasive squamous cell carcinoma,high,histopath SCC
+PATCH16,tumor_skin_melanoma_melanoma,3898,Tumoral,Malignant tumors,Melanoma,high,histopath melanoma
+PATCH16,nontumor_skin_epidermis_epidermis,3699,,,,exclude,normal epidermis tissue; no diagnosis
+PATCH16,nontumor_skin_sebaceousglands_sebaceousglands,3639,,,,exclude,normal sebaceous glands; no diagnosis
+PATCH16,nontumor_skin_chondraltissue_chondraltissue,2735,,,,exclude,normal chondral tissue; no diagnosis
+PATCH16,tumor_skin_naevus_naevus,2706,Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus,high,histopath naevus
+PATCH16,tumor_skin_epithelial_bcc,2004,Tumoral,Malignant tumors,Basal cell carcinoma,high,histopath BCC
+PATCH16,nontumor_skin_muscle_skeletal,1573,,,,exclude,normal muscle tissue; no diagnosis
+PATCH16,nontumor_skin_necrosis_necrosis,1392,,,,exclude,necrosis (non-specific); no diagnosis
+PATCH16,nontumor_skin_sweatglands_sweatglands,1038,,,,exclude,normal sweat glands; no diagnosis
+PATCH16,nontumor_skin_nerves_nerves,683,,,,exclude,normal nerve tissue; no diagnosis
+PATCH16,nontumor_skin_hairfollicle_hairfollicle,575,,,,exclude,normal hair follicle; no diagnosis
+PATCH16,nontumor_skin_vessel_vessel,575,,,,exclude,normal vessel tissue; no diagnosis
+PATCH16,nontumor_skin_elastosis_elastosis,72,Inflammatory,Exogenous agents,Photosensitivity,medium,elastosis → solar elastosis

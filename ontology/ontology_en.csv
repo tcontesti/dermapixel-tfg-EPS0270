@@ -1,0 +1,373 @@
+level_1,level_2,level_3_diagnosis
+Infectious,Bacterial infections,Impetigo
+Infectious,Bacterial infections,Bacterial superinfection
+Infectious,Bacterial infections,Bacterial folliculitis
+Infectious,Bacterial infections,Furuncle
+Infectious,Bacterial infections,Carbuncle
+Infectious,Bacterial infections,Sycosis barbae
+Infectious,Bacterial infections,Abscess
+Infectious,Bacterial infections,Lymphangitis
+Infectious,Bacterial infections,Bacterial paronychia
+Infectious,Bacterial infections,Perianal streptococcal cellulitis
+Infectious,Bacterial infections,Pitted keratolysis
+Infectious,Bacterial infections,Erythrasma
+Infectious,Bacterial infections,Ecthyma gangrenosum
+Infectious,Bacterial infections,Pseudomonas nail infection
+Infectious,Bacterial infections,Trichomycosis axillaris
+Infectious,Bacterial infections,Staphylococcal scalded skin syndrome
+Infectious,Bacterial infections,Scarlet fever
+Infectious,Bacterial infections,Erysipelas
+Infectious,Bacterial infections,Acute cellulitis
+Infectious,Bacterial infections,Anthrax
+Infectious,Bacterial infections,Erysipeloid
+Infectious,Bacterial infections,Tuberculosis
+Infectious,Bacterial infections,Atypical mycobacteria
+Infectious,Bacterial infections,Buruli ulcer
+Infectious,Bacterial infections,Nocardiosis
+Infectious,Bacterial infections,Leprosy
+Infectious,Bacterial infections,Erythema migrans
+Infectious,Bacterial infections,Mediterranean spotted fever
+Infectious,Bacterial infections,Other rickettsioses
+Infectious,Bacterial infections,Gonococcal urethritis
+Infectious,Bacterial infections,Syphilis
+Infectious,Bacterial infections,Lymphogranuloma venereum
+Infectious,Bacterial infections,Chancroid
+Infectious,Bacterial infections,Granuloma inguinale
+Infectious,Viral infections,Measles
+Infectious,Viral infections,Chickenpox
+Infectious,Viral infections,Rubella
+Infectious,Viral infections,Erythema infectiosum
+Infectious,Viral infections,Infectious mononucleosis
+Infectious,Viral infections,Gianotti-Crosti syndrome
+Infectious,Viral infections,Roseola infantum
+Infectious,Viral infections,Hand-foot-mouth disease
+Infectious,Viral infections,Unilateral laterothoracic exanthem
+Infectious,Viral infections,Papular-purpuric gloves and socks syndrome
+Infectious,Viral infections,Herpes simplex
+Infectious,Viral infections,Oral-labial herpes simplex
+Infectious,Viral infections,Genital herpes simplex
+Infectious,Viral infections,Herpetic whitlow
+Infectious,Viral infections,Herpes zoster
+Infectious,Viral infections,Molluscum contagiosum
+Infectious,Viral infections,Mpox
+Infectious,Viral infections,Milker's nodule
+Infectious,Viral infections,Orf
+Infectious,Viral infections,Common wart
+Infectious,Viral infections,Genital wart
+Infectious,Viral infections,Oral mucosal wart
+Infectious,Viral infections,Flat wart
+Infectious,Viral infections,Plantar wart
+Infectious,Viral infections,Epidermodysplasia verruciformis
+Infectious,Fungal infections,Pityriasis versicolor
+Infectious,Fungal infections,Malassezia folliculitis
+Infectious,Fungal infections,Candidal intertrigo
+Infectious,Fungal infections,Diaper candidiasis
+Infectious,Fungal infections,Oral thrush
+Infectious,Fungal infections,Candidal balanitis
+Infectious,Fungal infections,Vaginal candidiasis
+Infectious,Fungal infections,Candidal onychomycosis
+Infectious,Fungal infections,Angular cheilitis
+Infectious,Fungal infections,Tinea corporis
+Infectious,Fungal infections,Tinea manuum
+Infectious,Fungal infections,Tinea faciei
+Infectious,Fungal infections,Tinea pedis
+Infectious,Fungal infections,Tinea capitis
+Infectious,Fungal infections,Tinea cruris
+Infectious,Fungal infections,Majocchi granuloma
+Infectious,Fungal infections,Tinea unguium
+Infectious,Fungal infections,Tinea nigra
+Infectious,Fungal infections,Sporotrichosis
+Infectious,Fungal infections,Mycetoma
+Infectious,Parasitic infections,Cutaneous leishmaniasis
+Infectious,Parasitic infections,Larva currens
+Infectious,Parasitic infections,Cutaneous larva migrans
+Infectious,Infestations and bites,Scabies
+Infectious,Infestations and bites,Pediculosis capitis
+Infectious,Infestations and bites,Pediculosis pubis
+Infectious,Infestations and bites,Pediculosis corporis
+Infectious,Infestations and bites,Arthropod bite
+Infectious,Infestations and bites,Spider bite
+Infectious,Infestations and bites,Marine animal sting
+Infectious,Infestations and bites,Tungiasis
+Infectious,Infestations and bites,Myiasis
+Infectious,Infestations and bites,Tick bite
+Inflammatory,Eczema and dermatitis,Allergic contact dermatitis
+Inflammatory,Eczema and dermatitis,Irritant contact dermatitis
+Inflammatory,Eczema and dermatitis,Atopic dermatitis
+Inflammatory,Eczema and dermatitis,Pityriasis alba
+Inflammatory,Eczema and dermatitis,Keratosis pilaris
+Inflammatory,Eczema and dermatitis,Nummular eczema
+Inflammatory,Eczema and dermatitis,Lichen simplex chronicus
+Inflammatory,Eczema and dermatitis,Asteatotic eczema
+Inflammatory,Eczema and dermatitis,Notalgia paresthetica
+Inflammatory,Eczema and dermatitis,Prurigo nodularis
+Inflammatory,Eczema and dermatitis,Dyshidrotic eczema
+Inflammatory,Eczema and dermatitis,Id reaction
+Inflammatory,Eczema and dermatitis,Pruritic papular eruption of pregnancy
+Inflammatory,Psoriasis,Plaque psoriasis
+Inflammatory,Psoriasis,Localized pustular psoriasis
+Inflammatory,Psoriasis,Generalized pustular psoriasis
+Inflammatory,Psoriasis,Palmoplantar psoriasis
+Inflammatory,Psoriasis,Guttate psoriasis
+Inflammatory,Psoriasis,Inverse psoriasis
+Inflammatory,Psoriasis,Nail psoriasis
+Inflammatory,Psoriasis,Scalp psoriasis
+Inflammatory,Psoriasis,Psoriatic erythroderma
+Inflammatory,Other inflammatory dermatoses,Aphthae
+Inflammatory,Other inflammatory dermatoses,Geographic tongue
+Inflammatory,Other inflammatory dermatoses,Seborrheic dermatitis
+Inflammatory,Other inflammatory dermatoses,Lichen planus
+Inflammatory,Other inflammatory dermatoses,Lichen striatus
+Inflammatory,Other inflammatory dermatoses,Lichen nitidus
+Inflammatory,Other inflammatory dermatoses,Pityriasis rubra pilaris
+Inflammatory,Other inflammatory dermatoses,Parapsoriasis
+Inflammatory,Other inflammatory dermatoses,Confluent and reticulated papillomatosis
+Inflammatory,Other inflammatory dermatoses,Pityriasis lichenoides
+Inflammatory,Other inflammatory dermatoses,Perforating dermatoses
+Inflammatory,Other inflammatory dermatoses,Pilonidal sinus
+Inflammatory,Other inflammatory dermatoses,Flegel disease
+Inflammatory,Other inflammatory dermatoses,Gingival hyperplasia
+Inflammatory,Other inflammatory dermatoses,Cutaneous mucinosis
+Inflammatory,Other inflammatory dermatoses,Pityriasis rosea
+Inflammatory,Neutrophilic dermatoses,Sweet syndrome
+Inflammatory,Neutrophilic dermatoses,Pyoderma gangrenosum
+Inflammatory,Neutrophilic dermatoses,Granuloma faciale
+Inflammatory,Neutrophilic dermatoses,Subcorneal pustular dermatosis
+Inflammatory,Neutrophilic dermatoses,Neonatal pustular melanosis
+Inflammatory,Eosinophilic dermatoses,Wells syndrome
+Inflammatory,Eosinophilic dermatoses,Eosinophilic folliculitis
+Inflammatory,Eosinophilic dermatoses,Eosinophilic ulcer of oral mucosa
+Inflammatory,Eosinophilic dermatoses,Erosive pustular dermatosis of the scalp
+Inflammatory,Humoral reactivity,Urticaria
+Inflammatory,Humoral reactivity,Dermographism
+Inflammatory,Humoral reactivity,Angioedema
+Inflammatory,Humoral reactivity,Erythema multiforme
+Inflammatory,Drug eruptions,Toxic epidermal necrolysis
+Inflammatory,Drug eruptions,Stevens-Johnson syndrome
+Inflammatory,Drug eruptions,Morbilliform drug eruption
+Inflammatory,Drug eruptions,Acute generalized exanthematous pustulosis
+Inflammatory,Drug eruptions,Fixed drug eruption
+Inflammatory,Drug eruptions,Flagellate dermatitis
+Inflammatory,Drug eruptions,Drug-induced skin necrosis
+Inflammatory,Drug eruptions,Photo-induced drug eruption
+Inflammatory,Drug eruptions,Lichenoid drug eruption
+Inflammatory,Drug eruptions,Other drug eruptions
+Inflammatory,Granulomatous dermatoses,Granuloma annulare
+Inflammatory,Granulomatous dermatoses,Foreign body granuloma
+Inflammatory,Granulomatous dermatoses,Idiopathic facial aseptic granuloma
+Inflammatory,Systemic and metabolic,Lupus erythematosus
+Inflammatory,Systemic and metabolic,Erythema annulare centrifugum
+Inflammatory,Systemic and metabolic,Vasculitis
+Inflammatory,Systemic and metabolic,Calciphylaxis
+Inflammatory,Systemic and metabolic,Gouty tophi
+Inflammatory,Systemic and metabolic,Atrophic glossitis
+Inflammatory,Systemic and metabolic,Acanthosis nigricans
+Inflammatory,Systemic and metabolic,Porphyria
+Inflammatory,Systemic and metabolic,Carcinoid syndrome
+Inflammatory,Systemic and metabolic,Xanthomatosis
+Inflammatory,Systemic and metabolic,Necrobiosis lipoidica
+Inflammatory,Systemic and metabolic,Amyloidosis
+Inflammatory,Systemic and metabolic,Pellagra
+Inflammatory,Systemic and metabolic,Scurvy
+Inflammatory,Systemic and metabolic,Calcinosis cutis
+Inflammatory,Systemic and metabolic,Dermatomyositis
+Inflammatory,Systemic and metabolic,Still disease
+Inflammatory,Systemic and metabolic,Rheumatoid nodules
+Inflammatory,Systemic and metabolic,Sarcoidosis
+Inflammatory,Systemic and metabolic,Diabetic foot
+Inflammatory,Systemic and metabolic,Spiny keratoderma
+Inflammatory,Systemic and metabolic,Yellow nail syndrome
+Inflammatory,Vascular disorders,Senile purpura
+Inflammatory,Vascular disorders,Pigmented purpuric dermatoses
+Inflammatory,Vascular disorders,Collagen vasculopathy
+Inflammatory,Vascular disorders,Ecchymosis
+Inflammatory,Vascular disorders,Raynaud syndrome
+Inflammatory,Vascular disorders,Livedo reticularis
+Inflammatory,Vascular disorders,Venous ulcer
+Inflammatory,Vascular disorders,Lymphedema
+Inflammatory,Vascular disorders,Stasis dermatitis
+Inflammatory,Vascular disorders,Thromboangiitis obliterans
+Inflammatory,Blistering diseases,Pemphigus
+Inflammatory,Blistering diseases,Bullous pemphigoid
+Inflammatory,Blistering diseases,Chronic bullous disease of childhood
+Inflammatory,Blistering diseases,Pemphigoid gestationis
+Inflammatory,Blistering diseases,Epidermolysis bullosa acquisita
+Inflammatory,Blistering diseases,Dermatitis herpetiformis
+Inflammatory,Blistering diseases,Linear IgA bullous dermatosis
+Inflammatory,Blistering diseases,Epidermolysis bullosa
+Inflammatory,Connective tissue,Morphea
+Inflammatory,Connective tissue,Scleredema
+Inflammatory,Connective tissue,Scleroderma
+Inflammatory,Connective tissue,Lichen sclerosus
+Inflammatory,Connective tissue,Cutis verticis gyrata
+Inflammatory,Atrophic disorders,Anetoderma
+Inflammatory,Atrophic disorders,Striae
+Inflammatory,Atrophic disorders,Aplasia cutis
+Inflammatory,Pigmentation disorders,Vitiligo
+Inflammatory,Pigmentation disorders,Albinism
+Inflammatory,Pigmentation disorders,Idiopathic guttate hypomelanosis
+Inflammatory,Pigmentation disorders,Progressive macular hypomelanosis
+Inflammatory,Pigmentation disorders,Nevus anemicus
+Inflammatory,Pigmentation disorders,Nevus achromicus
+Inflammatory,Pigmentation disorders,Melasma
+Inflammatory,Pigmentation disorders,Post-inflammatory hyperpigmentation
+Inflammatory,Pigmentation disorders,Post-inflammatory hypopigmentation
+Inflammatory,Pigmentation disorders,Erythema dyschromicum perstans
+Inflammatory,Pigmentation disorders,Mongolian spot
+Inflammatory,Pigmentation disorders,Nevus of Ota
+Inflammatory,Pigmentation disorders,Nevus of Ito
+Inflammatory,Pigmentation disorders,Cafe-au-lait macule
+Inflammatory,Sebaceous glands,Acne
+Inflammatory,Sebaceous glands,Rosacea
+Inflammatory,Sebaceous glands,Perioral dermatitis
+Inflammatory,Sebaceous glands,Neonatal milia
+Inflammatory,Eccrine apocrine glands,Hyperhidrosis
+Inflammatory,Eccrine apocrine glands,Miliaria
+Inflammatory,Eccrine apocrine glands,Fox-Fordyce disease
+Inflammatory,Eccrine apocrine glands,Hidradenitis suppurativa
+Inflammatory,Eccrine apocrine glands,Palmoplantar eccrine hidradenitis
+Inflammatory,Eccrine apocrine glands,Aquagenic acrokeratoderma
+Inflammatory,Hair follicle disorders,Alopecia areata
+Inflammatory,Hair follicle disorders,Androgenetic alopecia
+Inflammatory,Hair follicle disorders,Other non-scarring alopecias
+Inflammatory,Hair follicle disorders,Hereditary hair shaft dysplasias
+Inflammatory,Hair follicle disorders,Scarring alopecias
+Inflammatory,Hair follicle disorders,Trichotillomania
+Inflammatory,Hair follicle disorders,Hirsutism
+Inflammatory,Hair follicle disorders,Hypertrichosis
+Inflammatory,Exogenous agents,Sunburn
+Inflammatory,Exogenous agents,Phytophotodermatitis
+Inflammatory,Exogenous agents,Photosensitivity
+Inflammatory,Exogenous agents,Radiation dermatitis
+Inflammatory,Exogenous agents,Pernio
+Inflammatory,Exogenous agents,Erythema ab igne
+Inflammatory,Exogenous agents,Reactive hyperkeratosis
+Inflammatory,Exogenous agents,Black hairy tongue
+Inflammatory,Exogenous agents,Pressure ulcer
+Inflammatory,Exogenous agents,Poikiloderma
+Inflammatory,Exogenous agents,Thermal burn
+Inflammatory,Exogenous agents,Dermatitis neglecta
+Inflammatory,Exogenous agents,Exogenous pigmentation
+Inflammatory,Exogenous agents,Dermatitis artefacta
+Inflammatory,Exogenous agents,Onychodystrophy
+Inflammatory,Subcutaneous tissue,Erythema nodosum
+Inflammatory,Subcutaneous tissue,Erythema induratum of Bazin
+Inflammatory,Subcutaneous tissue,Lipodermatosclerosis
+Inflammatory,Subcutaneous tissue,Subcutaneous fat necrosis of newborn
+Inflammatory,Subcutaneous tissue,Lipodystrophy
+Inflammatory,Subcutaneous tissue,Other panniculitis
+Inflammatory,Acantholytic disorders,Darier disease
+Inflammatory,Acantholytic disorders,Grover disease
+Inflammatory,Acantholytic disorders,Hailey-Hailey disease
+Inflammatory,Acantholytic disorders,Porokeratosis
+Inflammatory,Paraneoplastic syndromes,Bazex syndrome
+Inflammatory,Paraneoplastic syndromes,Erythema gyratum repens
+Inflammatory,Paraneoplastic syndromes,Hypertrichosis lanuginosa
+Inflammatory,Keratinization disorders,Ichthyosis
+Tumoral,Precancerous tumors,Actinic keratosis
+Tumoral,Precancerous tumors,Actinic cheilitis
+Tumoral,Precancerous tumors,Leukoplakia
+Tumoral,Malignant tumors,Basal cell carcinoma
+Tumoral,Malignant tumors,Invasive squamous cell carcinoma
+Tumoral,Malignant tumors,Bowen disease
+Tumoral,Malignant tumors,Erythroplasia of Queyrat
+Tumoral,Malignant tumors,Keratoacanthoma
+Tumoral,Malignant tumors,Extramammary Paget disease
+Tumoral,Malignant tumors,Porocarcinoma
+Tumoral,Malignant tumors,Sebaceous carcinoma
+Tumoral,Malignant tumors,Microcystic adnexal carcinoma
+Tumoral,Malignant tumors,Merkel cell carcinoma
+Tumoral,Malignant tumors,Lentigo maligna
+Tumoral,Malignant tumors,Melanoma
+Tumoral,Malignant tumors,Dermatofibrosarcoma protuberans
+Tumoral,Malignant tumors,Kaposi sarcoma
+Tumoral,Malignant tumors,Angiosarcoma
+Tumoral,Malignant tumors,Atypical fibroxanthoma
+Tumoral,Malignant tumors,Pleomorphic sarcoma
+Tumoral,Malignant tumors,Cutaneous metastases
+Tumoral,Hematologic tumors,Mycosis fungoides
+Tumoral,Hematologic tumors,Lymphomatoid papulosis
+Tumoral,Hematologic tumors,Angiolymphoid hyperplasia with eosinophilia
+Tumoral,Hematologic tumors,Other cutaneous T-cell lymphomas
+Tumoral,Hematologic tumors,Sezary syndrome
+Tumoral,Hematologic tumors,Cutaneous B-cell lymphomas
+Tumoral,Hematologic tumors,Pseudolymphoma
+Tumoral,Hematologic tumors,Langerhans cell histiocytosis
+Tumoral,Hematologic tumors,Non-Langerhans cell histiocytosis
+Tumoral,Hematologic tumors,Necrobiotic xanthogranuloma
+Tumoral,Hematologic tumors,Mastocytosis
+Tumoral,Hematologic tumors,Leukemia cutis
+Tumoral,Benign epithelial tumors,Seborrheic keratosis
+Tumoral,Benign epithelial tumors,Solar lentigo
+Tumoral,Benign epithelial tumors,Epidermal nevus
+Tumoral,Benign epithelial tumors,Sebaceous nevus
+Tumoral,Benign epithelial tumors,Comedo nevus
+Tumoral,Benign epithelial tumors,Clear cell acanthoma
+Tumoral,Benign epithelial tumors,Acral fibrokeratoma
+Tumoral,Benign epithelial tumors,Epidermal cyst
+Tumoral,Benign epithelial tumors,Dermoid cyst
+Tumoral,Benign epithelial tumors,Supernumerary nail
+Tumoral,Benign epithelial tumors,Pilomatrixoma
+Tumoral,Benign epithelial tumors,Trichilemmal cyst
+Tumoral,Benign epithelial tumors,Chondrodermatitis nodularis helicis
+Tumoral,Benign epithelial tumors,Hidrocystoma
+Tumoral,Benign epithelial tumors,Cylindroma
+Tumoral,Benign epithelial tumors,Poroma
+Tumoral,Benign epithelial tumors,Syringoma
+Tumoral,Benign epithelial tumors,Trichoepithelioma
+Tumoral,Benign epithelial tumors,Trichoblastoma
+Tumoral,Benign epithelial tumors,Fibrous papule
+Tumoral,Benign epithelial tumors,Inverted follicular keratosis
+Tumoral,Benign epithelial tumors,Fordyce spots
+Tumoral,Benign epithelial tumors,Sebaceous hyperplasia
+Tumoral,Benign epithelial tumors,Pearly penile papules
+Tumoral,Benign melanocytic neoplasms,Congenital melanocytic nevus
+Tumoral,Benign melanocytic neoplasms,Acquired melanocytic nevus
+Tumoral,Benign melanocytic neoplasms,Halo nevus
+Tumoral,Benign melanocytic neoplasms,Nevus spilus
+Tumoral,Benign melanocytic neoplasms,Becker nevus
+Tumoral,Benign melanocytic neoplasms,Blue nevus
+Tumoral,Benign melanocytic neoplasms,Pigmented spindle cell nevus
+Tumoral,Benign melanocytic neoplasms,Spitz nevus
+Tumoral,Benign melanocytic neoplasms,Lentigo simplex
+Tumoral,Benign melanocytic neoplasms,Ephelides
+Tumoral,Benign melanocytic neoplasms,Dysplastic nevus
+Tumoral,Vascular tumors,Infantile hemangioma
+Tumoral,Vascular tumors,Pyogenic granuloma
+Tumoral,Vascular tumors,Capillary angioma
+Tumoral,Vascular tumors,Telangiectasia
+Tumoral,Vascular tumors,Venous lake
+Tumoral,Vascular tumors,Angiokeratoma
+Tumoral,Vascular tumors,Glomus tumor
+Tumoral,Vascular tumors,Angiofibroma
+Tumoral,Benign mesenchymal tumors,Collagenoma
+Tumoral,Benign mesenchymal tumors,Leiomyoma
+Tumoral,Benign mesenchymal tumors,Smooth muscle hamartoma
+Tumoral,Benign mesenchymal tumors,Other hamartomas
+Tumoral,Benign mesenchymal tumors,Neuroma
+Tumoral,Benign mesenchymal tumors,Neurofibroma
+Tumoral,Benign mesenchymal tumors,Lipoma
+Tumoral,Vascular malformations,Capillary malformation
+Tumoral,Vascular malformations,Verrucous hemangioma
+Tumoral,Vascular malformations,Venous malformation
+Tumoral,Vascular malformations,Lymphatic malformation
+Tumoral,Vascular malformations,Arteriovenous malformation
+Tumoral,Benign tumors,Keloid
+Tumoral,Benign tumors,Hypertrophic scar
+Tumoral,Benign tumors,Skin tag
+Tumoral,Benign tumors,Dermatofibroma
+Tumoral,Benign tumors,Mucoid cyst
+Tumoral,Benign tumors,Exostosis
+Tumoral,Benign tumors,Supernumerary nipple
+Tumoral,Benign tumors,Juvenile xanthogranuloma
+Tumoral,Benign tumors,Sclerotic fibroma
+Tumoral,Benign tumors,Endometriosis
+Tumoral,Benign tumors,Xanthoma
+Tumoral,Benign tumors,Accessory tragus
+Genodermatosis,Epidermal differentiation disorders,Netherton syndrome
+Genodermatosis,Epidermal differentiation disorders,Pachyonychia congenita
+Genodermatosis,Tuberous sclerosis,Tuberous sclerosis
+Genodermatosis,Neurofibromatosis type 1,Neurofibromatosis type 1
+Genodermatosis,Incontinentia pigmenti,Incontinentia pigmenti
+Genodermatosis,Hereditary palmoplantar keratoderma,Hereditary palmoplantar keratoderma
+Genodermatosis,Pseudoxanthoma elasticum,Pseudoxanthoma elasticum
