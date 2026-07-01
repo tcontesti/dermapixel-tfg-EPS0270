@@ -395,24 +395,6 @@
       </div>
     </div>
 
-    <div class="mb-16">
-      <div class="index-num text-[10px] tracking-widest-2 text-ink-400 mb-4">Vídeo de presentación</div>
-      <video controls preload="metadata" playsinline
-             poster="screenshots/proto_consenso.png"
-             style="width:100%;aspect-ratio:16/9;max-height:75vh;background:#000;border:1px solid #e4e7ec;object-fit:contain;">
-        <source src="media/TFGEPS0270.mp4" type="video/mp4">
-        Tu navegador no admite la reproducción de vídeo. Puedes ver el sistema en <a href="https://dermapixel.eu">dermapixel.eu</a>.
-      </video>
-      <div style="display:flex;justify-content:center;margin-top:1.75rem;">
-        <a href="https://dermapixel.eu" target="_blank" rel="noopener"
-           style="display:inline-flex;align-items:center;gap:.55rem;padding:.9rem 1.7rem;background:#1a1a1a;color:#ffffff;font-size:.95rem;font-weight:500;letter-spacing:.02em;text-decoration:none;transition:opacity .2s;"
-           onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
-          Abrir el sistema en producción
-          <span style="opacity:.7;">&#8599;</span>
-        </a>
-      </div>
-    </div>
-
     <div class="slider relative" data-slider>
       <div class="slider-viewport overflow-hidden border border-ink-200 bg-paper" style="aspect-ratio: 16 / 10; max-height: 75vh;">
         <div class="slider-track flex h-full transition-transform duration-700 ease-out" data-slider-track style="will-change: transform;">
@@ -520,14 +502,21 @@
       </div>
     </div>
 
-    <a href="https://dermapixel.eu" class="group block relative border border-ink-200 bg-ink-900 overflow-hidden" style="aspect-ratio: 16 / 9; max-height: 75vh;">
-      <img src="screenshots/proto_consenso.png" alt="Vista de análisis del prototipo DermApIxel en producción" loading="lazy" class="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity" style="object-fit: cover; object-position: top;">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <span class="bg-paper/95 backdrop-blur px-8 py-4 text-sm font-medium text-ink-900 border border-ink-200 group-hover:translate-y-[-2px] transition-transform">
-          Abrir el prototipo en dermapixel.eu <span class="text-ink-400 ml-1">↗</span>
-        </span>
-      </div>
-    </a>
+    <video controls preload="metadata" playsinline
+           poster="screenshots/proto_consenso.png"
+           class="w-full border border-ink-200"
+           style="aspect-ratio: 16 / 9; max-height: 75vh; background:#000; object-fit: contain;">
+      <source src="media/TFGEPS0270.mp4" type="video/mp4">
+      Tu navegador no admite la reproducción de vídeo. Puedes ver el sistema en <a href="https://dermapixel.eu">dermapixel.eu</a>.
+    </video>
+    <div style="display:flex;justify-content:center;margin-top:1.75rem;">
+      <a href="https://dermapixel.eu" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:.55rem;padding:.95rem 1.9rem;background:#1a1a1a;color:#ffffff;font-size:1rem;font-weight:500;letter-spacing:.02em;text-decoration:none;transition:opacity .2s;"
+         onmouseover="this.style.opacity='0.82'" onmouseout="this.style.opacity='1'">
+        Abrir el sistema en producción
+        <span style="opacity:.7;">&#8599;</span>
+      </a>
+    </div>
 
     <div class="flex justify-between items-baseline mt-3 text-[10px] uppercase tracking-widest-2 text-ink-400">
       <span class="index-num">dermapixel.eu · web · WhatsApp · voz</span>
