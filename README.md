@@ -2,10 +2,10 @@
 
 Repositorio reproducible y material complementario del Trabajo de Fin de Grado **«Dermapixel: Evaluación de modelos fundacionales para Dermatología Clínica»** (código oficial EPS-UIB: **EPS0270**), de Antonio Contestí Coll, Grau d'Enginyeria Informàtica, Escola Politècnica Superior de la Universitat de les Illes Balears, curso 2025-2026, bajo la dirección del Dr. Javier Varona Gómez (UIB) y con colaboración clínica de la Dra. Rosa Taberner (Hospital Universitari Son Llàtzer).
 
-- 🌐 **Portada navegable (GitHub Pages):** https://tcontesti.github.io/dermapixel-tfg-EPS0270/
-- 📖 **Memoria (PDF, 97 págs):** [`MemoriaTFG.pdf`](MemoriaTFG.pdf)
-- 📚 **Wiki del proyecto:** https://github.com/tcontesti/dermapixel-tfg-EPS0270/wiki
-- 🩺 **Prototipo en producción:** https://dermapixel.eu
+- **Portada navegable (GitHub Pages):** https://tcontesti.github.io/dermapixel-tfg-EPS0270/
+- **Memoria (PDF, 97 págs):** [`MemoriaTFG.pdf`](MemoriaTFG.pdf)
+- **Wiki del proyecto:** https://github.com/tcontesti/dermapixel-tfg-EPS0270/wiki
+- **Prototipo en producción:** https://dermapixel.eu
 
 ## Qué es
 
@@ -21,21 +21,21 @@ Sobre estas piezas se construye el prototipo clínico **DermApIxel**, en producc
 
 ```
 dermapixel-tfg-EPS0270/
-├── MemoriaTFG.pdf      Memoria del TFG (v7, 97 páginas con apéndices)
-├── docs/               Portada GitHub Pages (landing) + capturas del prototipo
-├── repro/              Mapa de tareas, recetas de entrenamiento, semillas, normalizaciones y checkpoints
-├── tables/             Tablas detalladas de resultados, IC bootstrap y calibración de melanoma (HAM10000)
-├── datasheet/          Datasheet y documento de entrega del dataset DermapixelAI 1.0
-├── ontology/           Ontología clínica jerárquica L1/L2/L3 (Dra. Taberner) + mapeo de datasets
-├── ablations/          Pipeline y caracterización del dataset, y ablaciones complementarias (incl. rama contrastiva)
-├── sae/                Sparse Autoencoders y diccionario de conceptos clínicos
-├── llm/                Comparación extendida de modelos de lenguaje multimodales
-├── prototype/          Descripción del prototipo DermApIxel (módulos M1–M11)
-├── papers/             Preprints de los modelos de referencia (PanDerm, Derm1M, DermFM-Zero)
-├── code/               Pipelines experimentales (en organización)
-├── ai-statement/       Declaración de uso de herramientas de IA (Apéndice B de la memoria)
-├── LICENSE             CC BY-NC 4.0 (material original del autor)
-└── CITATION.cff        Cómo citar el TFG
+├── MemoriaTFG.pdf Memoria del TFG (v7, 97 páginas con apéndices)
+├── docs/ Portada GitHub Pages (landing) + capturas del prototipo
+├── repro/ Mapa de tareas, recetas de entrenamiento, semillas, normalizaciones y checkpoints
+├── tables/ Tablas detalladas de resultados, IC bootstrap y calibración de melanoma (HAM10000)
+├── datasheet/ Datasheet y documento de entrega del dataset DermapixelAI 1.0
+├── ontology/ Ontología clínica jerárquica L1/L2/L3 (Dra. Taberner) + mapeo de datasets
+├── ablations/ Pipeline y caracterización del dataset, y ablaciones complementarias (incl. rama contrastiva)
+├── sae/ Sparse Autoencoders y diccionario de conceptos clínicos
+├── llm/ Comparación extendida de modelos de lenguaje multimodales
+├── prototype/ Descripción del prototipo DermApIxel (módulos M1–M11)
+├── papers/ Preprints de los modelos de referencia (PanDerm, Derm1M, DermFM-Zero)
+├── code/ Pipelines experimentales (en organización)
+├── ai-statement/ Declaración de uso de herramientas de IA (Apéndice B de la memoria)
+├── LICENSE CC BY-NC 4.0 (material original del autor)
+└── CITATION.cff Cómo citar el TFG
 ```
 
 Esta estructura reproduce la definida en el **Apéndice A** de la memoria («Material complementario y repositorio reproducible»). El repositorio está en organización y ampliación continua tras el depósito.
@@ -64,13 +64,13 @@ El documento académico (memoria) y el material original del autor se distribuye
 
 ```bibtex
 @thesis{contesti2026dermapixel,
-  author       = {Contestí Coll, Antonio},
-  title        = {Dermapixel: Evaluación de modelos fundacionales para Dermatología Clínica},
-  type         = {Trabajo de Fin de Grado},
-  institution  = {Escola Politècnica Superior, Universitat de les Illes Balears},
-  address      = {Palma de Mallorca},
-  year         = {2026},
-  note         = {Código TFG EPS0270. Tutor: Dr. Javier Varona Gómez. Colaboración clínica: Dra. Rosa Taberner (Hospital Universitari Son Llàtzer)}
+ author = {Contestí Coll, Antonio},
+ title = {Dermapixel: Evaluación de modelos fundacionales para Dermatología Clínica},
+ type = {Trabajo de Fin de Grado},
+ institution = {Escola Politècnica Superior, Universitat de les Illes Balears},
+ address = {Palma de Mallorca},
+ year = {2026},
+ note = {Código TFG EPS0270. Tutor: Dr. Javier Varona Gómez. Colaboración clínica: Dra. Rosa Taberner (Hospital Universitari Son Llàtzer)}
 }
 ```
 
