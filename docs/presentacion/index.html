@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dermapixel · Defensa TFG EPS0270</title>
+<!-- Fuentes en local (funciona sin internet). Fallback online opcional abajo. -->
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+  :root{
+    --paper:#fafaf9; --ink:#0a0a0a; --ink800:#171717; --ink700:#262626;
+    --ink600:#404040; --ink500:#737373; --ink400:#a3a3a3; --ink300:#d4d4d4;
+    --ink200:#e5e5e5; --ink100:#f5f5f5;
+    --stageW:1280px; --stageH:720px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%}
+  body{
+    background:#111; color:var(--ink);
+    font-family:"Inter Tight",-apple-system,BlinkMacSystemFont,sans-serif;
+    font-feature-settings:"ss01","cv11"; -webkit-font-smoothing:antialiased;
+    overflow:hidden; display:flex; align-items:center; justify-content:center;
+  }
+  /* 16:9 stage, scaled to fit by JS */
+  #deck{
+    width:var(--stageW); height:var(--stageH); position:relative;
+    background:var(--paper); overflow:hidden;
+    transform-origin:center center; box-shadow:0 20px 80px rgba(0,0,0,.5);
+  }
+  .slide{
+    position:absolute; inset:0; display:none;
+    flex-direction:column; padding:64px 84px 56px;
+  }
+  .slide.active{display:flex}
+
+  /* shared bits */
+  .eyebrow{font-size:12px; text-transform:uppercase; letter-spacing:.22em; color:var(--ink500); font-weight:500}
+  .serif{font-family:"Newsreader",Georgia,serif; font-style:italic; font-weight:400}
+  .mono{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums}
+  .rule{height:1px; background:var(--ink200); border:0}
+  .topbar{display:flex; justify-content:space-between; align-items:center}
+  .uib-mark{position:absolute; top:26px; left:84px; height:27px; width:auto; z-index:6}
+  .cover .uib-mark{top:64px; height:40px}
+  .pageno{position:absolute; right:84px; bottom:40px; color:var(--ink400); font-size:12px; letter-spacing:.1em}
+
+  /* ── Slide 1 · Portada ── */
+  .cover{justify-content:space-between}
+  .cover .brand{font-size:132px; font-weight:300; letter-spacing:-.03em; line-height:.92}
+  .cover .sub{font-size:29px; font-weight:300; color:var(--ink700); max-width:22ch; line-height:1.15; margin-top:22px}
+  .cover .sub .serif{color:var(--ink600)}
+  .cover .meta{display:grid; grid-template-columns:1fr 1fr; gap:26px 48px; max-width:820px}
+  .cover .meta .k{font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:var(--ink400); margin-bottom:5px}
+  .cover .meta .v{font-size:17px; color:var(--ink800); font-weight:400}
+
+  /* ── content template ── */
+  .head{margin-bottom:8px}
+  .head .kicker{font-size:12px; text-transform:uppercase; letter-spacing:.22em; color:var(--ink500); margin-bottom:14px}
+  .head h2{font-size:46px; font-weight:300; letter-spacing:-.02em; line-height:1.04; max-width:24ch}
+  .body{flex:1; display:flex; align-items:center}
+  .statement{font-size:34px; font-weight:300; line-height:1.28; color:var(--ink800); max-width:26ch}
+  .statement b{font-weight:600}
+  .chips{display:flex; gap:14px; margin-top:34px}
+  .chip{border:1px solid var(--ink300); border-radius:999px; padding:9px 18px; font-size:15px; color:var(--ink700)}
+  .big{font-size:120px; font-weight:200; letter-spacing:-.03em; line-height:1}
+  .big small{font-size:22px; color:var(--ink500); font-weight:400; letter-spacing:0}
+
+  /* layout helpers */
+  .cols2{display:grid; grid-template-columns:1fr 1fr; gap:56px; width:100%}
+  .cols3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:44px; width:100%}
+  .divleft{box-shadow:inset 1px 0 0 var(--ink200); padding-left:56px}
+  .eyebrow.sm{font-size:11px}
+  .lead{font-size:29px; font-weight:300; line-height:1.2; color:var(--ink800)}
+  .muted{color:var(--ink500)}
+  .announce{background:var(--ink); color:var(--paper); padding:26px 34px; font-size:23px; font-weight:300; line-height:1.36; max-width:46ch}
+  .announce b{font-weight:600}
+  .announce .lbl{font-family:"Newsreader",serif; font-style:italic; font-size:15px; color:var(--ink400); display:block; margin-bottom:9px}
+  .numgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:38px 40px; width:100%}
+  .numgrid .n{font-size:60px; font-weight:200; letter-spacing:-.02em; line-height:1}
+  .numgrid .l{font-size:14px; color:var(--ink500); margin-top:8px}
+  .cycler{font-size:13px; color:var(--ink600); margin-top:14px; min-height:17px; letter-spacing:.01em; transition:opacity .45s ease; opacity:1; box-shadow:inset 2px 0 0 var(--ink300); padding-left:11px}
+  .cycler.out{opacity:0}
+  table.cmp{width:100%; border-collapse:collapse; font-size:21px}
+  table.cmp td,table.cmp th{padding:17px 6px; text-align:left; box-shadow:inset 0 -1px 0 var(--ink200)}
+  table.cmp th{font-size:12px; text-transform:uppercase; letter-spacing:.16em; color:var(--ink500); font-weight:600}
+  table.cmp td:first-child{color:var(--ink500); font-size:14px; text-transform:uppercase; letter-spacing:.12em}
+  .check{font-size:20px; color:var(--ink800); margin:11px 0; padding-left:28px; position:relative; line-height:1.3}
+  .check::before{content:"✓"; position:absolute; left:0; color:var(--ink400)}
+  .mrank{display:flex; flex-direction:column; gap:13px}
+  .mrow{display:flex; align-items:center; gap:18px}
+  .ml{width:230px; flex:none; text-align:right}
+  .ml .mn{font-size:16px; color:var(--ink800); line-height:1.15}
+  .ml .md{font-size:12px; color:var(--ink400); margin-top:2px}
+  .mtrack{flex:1; height:20px; background:var(--ink100)}
+  .mfill{height:100%}
+  .mrow .mv{width:56px; flex:none; font-size:17px; color:var(--ink700); text-align:right}
+  .biglead{font-size:40px; font-weight:300; letter-spacing:-.01em; line-height:1.12; max-width:24ch}
+  .biglead .serif{color:var(--ink600)}
+  .stats{display:flex; gap:64px; align-items:flex-end; flex-wrap:wrap}
+  .stat .v{font-size:66px; font-weight:200; letter-spacing:-.02em; line-height:1}
+  .stat .v small{font-size:22px; color:var(--ink500); font-weight:400; letter-spacing:0}
+  .stat .k{font-size:15px; color:var(--ink500); margin-top:12px; max-width:20ch; line-height:1.35}
+  .pyr{width:100%; max-width:840px; display:flex; flex-direction:column; gap:12px}
+  .pyr .bar{color:var(--paper); height:58px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; font-size:18px; letter-spacing:.01em; transform-origin:left}
+  .pyr .bar b{font-weight:600; letter-spacing:.04em}
+  .pyr .pyrow{display:flex; align-items:center; gap:22px}
+  .pyr .pyrow .bar{flex:0 0 auto}
+  .cycler.pc{margin-top:0; font-size:16px; color:var(--ink700); flex:1}
+  .halfs{display:grid; grid-template-columns:1fr 1fr; gap:60px; width:100%}
+  .tag{display:inline-block; border:1px solid var(--ink300); border-radius:999px; padding:8px 16px; font-size:15px; color:var(--ink700)}
+  .tag.sm{padding:4px 11px; font-size:12px; margin:0}
+  .slide img:not(.uib-mark){border-radius:10px}
+  .imgcyc{position:relative; width:100%; aspect-ratio:1/1; overflow:hidden; background:var(--ink100); border-radius:10px}
+  .imgcyc img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .6s ease}
+  .imgcyc img.on{opacity:1}
+  .stackgrp{margin-top:11px}
+  .stackgrp .gl{font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--ink400); margin-bottom:6px}
+  .stackgrp .chips{display:flex; flex-wrap:wrap; gap:6px}
+  .mark-x{color:var(--ink400)} .mark-v{color:var(--ink); font-weight:600}
+  .li{font-size:20px; margin:12px 0; color:var(--ink800); line-height:1.3}
+  .bc{display:flex; flex-direction:column; gap:16px; width:100%; max-width:780px}
+  .bc .row{display:grid; grid-template-columns:230px 1fr 64px; align-items:center; gap:18px}
+  .bc .name{font-size:16px; color:var(--ink600)}
+  .bc .fill{height:22px; background:var(--ink300)}
+  .bc .fill.hi{background:var(--ink)}
+  .bc .val{font-size:16px; color:var(--ink700); text-align:right}
+  .ladder{width:100%; max-width:640px}
+  .ladder .step{display:flex; align-items:baseline; gap:24px; padding:15px 0; box-shadow:inset 0 -1px 0 var(--ink200)}
+  .ladder .pct{font-size:46px; font-weight:200; width:150px; letter-spacing:-.02em}
+  .ladder .nm{font-size:18px; color:var(--ink600)}
+  .chain{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+  .chain .node{border:1px solid var(--ink300); border-radius:9px; padding:12px 16px; font-size:15px; color:var(--ink700); white-space:nowrap}
+  .chain .node.dark{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+  .chain .arr{color:var(--ink400); font-size:18px}
+  .split{display:flex; gap:56px; align-items:center; width:100%}
+  .split .txt{flex:1}
+  .split .pic{flex:0 0 50%}
+  .picwrap{border:1px solid var(--ink200); background:#fff; overflow:hidden; border-radius:4px; box-shadow:0 10px 34px rgba(0,0,0,.07)}
+  .picwrap img{width:100%; display:block}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:24px; width:100%}
+  .cap{font-size:12px; color:var(--ink500); margin-top:10px; text-transform:uppercase; letter-spacing:.12em}
+  .segrid{display:grid; grid-template-columns:74px repeat(4,1fr); gap:9px 11px; align-items:center; width:100%}
+  .segrid .sh{font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink500); text-align:center; line-height:1.15}
+  .segrid .sr{font-size:11px; color:var(--ink600); text-align:right; padding-right:4px; line-height:1.2}
+  .segrid .scell{position:relative}
+  .segrid .scell img{width:100%; aspect-ratio:1; object-fit:cover; display:block; border-radius:3px}
+  .segrid .sd{position:absolute; bottom:5px; left:50%; transform:translateX(-50%); background:rgba(10,10,10,.72); color:#fff; font-size:11px; padding:1px 8px; border-radius:3px; font-variant-numeric:tabular-nums}
+  .arch{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .arch .box{border:1px solid var(--ink300); border-radius:10px; padding:16px 22px; font-size:16px; color:var(--ink800); line-height:1.3}
+  .arch .box.gpu{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+  .arch .sep{color:var(--ink400); font-size:13px; letter-spacing:.06em}
+  .modgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px 20px; width:100%}
+  .modgrid .m{border:1px solid var(--ink200); border-radius:9px; padding:15px 17px}
+  .modgrid .m .mn{font-size:11px; color:var(--ink400); font-family:"JetBrains Mono",monospace; letter-spacing:.05em}
+  .modgrid .m .md{font-size:15px; color:var(--ink800); margin-top:6px; line-height:1.28}
+  /* heatmap monocromo */
+  .hm{display:grid; grid-template-columns:120px repeat(10,1fr); gap:3px; width:100%}
+  .hm .ch{font-size:10px; color:var(--ink500); text-align:center; align-self:end; padding-bottom:5px; line-height:1.1}
+  .hm .rh{display:flex; align-items:center; justify-content:flex-end; padding-right:12px; font-size:13px; color:var(--ink700)}
+  .hm .c{height:42px; display:flex; align-items:center; justify-content:center; font-size:12px; font-variant-numeric:tabular-nums}
+  .hm .c.na{background:#ededed; color:#bcbcbc; font-size:11px}
+  .hm .c.leak{box-shadow:inset 0 0 0 2px #cc3333}
+  .hm.sm{grid-template-columns:78px repeat(10,1fr); gap:2px}
+  .hm.sm .rh{font-size:11px; padding-right:7px}
+  .hm.sm .ch{font-size:8px; padding-bottom:3px}
+  .hm.sm .c{height:30px; font-size:10px}
+  .hm.sm .c.na{font-size:9px}
+  /* gráficas SVG minimalistas */
+  .chart{width:100%; max-width:480px; height:auto}
+  .chart .ax{stroke:var(--ink300); stroke-width:1}
+  .chart .grid{stroke:var(--ink200); stroke-width:1; stroke-dasharray:3 4}
+  .chart .cv{fill:none; stroke:var(--ink); stroke-width:2.5; stroke-linejoin:round; stroke-linecap:round; stroke-dasharray:660}
+  .chart .cv2{fill:none; stroke:var(--ink400); stroke-width:2; stroke-dasharray:5 4; stroke-linejoin:round}
+  .chart .dot{fill:var(--ink)}
+  .legend{display:flex; gap:22px; font-size:12px; color:var(--ink500); margin-top:8px}
+  .legend i{display:inline-block; width:22px; height:0; vertical-align:middle; margin-right:7px}
+  .legend .s1{border-top:2.5px solid var(--ink)} .legend .s2{border-top:2px dashed var(--ink400)}
+  .chart .glab{fill:var(--ink500); font-size:11px; font-family:"JetBrains Mono",monospace}
+  @keyframes draw{from{stroke-dashoffset:660} to{stroke-dashoffset:0}}
+  .slide.active .chart .cv{animation:draw 1.1s .25s ease both}
+  /* entrada suave por diapositiva */
+  @keyframes fadeup{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none}}
+  .slide.active .head{animation:fadeup .45s ease both}
+  .slide.active .body{animation:fadeup .55s .06s ease both}
+
+  /* ── Impresión / export a PDF: todas las diapositivas, una por página ── */
+  @media print{
+    @page{size:1280px 720px; margin:0}
+    body{background:#fff; display:block; overflow:visible}
+    #deck{transform:none !important; box-shadow:none; width:1280px; height:auto}
+    .slide{display:flex !important; position:relative; inset:auto; width:1280px; height:720px; page-break-after:always; break-after:page}
+    .hud,#notes{display:none !important}
+    .slide .head, .slide .body{animation:none !important}
+    .chart .cv{animation:none !important; stroke-dashoffset:0 !important}
+  }
+
+  /* HUD (fuera del stage) */
+  .hud{position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+       display:flex; gap:16px; align-items:center; color:#888; font-size:12px;
+       font-family:"JetBrains Mono",monospace; letter-spacing:.08em; user-select:none}
+  .hud button{background:none; border:1px solid #333; color:#aaa; border-radius:6px; padding:4px 9px; cursor:pointer; font:inherit}
+  .hud button:hover{color:#fff; border-color:#666}
+  /* Presenter notes */
+  #notes{position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto;
+         background:#0d0d0d; color:#d8d8d8; border-top:1px solid #333;
+         padding:20px 40px; font-size:16px; line-height:1.5; display:none}
+  #notes.show{display:block}
+  #notes .nlabel{font-family:"JetBrains Mono",monospace; font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.15em; margin-bottom:8px}
+  #notes b{color:#fff}
+  #notes .nnext{margin-top:12px; padding-top:10px; border-top:1px solid #333; color:#8a8a8a; font-size:13px; font-family:"JetBrains Mono",monospace}
+  .hud #timer{color:#ddd; min-width:46px; text-align:center; font-variant-numeric:tabular-nums}
+  #notes #ntimer{color:#bbb}
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ═══ Slide 1 · Portada ═══ -->
+  <section class="slide cover active" data-notes="Buenos días. Soy Antonio Contestí y presento mi Trabajo de Fin de Grado: una evaluación de los modelos fundacionales aplicados a la dermatología clínica, dirigido por el Dr. Javier Varona y con la colaboración clínica de la Dra. Rosa Taberner, del Hospital Universitari Son Llàtzer. El nombre no es casual: Dermapixel es el blog de dermatología de la Dra. Taberner, una de las referencias divulgativas en español, y es la semilla de la que nace este trabajo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="topbar" style="justify-content:flex-end">
+      <span class="eyebrow">Trabajo de Fin de Grado · EPS0270 · Escola Politècnica Superior</span>
+    </div>
+
+    <div style="margin-top:auto">
+      <div class="brand">DermAp<span>I</span>xel</div>
+      <div class="sub">Evaluación de <span class="serif">modelos fundacionales</span> para Dermatología Clínica</div>
+    </div>
+
+    <hr class="rule" style="margin:44px 0 30px">
+    <div class="meta">
+      <div><div class="k">Autor</div><div class="v">Antonio Contestí Coll</div></div>
+      <div><div class="k">Director</div><div class="v">Dr. Javier Varona Gómez</div></div>
+      <div><div class="k">Colaboración clínica</div><div class="v">Dra. Rosa Taberner Ferrer · Hospital Universitari Son Llàtzer</div></div>
+      <div><div class="k">Origen · blog</div><div class="v">dermapixel.blogspot.com</div></div>
+      <div><div class="k">Prototipo</div><div class="v">dermapixel.eu</div></div>
+    </div>
+    <div class="pageno mono">01</div>
+  </section>
+
+  <!-- ═══ Slide 2 · El problema clínico ═══ -->
+  <section class="slide" data-notes="Empiezo por el problema. La dermatología afronta una demanda creciente frente a un acceso limitado al especialista. Y el tiempo importa: en un melanoma, la supervivencia a cinco años cae de cerca del 99% en estadio I a un 25% en estadio IV —detectar a tiempo salva vidas. Esto motiva el interés por los sistemas de apoyo al diagnóstico por imagen. Abarco las tres modalidades sobre las que existen modelos fundacionales —fotografía clínica, dermatoscopia e histopatología—, con el foco en la fotografía clínica; la histopatología entra solo como prueba de transferencia. Existen además otras aproximaciones (imagen corporal completa, o clínica + dermatoscopia de una misma lesión) que quedan fuera del alcance, como evolución futura.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head">
+      <div class="kicker">El problema</div>
+      <h2>Más demanda, menos acceso al especialista — y en dermatología el tiempo salva vidas.</h2>
+    </div>
+    <div class="body" style="gap:72px">
+      <div style="flex:0 0 auto">
+        <div class="big">99% <small>→ 25%</small></div>
+        <div style="font-size:16px; color:var(--ink500); margin-top:10px; max-width:20ch">Supervivencia del melanoma a 5 años, del estadio I al IV.</div>
+      </div>
+      <div class="statement" style="font-size:26px; max-width:24ch">
+        Sistemas de apoyo al diagnóstico por imagen sobre <b>tres modalidades</b>: fotografía clínica, dermatoscopia e histopatología.
+        <div class="chips">
+          <span class="chip">Clínica</span>
+          <span class="chip">Dermatoscopia</span>
+          <span class="chip">Histopatología</span>
+        </div>
+      </div>
+    </div>
+    <div class="pageno mono">02</div>
+  </section>
+
+  <!-- ═══ Slide 3 · Cambio de paradigma ═══ -->
+  <section class="slide" data-notes="Hasta hace poco, cada modelo servía para una única tarea, típicamente melanoma sí o no. Y en esa tarea los mejores ya alcanzan AUROC por encima de 0,95, comparable a un experto. Por eso el reto ya no es mejorar unas décimas: es tener un mismo modelo capaz de generalizar a muchas enfermedades, modalidades y tareas. Ahí cambia el paradigma —de un modelo por enfermedad a los modelos fundacionales, preentrenados y adaptables con técnicas como linear probing o LoRA. La pregunta ya no es si detecta bien el melanoma, sino si un mismo modelo sirve de base para muchas tareas. Y ahí se sitúa mi trabajo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Un cambio de paradigma</div>
+      <h2>La pregunta ya no es cuál detecta mejor el melanoma, sino si un mismo modelo sirve para muchas tareas.</h2></div>
+    <div class="body"><div class="cols2" style="align-items:start">
+      <div>
+        <div class="eyebrow">1.ª generación</div>
+        <div class="lead" style="margin-top:16px">Un modelo = una enfermedad</div>
+        <div class="muted" style="margin-top:14px; font-size:17px">Melanoma sí / no · AUROC &gt;0,95 en HAM10000 ≈ experto</div>
+      </div>
+      <div class="divleft">
+        <div class="eyebrow">2.ª generación</div>
+        <div class="lead" style="margin-top:16px">Un modelo fundacional = muchas enfermedades, modalidades y tareas</div>
+        <div class="muted" style="margin-top:14px; font-size:17px">Preentrenado + adaptable · linear probing / LoRA</div>
+      </div>
+    </div></div>
+    <div class="pageno mono">03</div>
+  </section>
+
+  <!-- ═══ Slide 4 · El estado del arte ═══ -->
+  <section class="slide" data-notes="Antes de los retos, el mapa del terreno. Revisé el estado del arte y lo agrupé en cinco familias de modelos fundacionales. Primero, los encoders visuales auto-supervisados, como PanDerm, que aprenden representaciones a partir de millones de imágenes sin etiquetas. Segundo, los modelos vision-language contrastivos, que alinean imagen y texto al estilo CLIP. Tercero, los que integran zero-shot nativo, capaces de clasificar sin reentrenar, solo con una descripción. Cuarto, la segmentación promptable, con SAM y MedSAM2, que delimitan la lesión con una simple indicación. Y quinto, los grandes modelos de lenguaje multimodales generalistas, como GPT-4o o MedGemma, que razonan sobre la imagen en lenguaje natural. Evalué las cinco familias. Y al hacerlo, encontré tres retos abiertos.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">El estado del arte · el mapa del terreno</div>
+      <h2>Cinco familias de modelos fundacionales.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:0">
+      <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">01</div>
+        <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Encoders visuales auto-supervisados</div></div>
+        <div class="muted" style="flex:1; font-size:16px">Aprenden representaciones sin etiquetas</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">PanDerm · DINOv2</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">02</div>
+        <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Vision-language contrastivo</div></div>
+        <div class="muted" style="flex:1; font-size:16px">Alinean imagen y texto en un espacio común (CLIP)</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP · SigLIP</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">03</div>
+        <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Zero-shot nativo</div></div>
+        <div class="muted" style="flex:1; font-size:16px">Clasifican sin reentrenar, solo con una descripción</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP · BiomedCLIP</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">04</div>
+        <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Segmentación promptable</div></div>
+        <div class="muted" style="flex:1; font-size:16px">Delimitan la lesión con una simple indicación</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">SAM2 · MedSAM2</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200); border-bottom:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">05</div>
+        <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">LLMs multimodales generalistas</div></div>
+        <div class="muted" style="flex:1; font-size:16px">Razonan sobre la imagen en lenguaje natural</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">GPT-4o · MedGemma</div>
+      </div>
+      <div class="muted" style="margin-top:26px; font-size:19px">Las evalué <b style="color:var(--ink); font-weight:500">todas</b> — y al hacerlo encontré <b style="color:var(--ink); font-weight:500">tres retos abiertos</b>.</div>
+    </div>
+    <div class="pageno mono">04</div>
+  </section>
+
+  <!-- ═══ Slide 5 · Los tres huecos + anuncio ═══ -->
+  <section class="slide" data-notes="Encontré tres retos abiertos. El primero, metodológico: los modelos se evalúan con protocolos, datasets y métricas distintas, y cuesta saber cuál funciona mejor. El segundo, lingüístico: casi todo está en inglés; encontrar fotografía clínica en español con narrativa real es excepcional. Y el tercero, translacional: del benchmark al hospital hay una distancia que nadie aborda. De ahí la pregunta. Y les adelanto la idea que me gustaría que recordaran: el principal factor no es la arquitectura, sino la calidad de los datos.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Punto de partida · la pregunta</div>
+      <h2>Tres retos abiertos.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
+      <div class="cols3">
+        <div><div class="eyebrow">Metodológico</div><div class="muted" style="margin-top:12px; font-size:18px; line-height:1.35">Protocolos, datasets y métricas distintas → cuesta saber cuál funciona mejor.</div></div>
+        <div><div class="eyebrow">Lingüístico</div><div class="muted" style="margin-top:12px; font-size:18px; line-height:1.35">Casi todo en inglés; casi nada clínico en español con texto real.</div></div>
+        <div><div class="eyebrow">Translacional</div><div class="muted" style="margin-top:12px; font-size:18px; line-height:1.35">Del benchmark al hospital hay una distancia que nadie aborda.</div></div>
+      </div>
+      <div class="lead" style="font-size:24px; max-width:48ch">¿Qué modelos generalizan de verdad fuera de sus datos, cómo se comportan en español y qué papel juega el texto clínico?</div>
+      <div class="announce"><span class="lbl">La idea para llevarse</span>El principal factor no es la arquitectura del modelo, sino la <b>calidad de los datos</b> sobre los que se entrena y se evalúa.</div>
+    </div>
+    <div class="pageno mono">05</div>
+  </section>
+
+  <!-- ═══ Slide 5 · Objetivos y aportaciones ═══ -->
+  <section class="slide" data-notes="Tres objetivos: comparar de forma independiente los modelos fundacionales; evaluar las estrategias clave —LoRA, zero-shot, multimodalidad, interpretabilidad—; y trasladar el reconocimiento sobre fotografía clínica a un prototipo funcional. Y la idea que resume el espíritu: no propone un modelo más, propone una forma de evaluarlos. De ahí sus cuatro aportaciones: benchmark independiente, DermapixelAI, evidencia metodológica con Dermapixel R0, y un prototipo funcional. Todas las comparaciones priorizan modelos abiertos, por reproducibilidad; los cerrados, solo como referencia.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Objetivos y aportaciones</div>
+      <h2 class="biglead">No propone un modelo más; propone una <span class="serif">forma de evaluarlos</span>.</h2></div>
+    <div class="body"><div class="cols2" style="align-items:start">
+      <div>
+        <div class="eyebrow">Objetivos</div>
+        <div style="margin-top:16px">
+          <div class="check">Comparar de forma independiente los modelos fundacionales</div>
+          <div class="check">Evaluar las estrategias clave · LoRA · zero-shot · multimodalidad · interpretabilidad</div>
+          <div class="check">Trasladar el reconocimiento clínico a un prototipo funcional</div>
+        </div>
+      </div>
+      <div class="divleft">
+        <div class="eyebrow">Aportaciones</div>
+        <div style="margin-top:16px">
+          <div class="check">Benchmark independiente</div>
+          <div class="check">DermapixelAI — recurso clínico en español</div>
+          <div class="check">Dermapixel R0 y evidencia metodológica</div>
+          <div class="check">Prototipo funcional</div>
+        </div>
+      </div>
+    </div></div>
+    <div class="muted mono" style="position:absolute; left:84px; bottom:40px; font-size:12px">Solo modelos abiertos (pesos + código) · los cerrados, como referencia</div>
+    <div class="pageno mono">06</div>
+  </section>
+
+  <!-- ═══ Slide 6 · El alcance ═══ -->
+  <section class="slide" data-notes="Antes de los resultados, el alcance: no comparo dos o tres modelos, sino un benchmark amplio —catorce modelos, doce datasets, más de setenta mil imágenes armonizadas y varios protocolos. Ese volumen es lo que da solidez a las conclusiones. Y con ese alcance, la siguiente pregunta era cómo comparar de forma justa.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">El alcance del trabajo</div>
+      <h2>No es un benchmark pequeño.</h2></div>
+    <div class="body"><div class="numgrid">
+      <div><div class="n">14</div><div class="l">modelos</div><div class="cycler" data-items="PanDerm Large|PanDerm Base|DermLIP v1|DermLIP v2|SigLIP-Large|DINOv2 ViT-L|ConvNeXt-Large|EfficientNetV2|BiomedCLIP|GPT-4o|Gemini 2.5 Pro|MedGemma 4B|MedGemma 27B|SAM2.1-Large">PanDerm Large</div></div>
+      <div><div class="n">12</div><div class="l">datasets públicos</div><div class="cycler" data-items="HAM10000|BCN20000|PAD-UFES-20|DDI|Dermnet|Derm7pt|HIBA|MSKCC|WSI patches|ISIC2018|Fitzpatrick17k|SkinCon">HAM10000</div></div>
+      <div><div class="n">72.654</div><div class="l">imágenes armonizadas</div></div>
+      <div><div class="n">3</div><div class="l">modalidades clínicas</div><div class="cycler" data-items="Fotografía clínica|Dermatoscopia|Histopatología">Fotografía clínica</div></div>
+      <div><div class="n">4</div><div class="l">protocolos experimentales</div><div class="cycler" data-items="Linear probing|Fine-tuning|Segmentación|Zero-shot">Linear probing</div></div>
+      <div><div class="n" style="font-size:34px; font-weight:300">Ontología</div><div class="l">propia · L1/L2/L3</div><div class="cycler" data-items="L1 · 4 familias|L2 · 43 subcategorías|L3 · 367 diagnósticos">L1 · 4 familias</div></div>
+      <div><div class="n" style="font-size:34px; font-weight:300">Dataset</div><div class="l">propio · DermapixelAI</div><div class="cycler" data-items="672 casos|1.089 imágenes|texto clínico en español">672 casos</div></div>
+      <div><div class="n" style="font-size:34px; font-weight:300">Prototipo</div><div class="l">funcional</div><div class="cycler" data-items="11 módulos de IA|web · WhatsApp · voz|dermapixel.eu">11 módulos de IA</div></div>
+    </div></div>
+    <div class="pageno mono">07</div>
+  </section>
+
+  <!-- ═══ Slide 7 · Por qué PanDerm ═══ -->
+  <section class="slide" data-notes="La primera referencia es PanDerm, el primer modelo fundacional dermatológico abierto. Se entrenó sobre 2,1 millones de imágenes en cuatro modalidades, con una mejora cercana al 10% sobre el estado del arte. Pero lo decisivo para este trabajo: publica pesos, código y benchmarks, lo que permitió una evaluación independiente y reproducible. Por eso es la referencia central.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">La primera referencia · encoder visual · Vision Transformer (ViT)</div>
+      <h2 style="font-size:96px; font-weight:300; letter-spacing:-.02em; line-height:1">PanDerm</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:36px">
+      <div class="lead" style="font-size:27px; max-width:34ch">El primer modelo fundacional dermatológico <b style="font-weight:600">abierto</b> — la referencia central de toda la comparación.</div>
+      <div class="cols3" style="align-items:end">
+        <div><div class="big" style="font-size:80px">2,1M</div><div class="muted" style="font-size:16px; margin-top:10px">imágenes de entrenamiento</div></div>
+        <div><div class="big" style="font-size:80px">4</div><div class="muted" style="font-size:16px; margin-top:10px">modalidades</div></div>
+        <div><div class="lead" style="font-size:24px">Pesos + código + benchmarks <b style="font-weight:600">públicos</b></div><div class="muted" style="margin-top:10px; font-size:16px">→ evaluación independiente</div></div>
+      </div>
+    </div>
+    <div class="muted mono" style="position:absolute; left:84px; bottom:40px; font-size:12px">ViT Base ~86M / Large ~307M · +10% sobre el estado del arte previo</div>
+    <div class="pageno mono">08</div>
+  </section>
+
+  <!-- ═══ Slide 8 · Por qué DermLIP ═══ -->
+  <section class="slide" data-notes="La segunda es DermLIP, que extiende PanDerm con una rama textual tipo CLIP, entrenada sobre Derm1M, un millón de pares imagen-texto. La diferencia clave: ya no solo aprende representaciones visuales, sino la relación entre imagen y descripción clínica. Esa alineación es la que hace posible el zero-shot y la recuperación de casos. La pregunta que me planteé: cómo se comportan estos dos paradigmas evaluados de forma independiente y bajo un mismo protocolo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">La segunda referencia · modelo vision-language · contrastivo (CLIP)</div>
+      <h2 style="font-size:88px; font-weight:300; letter-spacing:-.02em; line-height:1">DermLIP</h2></div>
+    <div class="body" style="gap:60px">
+      <div style="flex:0 0 40%">
+        <div class="lead" style="font-size:25px; max-width:20ch">Añade la <b style="font-weight:600">rama del lenguaje</b> — alinea imagen y texto en un mismo espacio.</div>
+        <div class="muted" style="margin-top:24px; font-size:17px; line-height:1.55">Preentrenado sobre <b style="color:var(--ink); font-weight:500">Derm1M</b> — un millón de pares imagen–texto dermatológicos, el mayor recurso multimodal abierto del dominio.</div>
+      </div>
+      <table class="cmp" style="flex:1">
+        <tr><th style="width:26%"></th><th>PanDerm</th><th>DermLIP</th></tr>
+        <tr><td>Entrada</td><td>Imagen</td><td>Imagen + texto</td></tr>
+        <tr><td>Preentrenamiento</td><td>2,1 M imágenes</td><td>1 M pares · Derm1M</td></tr>
+        <tr><td>Ventaja principal</td><td>Representación visual</td><td>Alineamiento multimodal</td></tr>
+        <tr><td>Permite zero-shot</td><td>✗</td><td>✓</td></tr>
+      </table>
+    </div>
+    <div class="pageno mono">09</div>
+  </section>
+
+  <!-- ═══ Slide 9 · Escenarios clínicos ═══ -->
+  <section class="slide" data-notes="Montamos un banco común de doce datasets públicos, más de setenta mil imágenes, en tres modalidades: dermatoscopia, fotografía clínica e histopatología, de hospitales, atención primaria y repositorios internacionales. La diversidad era intencionada: no optimizar para un único conjunto, sino ver hasta qué punto generaliza al cambiar la modalidad, el dispositivo, la población o el contexto. Por eso, cuando muestre medias entre datasets, son una tendencia descriptiva, nunca un ranking absoluto.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Materiales · escenarios clínicos</div>
+      <h2>Evaluación sobre múltiples escenarios clínicos.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:flex-start; gap:24px; padding-top:4px">
+      <div class="stats" style="gap:60px">
+        <div class="stat"><div class="v">12</div><div class="k">datasets públicos</div></div>
+        <div class="stat"><div class="v">72.654</div><div class="k">imágenes armonizadas</div></div>
+        <div class="stat"><div class="v">3</div><div class="k">modalidades</div></div>
+      </div>
+      <div class="cols3">
+        <div>
+          <div class="eyebrow">Dermatoscopia</div>
+          <div class="muted" style="margin-top:10px; font-size:15px; line-height:1.5">HAM10000 · BCN20000 · HIBA · MSKCC · ISIC2018</div>
+          <div class="imgcyc" style="width:186px; margin-top:14px">
+            <img class="on" src="assets/m10_d1.png" alt=""><img src="assets/m10_d2.png" alt=""><img src="assets/m10_d3.png" alt="">
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Fotografía clínica</div>
+          <div class="muted" style="margin-top:10px; font-size:15px; line-height:1.5">PAD-UFES-20 · DDI · DermNet · Fitzpatrick17k</div>
+          <div class="imgcyc" style="width:186px; margin-top:14px">
+            <img class="on" src="assets/m10_c1.png" alt=""><img src="assets/m10_c2.png" alt=""><img src="assets/m10_c3.png" alt="">
+          </div>
+        </div>
+        <div>
+          <div class="eyebrow">Histopatología</div>
+          <div class="muted" style="margin-top:10px; font-size:15px; line-height:1.5">WSI patches</div>
+          <div class="imgcyc" style="width:186px; margin-top:14px">
+            <img class="on" src="assets/m10_h1.png" alt=""><img src="assets/m10_h2.png" alt=""><img src="assets/m10_h3.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="muted mono" style="font-size:11px; margin-top:2px">Imágenes de ejemplo por modalidad · cortesía Dr. Àlex Llambrich (uso autorizado)</div>
+    </div>
+    <div class="pageno mono">10</div>
+  </section>
+
+  <!-- ═══ Slide 10 · Ontología L1/L2/L3 ═══ -->
+  <section class="slide" data-notes="Antes de comparar apareció un problema: cada dataset habla un idioma distinto. Un mismo diagnóstico recibe nombres distintos o se agrupa de otra forma; sin vocabulario común, la comparación no es justa. Construimos con la Dra. Taberner una ontología de tres niveles: cuatro familias, cuarenta y tres subcategorías y más de trescientos diagnósticos, mapeados a SNOMED y CIE-10. Con ella armonizamos setenta y dos mil imágenes de once datasets bajo un único lenguaje. Antes de comparar modelos, primero hicimos que todos hablaran el mismo idioma. Y esta ontología reaparece: es también la base del prototipo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Un lenguaje común · contribución propia</div>
+      <h2>La ontología clínica L1/L2/L3.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:20px">
+      <div class="pyr">
+        <div class="pyrow">
+          <div class="bar" style="width:22%; background:var(--ink)"><b>L1</b><span>4 familias</span></div>
+          <div class="cycler pc" data-items="Inflamatoria|Tumoral|Infecciosa|Genodermatosis">Inflamatoria</div>
+        </div>
+        <div class="pyrow">
+          <div class="bar" style="width:52%; background:var(--ink700)"><b>L2</b><span>43 subcategorías</span></div>
+          <div class="cycler pc" data-items="Neoplasias melanocíticas benignas|Tumores malignos|Tumores precancerosos|Tumores epiteliales benignos|Eccema y dermatitis|Psoriasis|Dermatosis granulomatosas|Dermatosis neutrofílicas|Enfermedades ampollosas|Trastornos de la queratinización|Trastornos de la pigmentación|Toxicodermias|Infecciones bacterianas|Infecciones víricas|Infecciones fúngicas|Infecciones parasitarias|Infestaciones y picaduras|Trastornos vasculares|Malformaciones vasculares|Tumores vasculares|Trastornos del folículo piloso|Glándulas sebáceas|Glándulas ecrinas y apocrinas|Trastornos acantolíticos|Trastornos atróficos|Dermatosis eosinofílicas|Trastornos de la diferenciación epidérmica|Tumores mesenquimales benignos|Tumores hematológicos|Síndromes paraneoplásicos|Tejido conectivo|Tejido subcutáneo|Enfermedades sistémicas y metabólicas|Neurofibromatosis tipo 1|Esclerosis tuberosa|Incontinentia pigmenti|Pseudoxantoma elástico|Queratodermia palmoplantar hereditaria|Otras dermatosis inflamatorias|Agentes exógenos|Reactividad humoral|Tumores benignos">Neoplasias melanocíticas benignas</div>
+        </div>
+        <div class="pyrow">
+          <div class="bar" style="width:100%; background:var(--ink500)"><b>L3</b><span>367 diagnósticos</span></div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:26px">
+        <div class="muted" style="font-size:16px">SNOMED CT + CIE-10 · validada con la Dra. Taberner · 72.654 imágenes armonizadas</div>
+        <div class="cycler pc" data-items="Melanoma|Carcinoma basocelular|Nevo melanocítico|Queratosis seborreica|Psoriasis|Dermatitis atópica|Verruga vírica|Carcinoma escamoso|Dermatofibroma|Léntigo maligno|Rosácea|Liquen plano|Molusco contagioso|Tiña corporal" style="margin-top:0; font-size:15px; flex:0 0 auto">Melanoma</div>
+      </div>
+    </div>
+    <div class="pageno mono">11</div>
+  </section>
+
+  <!-- ═══ Slide 11 · Reproducibilidad ═══ -->
+  <section class="slide" data-notes="Sobre este banco aplicamos cuatro protocolos: linear probing, fine-tuning, segmentación y zero-shot. Y un aspecto del que estoy especialmente orgulloso: antes de comparar, auditamos por hash MD5 si algún dataset ya estaba en el preentrenamiento. Solo DermNet aparecía contaminado, al cien por cien; el resto, cero. Eso nos permitió señalar explícitamente qué comparaciones podían estar afectadas. Todo con semillas fijas y predicciones guardadas. Porque comparar modelos solo tiene sentido si todos juegan con las mismas reglas.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Rigor metodológico</div>
+      <h2>Evaluación reproducible y sin sesgos.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:36px">
+      <div class="halfs">
+        <div>
+          <div class="eyebrow">4 protocolos</div>
+          <div style="margin-top:16px">
+            <div class="check">Linear probing · calidad de la representación</div>
+            <div class="check">Fine-tuning · rendimiento máximo</div>
+            <div class="check">Segmentación · localización de la lesión</div>
+            <div class="check">Zero-shot · clasificación guiada por texto</div>
+          </div>
+        </div>
+        <div class="divleft">
+          <div class="eyebrow">Auditoría de contaminación · MD5</div>
+          <div style="margin-top:20px">
+            <div class="stat"><div class="v" style="font-size:50px">0%</div><div class="k">solapamiento en 11 datasets</div></div>
+            <div class="stat" style="margin-top:22px"><div class="v" style="font-size:50px">100%</div><div class="k">DermNet — marcado como contaminado</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="lead" style="font-size:22px; max-width:none">Comparar modelos solo tiene sentido si <b style="font-weight:600">todos juegan con las mismas reglas</b>.</div>
+    </div>
+    <div class="pageno mono">12</div>
+  </section>
+
+  <!-- ═══ Slide 12 · Resultado 1 · Clasificación ═══ -->
+  <section class="slide" data-notes="Empezamos por linear probing: la calidad de las representaciones. PanDerm Large mejora a Base, con nueve puntos de balanced accuracy de media. Pero el hallazgo: la ventaja no es constante, aumenta cuando el escenario se aleja de la dermatoscopia estandarizada y se acerca a la práctica clínica. En HAM10000 un generalista como SigLIP iguala a los especialistas; en fotografía clínica de móvil o cohortes heterogéneas, PanDerm lidera claramente. El beneficio del dominio depende de la distancia entre evaluación y entrenamiento. El mejor modelo depende del escenario. Y esto nos llevó a preguntarnos cuántas etiquetas hacen falta.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 1 · Clasificación · linear probe</div>
+      <h2 style="font-size:33px">La ventaja de dominio crece con la heterogeneidad clínica.</h2></div>
+    <div class="body"><div class="split" style="gap:40px; align-items:center">
+      <div style="flex:0 0 60%">
+      <div class="hm sm">
+        <div></div>
+        <div class="ch">HAM</div><div class="ch">BCN</div><div class="ch">PAD</div><div class="ch">DDI</div><div class="ch">MSKCC</div><div class="ch">HIBA</div><div class="ch">D7-c</div><div class="ch">D7-d</div><div class="ch">Dermnet</div><div class="ch">WSI</div>
+        <div class="rh">DermLIP v2</div>
+        <div class="c" style="background:#2a2a2a;color:#ffffff">0,978</div><div class="c" style="background:#3d3d3d;color:#ffffff">0,950</div><div class="c" style="background:#5b5b5b;color:#ffffff">0,908</div><div class="c" style="background:#9a9a9a;color:#262626">0,819</div><div class="c" style="background:#555555;color:#ffffff">0,916</div><div class="c" style="background:#2a2a2a;color:#ffffff">0,978</div><div class="c" style="background:#bfbfbf;color:#262626">0,767</div><div class="c" style="background:#737373;color:#ffffff">0,874</div><div class="c leak" style="background:#1d1d1d;color:#ffffff">0,996</div><div class="c" style="background:#202020;color:#ffffff">0,992</div>
+        <div class="rh">PanDerm Large</div>
+        <div class="c" style="background:#3b3b3b;color:#ffffff">0,954</div><div class="c" style="background:#5f5f5f;color:#ffffff">0,903</div><div class="c" style="background:#3e3e3e;color:#ffffff">0,949</div><div class="c" style="background:#7d7d7d;color:#ffffff">0,860</div><div class="c" style="background:#cacaca;color:#262626">0,751</div><div class="c" style="background:#434343;color:#ffffff">0,942</div><div class="c" style="background:#777777;color:#ffffff">0,869</div><div class="c" style="background:#7e7e7e;color:#ffffff">0,858</div><div class="c" style="background:#4b4b4b;color:#ffffff">0,931</div><div class="c" style="background:#202020;color:#ffffff">0,991</div>
+        <div class="rh">PanDerm Base</div>
+        <div class="c" style="background:#666666;color:#ffffff">0,892</div><div class="c" style="background:#808080;color:#ffffff">0,855</div><div class="c" style="background:#575757;color:#ffffff">0,913</div><div class="c" style="background:#949494;color:#262626">0,827</div><div class="c" style="background:#cdcdcd;color:#262626">0,746</div><div class="c" style="background:#656565;color:#ffffff">0,894</div><div class="c" style="background:#a2a2a2;color:#262626">0,808</div><div class="c" style="background:#8a8a8a;color:#ffffff">0,841</div><div class="c" style="background:#696969;color:#ffffff">0,888</div><div class="c" style="background:#2b2b2b;color:#ffffff">0,976</div>
+        <div class="rh">DINOv2 ViT-L</div>
+        <div class="c" style="background:#404040;color:#ffffff">0,946</div><div class="c na">N/A</div><div class="c" style="background:#656565;color:#ffffff">0,894</div><div class="c" style="background:#c7c7c7;color:#262626">0,755</div><div class="c na">N/A</div><div class="c na">N/A</div><div class="c na">N/A</div><div class="c na">N/A</div><div class="c na">N/A</div><div class="c na">N/A</div>
+        <div class="rh">BiomedCLIP</div>
+        <div class="c" style="background:#3b3b3b;color:#ffffff">0,953</div><div class="c" style="background:#686868;color:#ffffff">0,890</div><div class="c" style="background:#7d7d7d;color:#ffffff">0,860</div><div class="c" style="background:#e4e4e4;color:#262626">0,714</div><div class="c" style="background:#dcdcdc;color:#262626">0,726</div><div class="c" style="background:#606060;color:#ffffff">0,901</div><div class="c" style="background:#a9a9a9;color:#262626">0,798</div><div class="c" style="background:#c6c6c6;color:#262626">0,757</div><div class="c" style="background:#747474;color:#ffffff">0,873</div><div class="c" style="background:#232323;color:#ffffff">0,987</div>
+      </div>
+      <div class="cap" style="margin-top:12px">AUROC por modelo y dataset · más oscuro = mayor · <span style="color:#cc3333">▢</span> solapamiento Dermnet (leakage)</div>
+      </div>
+      <div class="txt" style="flex:1">
+        <div class="stat"><div class="v" style="font-size:50px">+9,0<small> pp</small></div><div class="k">Balanced accuracy · PanDerm Large vs Base</div></div>
+        <div class="muted" style="margin-top:22px; font-size:16px; line-height:1.55">En HAM10000, SigLIP iguala a los especialistas (0,900); en fotografía clínica, PanDerm lidera (PAD-UFES 0,772 · DDI 0,860).</div>
+        <div style="margin-top:22px"><span class="tag" style="border-color:var(--ink); color:var(--ink)">El mejor modelo depende del escenario</span></div>
+      </div>
+    </div></div>
+    <div class="pageno mono">13</div>
+  </section>
+
+  <!-- ═══ Slide 13 · Resultado 2 · Eficiencia de etiquetas ═══ -->
+  <section class="slide" data-notes="Cuántas etiquetas hacen falta. Muy pocas. Con el 1% de HAM10000, solo 82 imágenes, la AUROC ya llega al 96% del máximo. En PAD-UFES, 14 imágenes recuperan el 95%. La capacidad de representación ya estaba aprendida en el preentrenamiento; las pocas etiquetas solo le indican cómo adaptar ese conocimiento. La AUROC satura pronto; la balanced accuracy sigue subiendo porque las clases minoritarias necesitan más ejemplos. Primera evidencia de que, con un buen modelo, añadir más capacidad aporta menos que tener buenos datos. Y si sin tocarlo ya rinde así, ¿compensa reentrenarlo entero?">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 2 · Eficiencia de etiquetas</div>
+      <h2>Muy pocas etiquetas bastan.</h2></div>
+    <div class="body"><div class="split">
+      <div class="txt" style="flex:0 0 34%">
+        <div class="stat"><div class="v">82<small> imágenes</small></div><div class="k">→ 96% del rendimiento · 1% de HAM10000</div></div>
+        <div class="stat" style="margin-top:30px"><div class="v">14<small> imágenes</small></div><div class="k">→ 95% del rendimiento · PAD-UFES</div></div>
+        <div class="biglead serif" style="font-size:24px; margin-top:36px; max-width:18ch; color:var(--ink800)">La representación ya estaba aprendida.</div>
+      </div>
+      <div style="flex:1">
+        <svg class="chart" viewBox="0 0 490 250" role="img" aria-label="Curva de saturación de la AUROC">
+          <line class="grid" x1="66" y1="51" x2="462" y2="51"/>
+          <line class="ax" x1="66" y1="20" x2="66" y2="206"/>
+          <line class="ax" x1="66" y1="206" x2="462" y2="206"/>
+          <polyline class="cv" points="70,150 86,106 105,85 144,48 262,45 458,39"/>
+          <circle class="dot" cx="86" cy="106" r="3"/><circle class="dot" cx="105" cy="85" r="3"/>
+          <circle class="dot" cx="144" cy="48" r="3"/><circle class="dot" cx="262" cy="45" r="3"/>
+          <circle class="dot" cx="458" cy="39" r="3"/>
+          <circle class="dot" cx="70" cy="150" r="5"/>
+          <text class="glab" x="80" y="146">82 img · 0,918</text>
+          <text class="glab" x="60" y="55" text-anchor="end">0,95</text>
+          <text class="glab" x="60" y="209" text-anchor="end">0,90</text>
+          <text class="glab" x="70" y="224" text-anchor="middle">1%</text>
+          <text class="glab" x="262" y="224" text-anchor="middle">50%</text>
+          <text class="glab" x="458" y="224" text-anchor="end">100%</text>
+          <text class="glab" x="458" y="18" text-anchor="end" fill="#a3a3a3">AUROC</text>
+        </svg>
+        <div class="cap" style="margin-top:8px">AUROC vs % de datos de entrenamiento (HAM10000) · satura muy pronto</div>
+      </div>
+    </div></div>
+    <div class="pageno mono">14</div>
+  </section>
+
+  <!-- ═══ Slide 14 · Resultado 3 · Adaptación ═══ -->
+  <section class="slide" data-notes="Al reentrenar el modelo completo, la respuesta depende del tamaño del dataset. Con muchos datos, el fine-tuning dispara el rendimiento: en HAM10000 sube 47 puntos de balanced accuracy. Pero con pocos datos ocurre lo contrario: en DDI, con unas cuatrocientas imágenes, reentrenar empeora por sobreajuste. No existe una estrategia de adaptación universal: con muchos datos, fine-tuning; con pocos, adaptaciones ligeras como el encoder congelado o LoRA. Y eso abre una tercera vía intermedia, LoRA, que es la base de Dermapixel R0.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 3 · Adaptación</div>
+      <h2>No existe una estrategia de adaptación universal.</h2></div>
+    <div class="body"><div class="cols3" style="align-items:start">
+      <div>
+        <div class="eyebrow">Dataset pequeño</div>
+        <div style="margin-top:18px">
+          <div class="li"><span class="mark-x">✗</span>&nbsp;&nbsp;Fine-tuning — sobreajuste</div>
+          <div class="li"><span class="mark-v">✓</span>&nbsp;&nbsp;Encoder congelado (linear probing)</div>
+        </div>
+        <div class="muted" style="margin-top:22px; font-size:15px">DDI (~400 img) −2,1 pp</div>
+      </div>
+      <div class="divleft">
+        <div class="eyebrow">Punto intermedio · LoRA</div>
+        <div style="margin-top:18px">
+          <div class="li"><span class="mark-v">✓</span>&nbsp;&nbsp;Adapta pocos parámetros sin reentrenar todo</div>
+        </div>
+        <div class="muted" style="margin-top:22px; font-size:15px; line-height:1.5">La vía que adoptamos después · base de <b style="color:var(--ink); font-weight:500">Dermapixel R0</b></div>
+      </div>
+      <div class="divleft">
+        <div class="eyebrow">Dataset grande</div>
+        <div style="margin-top:18px">
+          <div class="li"><span class="mark-v">✓</span>&nbsp;&nbsp;Fine-tuning — rendimiento máximo</div>
+        </div>
+        <div class="muted" style="margin-top:22px; font-size:15px">HAM10000 +47,1 pp · PAD-UFES +19,4 pp</div>
+      </div>
+    </div></div>
+    <div class="pageno mono">15</div>
+  </section>
+
+  <!-- ═══ Slide 15 · Resultado 4 · Segmentación ═══ -->
+  <section class="slide" data-notes="Segmentar la lesión. Adaptando solo el decodificador de SAM2 llegamos a un Dice de 0,947 en ISIC2018, superando la referencia previa, y generaliza sin reentrenar a otros dos datasets. Comparamos cinco arquitecturas: la mejor, MedSAM2-tiny, con Dice 0,9556 en solo 26 milisegundos. Pero el hallazgo más interesante no fue qué arquitectura ganaba.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 4 · Segmentación</div>
+      <h2>Adaptación eficiente con SAM2.</h2></div>
+    <div class="body"><div class="split" style="gap:44px; align-items:center">
+      <div class="txt" style="flex:0 0 27%">
+        <div class="stat"><div class="v">0,947</div><div class="k">Dice ISIC2018 · supera la referencia</div></div>
+        <div class="stat" style="margin-top:24px"><div class="v" style="font-size:50px">0,9556<small> · 26 ms</small></div><div class="k">MedSAM2-tiny</div></div>
+        <div class="stat" style="margin-top:24px"><div class="v" style="font-size:50px">0,945 / 0,960</div><div class="k">generaliza · ISIC2017 / PH2</div></div>
+        <div class="muted serif" style="margin-top:30px; font-size:17px">…pero el hallazgo no fue qué arquitectura ganaba.</div>
+      </div>
+      <div style="flex:1">
+        <div class="segrid">
+          <div></div>
+          <div class="sh">Imagen + caja</div><div class="sh">MedSAM2-tiny</div><div class="sh">SAM2.1-Large</div><div class="sh">SAM2 zero-shot</div>
+          <div class="sr">In-domain<br><span style="color:var(--ink400)">ISIC2018</span></div>
+          <div class="scell"><img src="assets/seg/id_0.png" alt=""></div>
+          <div class="scell"><img src="assets/seg/id_1.png" alt=""><span class="sd">0,985</span></div>
+          <div class="scell"><img src="assets/seg/id_2.png" alt=""><span class="sd">0,980</span></div>
+          <div class="scell"><img src="assets/seg/id_3.png" alt=""><span class="sd">0,933</span></div>
+          <div class="sr">Fuera de dominio<br><span style="color:var(--ink400)">ISIC2017</span></div>
+          <div class="scell"><img src="assets/seg/ood_0.png" alt=""></div>
+          <div class="scell"><img src="assets/seg/ood_1.png" alt=""><span class="sd">0,970</span></div>
+          <div class="scell"><img src="assets/seg/ood_2.png" alt=""><span class="sd">0,979</span></div>
+          <div class="scell"><img src="assets/seg/ood_3.png" alt=""><span class="sd">0,946</span></div>
+        </div>
+        <div class="cap" style="margin-top:14px"><span style="color:#cc3333">rojo</span> = predicho · <span style="color:#2e9e4f">verde</span> = referencia · <span style="color:#d9a021">amarillo</span> = caja-prompt</div>
+      </div>
+    </div></div>
+    <div class="pageno mono">16</div>
+  </section>
+
+  <!-- ═══ Slide 16 · Resultado 5 · La caja ═══ -->
+  <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso SAM2 es el segmentador del prototipo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 5 · Segmentación</div>
+      <h2>Lo que gobierna el rendimiento es la caja, no la arquitectura.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
+      <div class="split" style="gap:54px; align-items:center">
+        <div style="flex:1">
+          <div class="eyebrow" style="margin-bottom:16px">Qué factor pesa</div>
+          <div class="bc" style="max-width:none">
+            <div class="row"><div class="name">Arquitectura</div><div class="fill" style="width:13%"></div><div class="val">+1 pp</div></div>
+            <div class="row"><div class="name">Preentrenamiento médico</div><div class="fill" style="width:13%"></div><div class="val">+1 pp</div></div>
+            <div class="row"><div class="name">Quitar la caja</div><div class="fill hi" style="width:100%"></div><div class="val">−7,5 pp</div></div>
+          </div>
+        </div>
+        <div style="flex:0 0 42%">
+          <div class="eyebrow" style="margin-bottom:6px">Robustez de la caja-prompt</div>
+          <svg class="chart" viewBox="0 0 380 214" role="img" aria-label="Dice vs escala de la caja">
+            <line class="ax" x1="46" y1="20" x2="46" y2="178"/>
+            <line class="ax" x1="46" y1="178" x2="352" y2="178"/>
+            <polyline class="cv" points="60,160 150,88 240,32 330,56"/>
+            <circle class="dot" cx="240" cy="32" r="5"/>
+            <circle class="dot" cx="60" cy="160" r="3"/>
+            <text class="glab" x="240" y="24" text-anchor="middle">ref · 0,9556</text>
+            <text class="glab" x="60" y="176" text-anchor="middle">0,802</text>
+            <text class="glab" x="60" y="196" text-anchor="middle">−20%</text>
+            <text class="glab" x="150" y="196" text-anchor="middle">−10%</text>
+            <text class="glab" x="240" y="196" text-anchor="middle">0</text>
+            <text class="glab" x="330" y="196" text-anchor="middle">+10%</text>
+            <text class="glab" x="41" y="24" text-anchor="end" fill="#a3a3a3">Dice</text>
+          </svg>
+          <div class="cap" style="margin-top:4px">Apretar → catastrófico · aflojar → benigno (asimétrico)</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:48px; align-items:baseline; flex-wrap:wrap">
+        <div class="muted" style="font-size:16px">Modelo vs consenso experto <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; dermatólogo vs dermatólogo 0,728 · jitter ±20 px inocuo (−0,86 pp)</div>
+        <span class="tag">SAM2 → prototipo · M2</span>
+      </div>
+    </div>
+    <div class="pageno mono">17</div>
+  </section>
+
+  <!-- ═══ Slide 17 · Resultado 6 · Texto e idioma ═══ -->
+  <section class="slide" data-notes="El papel del texto, en zero-shot. Manteniendo la misma imagen y el mismo encoder visual, modificamos solo la rama textual, y la AUROC pasó de 0,366 a 0,854, casi 49 puntos. El cuello de botella puede estar tanto en la imagen como en la alineación imagen-texto. Y pega en el español: como el texto se entrenó en inglés, el castellano queda peor alineado. En un carcinoma real, con etiquetas en español el modelo priorizaba melanoma; traducidas al inglés, misma imagen, acertaba. La imagen nunca cambió: cambió el idioma con el que la describíamos.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 6 · Zero-shot</div>
+      <h2>El texto también importa.</h2></div>
+    <div class="body" style="gap:84px; align-items:center">
+      <div>
+        <div class="ladder" style="max-width:470px">
+          <div class="step"><div class="pct" style="font-size:38px; width:120px">0,366</div><div class="nm">prompts genéricos + PubMedBERT</div></div>
+          <div class="step"><div class="pct" style="font-size:38px; width:120px">0,516</div><div class="nm">prompts clínicos (Derm1M) + PubMedBERT</div></div>
+          <div class="step"><div class="pct" style="font-size:38px; width:120px; color:var(--ink)">0,854</div><div class="nm">prompts clínicos (Derm1M) + GPT-2 / CLIP</div></div>
+        </div>
+        <div class="muted" style="margin-top:16px; font-size:15px">misma imagen · solo cambia la rama textual → <b style="color:var(--ink)">+48,8 pp</b></div>
+        <div class="muted" style="margin-top:8px; font-size:13px">«clínicos» = envoltorio clínico de 8–15 palabras + 1 rasgo · «genéricos» = etiqueta desnuda</div>
+      </div>
+      <div>
+        <div class="biglead" style="font-size:27px; max-width:18ch">La imagen nunca cambió: cambió <span class="serif">el idioma con el que la describíamos</span>.</div>
+        <div class="muted" style="margin-top:18px; font-size:16px">Carcinoma real · ES → 2.ª opción · EN → 1.ª opción</div>
+      </div>
+    </div>
+    <div class="pageno mono">18</div>
+  </section>
+
+  <!-- ═══ Slide 18 · Resultado 7 · LLMs ═══ -->
+  <section class="slide" data-notes="¿Compiten los grandes modelos multimodales con los especialistas? En el escenario evaluado, no. Sobre HAM10000, el mejor especialista alcanza 92% de accuracy; el mejor generalista en zero-shot, un 49%. Adaptar MedGemma con LoRA sube casi catorce puntos, pero se queda once por debajo. Lo que marca la diferencia no es tener más parámetros, sino haber aprendido dermatología. Por eso, en el prototipo, el modelo fundacional clasifica y el modelo de lenguaje solo explica y apoya. Cada modelo tiene su papel.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 7 · Especialistas vs generalistas</div>
+      <h2>¿Puede un LLM sustituir a un modelo especializado?</h2></div>
+    <div class="body" style="gap:64px; align-items:center">
+      <div style="flex:1">
+        <div class="eyebrow" style="margin-bottom:16px">Accuracy sobre HAM10000</div>
+        <div class="mrank">
+          <div class="mrow">
+            <div class="ml"><div class="mn">PanDerm Base</div><div class="md">especialista · FT + TTA</div></div>
+            <div class="mtrack"><div class="mfill" style="width:92%; background:var(--ink)"></div></div>
+            <div class="mv mono">0,920</div>
+          </div>
+          <div class="mrow">
+            <div class="ml"><div class="mn">MedGemma 27B + LoRA</div><div class="md">generalista adaptado al dominio</div></div>
+            <div class="mtrack"><div class="mfill" style="width:80.2%; background:var(--ink700)"></div></div>
+            <div class="mv mono">0,802</div>
+          </div>
+          <div class="mrow">
+            <div class="ml"><div class="mn">MedGemma 27B</div><div class="md">generalista · zero-shot</div></div>
+            <div class="mtrack"><div class="mfill" style="width:66.5%; background:var(--ink500)"></div></div>
+            <div class="mv mono">0,665</div>
+          </div>
+          <div class="mrow">
+            <div class="ml"><div class="mn">GPT-4o</div><div class="md">mejor generalista · zero-shot</div></div>
+            <div class="mtrack"><div class="mfill" style="width:48.5%; background:var(--ink500)"></div></div>
+            <div class="mv mono">0,485</div>
+          </div>
+          <div class="mrow">
+            <div class="ml"><div class="mn">BLIP-2 · InstructBLIP</div><div class="md">generalista · zero-shot</div></div>
+            <div class="mtrack"><div class="mfill" style="width:2%; background:var(--ink300)"></div></div>
+            <div class="mv mono">≈0,02</div>
+          </div>
+        </div>
+        <div class="muted" style="margin-top:16px; font-size:13px">Barra negra = especialista · grises = generalistas · las cifras comerciales son un punto de comparación, no el techo del sistema</div>
+      </div>
+      <div style="flex:0 0 27%">
+        <div class="biglead" style="font-size:28px; max-width:14ch">Más parámetros <span class="serif">≠</span> mejor rendimiento clínico.</div>
+        <div class="muted" style="margin-top:20px; font-size:16px; line-height:1.5"><b style="color:var(--ink); font-weight:600">43,5 pp</b> separan al mejor especialista del mejor generalista.</div>
+        <div class="muted" style="margin-top:12px; font-size:16px; line-height:1.5">La adaptación (LoRA) gana <b style="color:var(--ink); font-weight:500">+13,7 pp</b> — aún <b style="color:var(--ink); font-weight:500">−11,8 pp</b> por debajo.</div>
+        <div class="muted" style="margin-top:12px; font-size:16px; line-height:1.5">Decide haber aprendido dermatología, no la escala bruta.</div>
+      </div>
+    </div>
+    <div class="pageno mono">19</div>
+  </section>
+
+  <!-- ═══ Slide 19 · Resultado 8 · Equidad + DeLong ═══ -->
+  <section class="slide" data-notes="Equidad y rigor estadístico. Medimos el rendimiento por fototipo sobre Fitzpatrick17k: todos empeoran en pieles oscuras. La paradoja: BiomedCLIP tiene el menor gap y a la vez es el peor modelo global; puede parecer equitativo porque es igual de malo en todos los grupos. El gap solo no mide equidad. Y aplicamos el test de DeLong sobre malignidad: es una prueba estadística que compara la AUROC de dos modelos sobre los mismos casos y nos dice si la diferencia entre ellos es real o puede deberse al azar. El resultado: PanDerm Large y DermLIP v2 no se distinguen entre sí, pero ambos superan significativamente a los generalistas. En los datasets pequeños falta potencia, que no es lo mismo que ausencia de efecto. En IA médica no basta una métrica: hay que interpretar el conjunto de la evidencia.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 8 · Equidad y estadística</div>
+      <h2>Equidad y validación estadística.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
+      <div class="halfs" style="align-items:center">
+        <div>
+          <svg class="chart" viewBox="0 0 380 214" role="img" aria-label="BAcc por fototipo">
+            <line class="ax" x1="40" y1="20" x2="40" y2="175"/>
+            <line class="ax" x1="40" y1="175" x2="345" y2="175"/>
+            <polyline class="cv" points="40,50 100,56 160,42 220,71 280,110 340,134"/>
+            <polyline class="cv2" points="40,110 100,97 160,95 220,111 280,101 340,158"/>
+            <text class="glab" x="40" y="192" text-anchor="middle">I</text>
+            <text class="glab" x="100" y="192" text-anchor="middle">II</text>
+            <text class="glab" x="160" y="192" text-anchor="middle">III</text>
+            <text class="glab" x="220" y="192" text-anchor="middle">IV</text>
+            <text class="glab" x="280" y="192" text-anchor="middle">V</text>
+            <text class="glab" x="340" y="192" text-anchor="middle">VI</text>
+            <text class="glab" x="35" y="24" text-anchor="end" fill="#a3a3a3">BAcc</text>
+          </svg>
+          <div class="legend"><span><i class="s1"></i>PanDerm Large</span><span><i class="s2"></i>BiomedCLIP</span></div>
+          <div class="cap" style="margin-top:10px">BAcc por fototipo I→VI (Fitzpatrick17k) · <b style="color:var(--ink)">plano ≠ bueno</b></div>
+        </div>
+        <div class="divleft">
+          <div class="eyebrow">Paradoja BiomedCLIP</div>
+          <div class="muted" style="margin-top:12px; font-size:17px; line-height:1.45">El <b style="color:var(--ink)">menor gap</b> entre fototipos… y a la vez el <b style="color:var(--ink)">peor modelo</b>. El gap solo no mide equidad.</div>
+          <div class="eyebrow" style="margin-top:24px">Test de DeLong · malignidad</div>
+          <div class="muted" style="margin-top:8px; font-size:14px; line-height:1.4">Compara la <b style="color:var(--ink)">AUROC de dos modelos sobre los mismos casos</b> y dice si su diferencia es <b style="color:var(--ink)">estadísticamente real</b> o puede deberse al azar.</div>
+          <div class="muted" style="margin-top:11px; font-size:17px; line-height:1.45"><b style="color:var(--ink)">PanDerm ≈ DermLIP</b> (sin diferencia significativa) · ambos <b style="color:var(--ink)">&gt; generalistas</b>.</div>
+        </div>
+      </div>
+      <div class="lead" style="font-size:21px; max-width:none">En IA médica no basta una métrica: <b style="font-weight:600">hay que interpretar el conjunto de la evidencia</b>.</div>
+    </div>
+    <div class="pageno mono">20</div>
+  </section>
+
+  <!-- ═══ Slide 20 · Resultado 9 · Interpretabilidad ═══ -->
+  <section class="slide" data-notes="Interpretabilidad. Con un Sparse Autoencoder descomponemos la representación de PanDerm en más de dieciséis mil features latentes. Sin supervisión, muchas se alinean con criterios de la Lista de los Siete Puntos: el modelo ha aprendido conceptos dermatológicos sin que nadie se los enseñe. Por ejemplo, el feature 2040 se activa justo en las imágenes con retículo pigmentado, el 4740 en las estructuras vasculares. Usándolos como Concept Bottleneck, deja de ser una caja negra y razona con conceptos que el dermatólogo puede inspeccionar. Y con un ajuste multitarea mantiene la AUROC en 0,891 frente a 0,890: explicar no empeora el resultado. Este vocabulario ya está definido con la Dra. Taberner e integrado en el prototipo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultado 9 · Interpretabilidad</div>
+      <h2>¿Qué ha aprendido el modelo?</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
+      <div class="chain">
+        <span class="node dark">PanDerm</span><span class="arr">→</span>
+        <span class="node">Sparse Autoencoder</span><span class="arr">→</span>
+        <span class="node">conceptos latentes</span><span class="arr">→</span>
+        <span class="node">Concept Bottleneck</span><span class="arr">→</span>
+        <span class="node">7 criterios</span><span class="arr">→</span>
+        <span class="node dark">diagnóstico</span>
+      </div>
+      <div style="display:flex; gap:50px; align-items:center">
+        <div>
+          <div class="eyebrow">Ejemplo · un feature del SAE = un concepto clínico</div>
+          <div style="display:flex; align-items:center; gap:16px; margin-top:14px">
+            <div style="width:186px; flex:none">
+              <div class="lead" style="font-size:19px">Retículo pigmentado</div>
+              <div class="mono" style="font-size:12px; color:var(--ink500); margin-top:2px">feature #2040 · AUROC 0,742</div>
+            </div>
+            <img src="assets/sae_1.png" style="width:104px; height:104px; object-fit:cover; display:block">
+            <img src="assets/sae_2.png" style="width:104px; height:104px; object-fit:cover; display:block">
+            <img src="assets/sae_3.png" style="width:104px; height:104px; object-fit:cover; display:block">
+          </div>
+          <div style="display:flex; align-items:center; gap:16px; margin-top:16px">
+            <div style="width:186px; flex:none">
+              <div class="lead" style="font-size:19px">Velo azul-blanquecino</div>
+              <div class="mono" style="font-size:12px; color:var(--ink500); margin-top:2px">feature #14541 · AUROC 0,722</div>
+            </div>
+            <img src="assets/velo_1.png" style="width:104px; height:104px; object-fit:cover; display:block">
+            <img src="assets/velo_2.png" style="width:104px; height:104px; object-fit:cover; display:block">
+            <img src="assets/velo_3.png" style="width:104px; height:104px; object-fit:cover; display:block">
+          </div>
+          <div class="muted" style="margin-top:15px; font-size:14px; max-width:56ch">Cada feature se activa en imágenes que comparten el concepto <b style="color:var(--ink)">sin que nadie se lo enseñara</b> — alineadas con el Derm7pt (retículo y velo presentes ✓).</div>
+        </div>
+        <div class="divleft">
+          <div class="stat"><div class="v" style="font-size:40px">0,891 ≈ 0,890</div><div class="k">multitarea vs convencional</div></div>
+          <div class="biglead" style="font-size:23px; max-width:13ch; margin-top:20px">Explicar <span class="serif">no empeora el resultado</span>.</div>
+        </div>
+      </div>
+    </div>
+    <div class="pageno mono">21</div>
+  </section>
+
+  <!-- ═══ Slide 21 · Contribuciones ═══ -->
+  <section class="slide" data-notes="Además de evaluar, el trabajo aporta tres cosas propias. DermapixelAI 1.0: un dataset clínico en español, multimodal —imagen, texto y caso—, 672 casos y 1.089 imágenes, auditado y liberado. Dermapixel R0: la adaptación de PanDerm al castellano con LoRA, entrenando solo el 0,17% de los parámetros, que iguala a DermLIP en subcategoría; valida que con pocos datos las adaptaciones eficientes ganan al fine-tuning. Y la tercera, honesta: la búsqueda por texto en español es viable pero aún no generaliza; no falla el método, faltan datos. En conjunto, transforman un benchmark en una plataforma. Y a medio plazo, estas piezas encajan en un sistema de IA agéntica: varios agentes especializados que trabajan en paralelo y se combinan bajo control del médico, en lugar de delegar todo en un único modelo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">De evaluar a crear</div>
+      <h2 class="biglead">No propone un modelo más; propone una <span class="serif">plataforma</span>.</h2></div>
+    <div class="body"><div class="cols3">
+      <div><div class="eyebrow">DermapixelAI 1.0</div><div style="margin-top:14px">
+        <div class="li" style="font-size:17px; margin:8px 0">Dataset multimodal en español</div>
+        <div class="li" style="font-size:17px; margin:8px 0">672 casos · 1.089 imágenes</div>
+        <div class="li" style="font-size:17px; margin:8px 0">Auditado · licencia abierta</div></div></div>
+      <div class="divleft"><div class="eyebrow">Dermapixel R0</div><div style="margin-top:14px">
+        <div class="li" style="font-size:17px; margin:8px 0">Adaptación al español con LoRA</div>
+        <div class="li" style="font-size:17px; margin:8px 0">Solo 0,17% de parámetros</div>
+        <div class="li" style="font-size:17px; margin:8px 0">≈ DermLIP v2</div></div></div>
+      <div class="divleft"><div class="eyebrow">Próximo paso</div><div style="margin-top:14px">
+        <div class="li" style="font-size:17px; margin:8px 0">Retrieval clínico en español</div>
+        <div class="li" style="font-size:17px; margin:8px 0">Banco del hospital</div>
+        <div class="li" style="font-size:17px; margin:8px 0">El límite es el dato, no el método</div>
+        <div class="muted" style="margin-top:16px; font-size:13px; line-height:1.45">Horizonte: una <b style="color:var(--ink)">IA agéntica</b> —varios agentes especializados, verificables y combinados bajo control médico— con rama multimodal en español.</div></div></div>
+    </div></div>
+    <div class="pageno mono">22</div>
+  </section>
+
+  <!-- ═══ Slide 22 · Conclusiones ═══ -->
+  <section class="slide" data-notes="Si resumo el trabajo en tres ideas: no existe un modelo universalmente superior; una vez maduros los encoders, el cuello de botella deja de ser la arquitectura y pasa a ser el dato; y los modelos ya empiezan a aprender conceptos clínicos que podemos interpretar: el SAE alinea 32 conceptos de SkinCon sin supervisión, y con la Dra. Taberner construimos un vocabulario dermatoscópico propio de 37 estructuras por 15 diagnósticos. Con ello cumplo los tres objetivos. Y en una idea: los modelos fundacionales han cambiado la pregunta —el reto ya no es modelos más grandes, sino mejores datos. Por eso el trabajo no termina como un benchmark, sino como una plataforma abierta. Y esa plataforma es el prototipo que os enseño ahora.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Conclusiones de la investigación</div>
+      <h2>Tres descubrimientos.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:24px">
+      <div class="cols2" style="align-items:start; gap:48px">
+        <div>
+          <div class="li" style="font-size:22px; margin:0"><b>1</b> &nbsp; No existe un modelo universal.</div>
+          <div class="li" style="font-size:22px; margin:18px 0 0"><b>2</b> &nbsp; El cuello de botella son los datos, no la arquitectura.</div>
+          <div class="li" style="font-size:22px; margin:18px 0 0"><b>3</b> &nbsp; La IA empieza a ser explicable.</div>
+        </div>
+        <div class="divleft">
+          <div class="eyebrow">Descubrimiento 3 · el vocabulario que lo hace posible</div>
+          <div style="display:flex; gap:24px; margin-top:14px; align-items:flex-start">
+            <div style="flex:1">
+              <div class="muted" style="font-size:15px; line-height:1.5"><b style="color:var(--ink)">16.384</b> features del SAE → <b style="color:var(--ink)">32 conceptos</b> de SkinCon, alineados <b style="color:var(--ink)">sin supervisión</b>.</div>
+              <div class="muted" style="font-size:15px; line-height:1.5; margin-top:12px">+ una clasificación dermatoscópica propia con la <b style="color:var(--ink)">Dra. Taberner</b>: <b style="color:var(--ink)">37 estructuras × 15 diagnósticos</b>.</div>
+              <div class="muted mono" style="font-size:11px; margin-top:14px; line-height:1.6">Melanocíticas · Queratinocíticas<br>Vasculares · Infecciosas</div>
+            </div>
+            <img src="assets/rosa_mini.png" style="height:176px; width:auto; display:block; flex:none">
+          </div>
+        </div>
+      </div>
+      <div class="announce" style="max-width:none"><span class="lbl">La idea que reaparece</span>Los modelos fundacionales cambian la tecnología; <b>los datos cambian la medicina</b>.</div>
+    </div>
+    <div class="pageno mono">23</div>
+  </section>
+
+  <!-- ═══ Slide 23 · Del benchmark al producto ═══ -->
+  <section class="slide" data-notes="Hasta ahora hablé de investigación. Quería comprobar si ese conocimiento podía trasladarse a un sistema real. Ese sistema es Dermapixel, en dermapixel.eu. Un único apunte de arquitectura: está desacoplada —el backend nunca ejecuta modelos; toda la inferencia ocurre en un servidor GPU independiente. Así, si la GPU falla, el servicio se degrada con elegancia en lugar de caerse. Y cada estudio queda auditado. Está construido con un stack estándar y reproducible —Vue, FastAPI, Docker, RabbitMQ, MySQL— sobre el servidor DGX Spark.">
+
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Del benchmark al producto</div>
+      <h2>La investigación, en un sistema real.</h2></div>
+    <div class="body" style="gap:56px; align-items:stretch">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
+        <div class="arch">
+          <span class="box">Frontend web</span><span class="sep">→</span>
+          <span class="box">Backend<br><small style="color:var(--ink500); font-size:12px">nunca ejecuta modelos</small></span><span class="sep">— red privada →</span>
+          <span class="box gpu">Servidor GPU<br><small style="font-size:12px; opacity:.75">inferencia · 11 módulos</small></span>
+        </div>
+        <div class="lead" style="font-size:21px; max-width:42ch; margin-top:40px">Arquitectura <b style="font-weight:600">desacoplada y resiliente</b>: si la GPU falla, el servicio se degrada con elegancia. Cada estudio, auditado.</div>
+      </div>
+      <div class="divleft" style="flex:0 0 33%">
+        <div class="eyebrow">Stack tecnológico</div>
+        <div class="stackgrp"><div class="gl">Frontend</div><div class="chips">
+          <span class="tag sm">Vue 3</span><span class="tag sm">Vite</span><span class="tag sm">Tailwind CSS</span></div></div>
+        <div class="stackgrp"><div class="gl">Backend</div><div class="chips">
+          <span class="tag sm">FastAPI</span><span class="tag sm">Uvicorn</span><span class="tag sm">SQLAlchemy</span><span class="tag sm">Docker Compose</span></div></div>
+        <div class="stackgrp"><div class="gl">Datos · mensajería</div><div class="chips">
+          <span class="tag sm">MySQL 8</span><span class="tag sm">FAISS</span><span class="tag sm">RabbitMQ</span><span class="tag sm">AMQP</span><span class="tag sm">RPC</span></div></div>
+        <div class="stackgrp"><div class="gl">Infraestructura</div><div class="chips">
+          <span class="tag sm">Nginx</span><span class="tag sm">DGX Spark · GB10</span><span class="tag sm">PyTorch</span><span class="tag sm">Ollama</span></div></div>
+        <div class="stackgrp"><div class="gl">Seguridad · trazabilidad</div><div class="chips">
+          <span class="tag sm">Auditoría por estudio</span><span class="tag sm">orientado a ENS</span></div></div>
+      </div>
+    </div>
+    <div class="pageno mono">24</div>
+  </section>
+
+  <!-- ═══ Slide 24 · Los 11 módulos ═══ -->
+  <section class="slide" data-notes="El prototipo integra once módulos de inteligencia artificial, muchos desarrollados en este trabajo. No los recorro uno a uno: los vais a ver funcionando en un caso real dentro de un momento.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">El prototipo · DermApIxel</div>
+      <h2>Once módulos de IA — muchos de este trabajo.</h2></div>
+    <div class="body"><div class="modgrid">
+      <div class="m"><div class="mn">M11</div><div class="md">Ensemble por consenso</div></div>
+      <div class="m"><div class="mn">M1 · M7</div><div class="md">Clasificación jerárquica</div></div>
+      <div class="m"><div class="mn">M2</div><div class="md">Segmentación · U-Net → MedSAM2</div></div>
+      <div class="m"><div class="mn">M9</div><div class="md">Dermapixel R0 · español (LoRA)</div></div>
+      <div class="m"><div class="mn">M10</div><div class="md">Lista de los 7 puntos</div></div>
+      <div class="m"><div class="mn">M4-bis</div><div class="md">Casos similares del archivo</div></div>
+      <div class="m"><div class="mn">M5</div><div class="md">Razonamiento clínico · LLM</div></div>
+      <div class="m"><div class="mn">M3 · M6</div><div class="md">Interpretabilidad SAE · zero-shot</div></div>
+    </div></div>
+    <div class="muted serif" style="position:absolute; left:84px; bottom:40px; font-size:18px">No los recorro uno a uno — los vais a ver funcionando.</div>
+    <div class="pageno mono">25</div>
+  </section>
+
+  <!-- ═══ Slide 25 · El veredicto ═══ -->
+  <section class="slide" data-notes="El médico sube una foto y en segundos recibe un veredicto. Tres ideas: no lo genera un modelo de lenguaje, es una síntesis determinista y auditable del consenso de cinco clasificadores, y nunca rebaja la urgencia. El diagnóstico es jerárquico y coherente, L1, L2, L3. Y cuando los módulos discrepan, lo dice: no oculta la incertidumbre, la muestra y recomienda valoración presencial.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">La demostración · el veredicto</div>
+      <h2 style="font-size:38px">Consenso determinista, jerárquico y honesto con la incertidumbre.</h2></div>
+    <div class="body"><div class="split">
+      <div class="txt">
+        <div class="check">Veredicto <b>determinista y auditable</b> — no lo genera un LLM</div>
+        <div class="check">Consenso de <b>5 clasificadores</b> · diagnóstico L1/L2/L3 coherente</div>
+        <div class="check">Si los módulos discrepan, <b>lo avisa</b> — muestra la incertidumbre</div>
+      </div>
+      <div class="pic"><div class="picwrap"><img src="assets/proto_consenso.png" alt="Veredicto de consenso"></div></div>
+    </div></div>
+    <div class="pageno mono">26</div>
+  </section>
+
+  <!-- ═══ Slide 26 · La investigación, funcionando ═══ -->
+  <section class="slide" data-notes="Aquí veis la investigación funcionando. La segmentación aplica el hallazgo de la caja: una U-Net localiza la lesión y MedSAM2 traza la máscara, que el clínico acepta o corrige. Y el sistema recupera casos parecidos del propio archivo de la Dra. Taberner, por similitud visual, con su diagnóstico y su texto. Un detalle coherente: desplegamos la búsqueda imagen-imagen, no la contrastiva por texto, porque esa todavía no generaliza. La investigación decide qué se despliega.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">La investigación, funcionando</div>
+      <h2 style="font-size:36px">Segmentación y casos similares — lo evaluado, en producción.</h2></div>
+    <div class="body"><div class="two">
+      <div><div class="picwrap"><img src="assets/proto_seg.png" alt="Segmentación"></div><div class="cap">Segmentación · U-Net → MedSAM2</div></div>
+      <div><div class="picwrap"><img src="assets/proto_ragES.png" alt="Casos similares"></div><div class="cap">Casos similares del archivo · M4-bis</div></div>
+    </div></div>
+    <div class="pageno mono">27</div>
+  </section>
+
+  <!-- ═══ Slide 27 · Explicabilidad y garantías ═══ -->
+  <section class="slide" data-notes="Sobre el veredicto, un modelo de lenguaje añade el razonamiento clínico, con una regla innegociable: la IA puede subir la urgencia, nunca bajarla; asiste, no decide. Responde con recuperación aumentada sobre el archivo, citando siempre sus fuentes. Y el experto valida y anota cada caso, que realimenta el entrenamiento. El sistema está diseñado con criterios de seguridad clínica y trazabilidad, no solo de precisión. No pretende sustituir al dermatólogo: aprende de él.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Explicabilidad y seguridad clínica</div>
+      <h2 style="font-size:38px">La IA asiste; no decide.</h2></div>
+    <div class="body"><div class="split">
+      <div class="txt">
+        <div class="check"><b>La urgencia nunca baja por IA</b> — solo puede subir</div>
+        <div class="check">RAG sobre el archivo, <b>citando siempre sus fuentes</b></div>
+        <div class="check">El experto valida y anota → <b>aprendizaje activo</b></div>
+        <div class="muted" style="margin-top:18px; font-size:16px">Diseñado con criterios de seguridad clínica y trazabilidad, no solo de precisión.</div>
+      </div>
+      <div class="pic"><div class="picwrap"><img src="assets/proto_razonamiento.png" alt="Razonamiento clínico"></div></div>
+    </div></div>
+    <div class="pageno mono">28</div>
+  </section>
+
+  <!-- ═══ Slide 28 · DEMOSTRACIÓN EN VIVO ═══ -->
+  <section class="slide" data-notes="RUNBOOK. Flujo A (web): subir melanoma → segmenta → veredicto (consenso + L1/L2/L3) → casos similares → razonamiento. Flujo B (voz + móvil): por voz, ¿qué medicación se usa para el melanoma? → responde → quiero enviar una foto → el sistema abre un formulario y sincroniza con el móvil → envío la foto → diagnóstico en el mismo hilo. Cierre: todo esto usa por dentro los modelos evaluados en la primera parte. RED DE SEGURIDAD: vídeo backup en pestaña contigua; hotspot propio; si a los 10 segundos algo falla, salto al vídeo sin dramatismo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head" style="margin-bottom:14px"><div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap">
+      <div class="kicker" style="margin-bottom:0">La demostración · en vivo</div>
+      <span class="tag sm">dermapixel.eu</span><span class="tag sm">voz</span><span class="tag sm">móvil</span>
+    </div></div>
+    <div class="body" style="justify-content:center; align-items:center">
+      <video src="assets/TFGEPS0270VIDEOUI_web.mp4" controls playsinline preload="metadata"
+             style="height:100%; max-height:520px; width:auto; max-width:100%; border-radius:10px; display:block; background:#000; box-shadow:0 12px 40px rgba(0,0,0,.18)"></video>
+    </div>
+    <div class="pageno mono">29</div>
+  </section>
+
+  <!-- ═══ Slide 29 · Cierre ═══ -->
+  <section class="slide" data-notes="El proyecto recibió la Beca de Innovación e IA de la Academia Española de Dermatología, diez mil euros, como validación externa. Las líneas futuras apuntan todas a lo mismo: mejores datos. Y una reflexión personal: al empezar pensaba que la pregunta era cuál era el mejor modelo; después de más de un año comparándolos, creo que la pregunta correcta es cómo construimos mejores datos para que esos modelos ayuden de verdad a los clínicos. La tecnología cambiará; pero ningún modelo sustituirá nunca a unos datos de calidad, ni al conocimiento del especialista que los construye. Gracias al Dr. Varona, a la Dra. Taberner, al Dr. Siyuan Yan y al Dr. Llambrich. Muchas gracias por su atención.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Cierre</div>
+      <h2 class="biglead" style="font-size:37px; max-width:30ch">Ningún modelo sustituirá nunca a unos <span class="serif">datos de calidad</span>, ni al conocimiento del especialista que los construye.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:flex-end; gap:22px">
+      <div class="muted" style="font-size:17px">Beca de Innovación e IA · Academia Española de Dermatología (10.000 €) — validación externa del proyecto.</div>
+      <hr class="rule">
+      <div class="meta" style="grid-template-columns:repeat(4,1fr); gap:16px 40px">
+        <div><div class="k">Dirección</div><div class="v" style="font-size:15px">Dr. Javier Varona</div></div>
+        <div><div class="k">Archivo Dermapixel</div><div class="v" style="font-size:15px">Dra. Rosa Taberner</div></div>
+        <div><div class="k">PanDerm · DermLIP</div><div class="v" style="font-size:15px">Dr. Siyuan Yan · Monash</div></div>
+        <div><div class="k">Nuevo dataset</div><div class="v" style="font-size:15px">Dr. Alex Llambrich</div></div>
+      </div>
+      <div class="muted mono" style="font-size:12px; margin-top:4px">Gracias por su atención · Quedo a su disposición para las preguntas</div>
+    </div>
+    <div class="pageno mono">30</div>
+  </section>
+
+</div>
+
+<div class="hud">
+  <button id="prev">◀</button>
+  <span id="count">01 / 02</span>
+  <button id="next">▶</button>
+  <span id="timer" title="Cronómetro (T = reiniciar)">00:00</span>
+  <button id="notesBtn" title="Notas del ponente (N)">Notas</button>
+  <button id="fs" title="Pantalla completa (F)">⤢</button>
+</div>
+
+<aside id="notes">
+  <div class="nlabel">Locución · <span id="nnum"></span> · <span id="ntimer">00:00</span></div>
+  <div id="ntext"></div>
+  <div class="nnext" id="nnext"></div>
+</aside>
+
+<script>
+  const deck   = document.getElementById('deck');
+  const slides = [...document.querySelectorAll('.slide')];
+  const count  = document.getElementById('count');
+  const notes  = document.getElementById('notes');
+  const ntext  = document.getElementById('ntext');
+  const nnum   = document.getElementById('nnum');
+  let i = 0;
+  const pad = n => String(n).padStart(2,'0');
+
+  // ── Cyclers: elementos que aparecen/desaparecen (solo en la slide activa) ──
+  let cyc = [], imgcyc = [], cycT = null;
+  function stopCyc(){ if(cycT){ clearInterval(cycT); cycT=null; } }
+  function startCyc(slide){
+    stopCyc();
+    cyc = [...slide.querySelectorAll('.cycler')].map(el=>({el, items:el.dataset.items.split('|'), k:0}));
+    imgcyc = [...slide.querySelectorAll('.imgcyc')].map(el=>{
+      const imgs=[...el.querySelectorAll('img')];
+      imgs.forEach((im,idx)=>im.classList.toggle('on', idx===0));
+      return {imgs, k:0};
+    });
+    if(!cyc.length && !imgcyc.length) return;
+    cycT = setInterval(()=>{
+      cyc.forEach(c=>c.el.classList.add('out'));
+      setTimeout(()=>cyc.forEach(c=>{
+        c.k = (c.k+1) % c.items.length;
+        c.el.textContent = c.items[c.k];
+        c.el.classList.remove('out');
+      }), 450);
+      imgcyc.forEach(c=>{
+        if(c.imgs.length < 2) return;
+        c.imgs[c.k].classList.remove('on');
+        c.k = (c.k+1) % c.imgs.length;
+        c.imgs[c.k].classList.add('on');
+      });
+    }, 2100);
+  }
+
+  function render(){
+    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
+    count.textContent = pad(i+1)+' / '+pad(slides.length);
+    nnum.textContent  = pad(i+1)+' / '+pad(slides.length);
+    ntext.innerHTML   = slides[i].dataset.notes || '<i style="color:#666">(sin notas)</i>';
+    const nx = slides[i+1];
+    const nxt = nx ? ((nx.querySelector('h2, .brand')?.textContent) || 'siguiente').trim() : '— fin de la presentación —';
+    document.getElementById('nnext').textContent = 'Siguiente ▸ ' + nxt;
+    startCyc(slides[i]);
+    // Vídeo: reproducir en la slide activa, pausar el resto
+    slides.forEach((s,k)=>{ const v=s.querySelector('video'); if(v && k!==i){ v.pause(); } });
+    const av = slides[i].querySelector('video');
+    if(av){ av.currentTime = 0; av.play().catch(()=>{}); }
+  }
+
+  // ── Cronómetro del ponente ──
+  let secs = 0;
+  const fmtT = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  const tEl = document.getElementById('timer'), ntEl = document.getElementById('ntimer');
+  setInterval(()=>{ secs++; const v=fmtT(secs); tEl.textContent=v; ntEl.textContent=v; }, 1000);
+  function go(n){ i = Math.max(0, Math.min(slides.length-1, n)); render(); }
+
+  // Fit the fixed 1280×720 stage to the window
+  function fit(){
+    const m = 24; // margin
+    const s = Math.min((innerWidth-m*2)/1280, (innerHeight-m*2)/720);
+    deck.style.transform = 'scale('+s+')';
+  }
+  addEventListener('resize', fit);
+
+  document.getElementById('next').onclick = ()=>go(i+1);
+  document.getElementById('prev').onclick = ()=>go(i-1);
+  document.getElementById('notesBtn').onclick = ()=>notes.classList.toggle('show');
+  document.getElementById('fs').onclick = ()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+
+  addEventListener('keydown', e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){ go(i+1); e.preventDefault(); }
+    else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ go(i-1); e.preventDefault(); }
+    else if(e.key==='Home'){ go(0); }
+    else if(e.key==='End'){ go(slides.length-1); }
+    else if(e.key.toLowerCase()==='n'){ notes.classList.toggle('show'); }
+    else if(e.key.toLowerCase()==='f'){ document.getElementById('fs').click(); }
+    else if(e.key.toLowerCase()==='t'){ secs=0; tEl.textContent=ntEl.textContent='00:00'; }
+  });
+
+  const h0 = parseInt((location.hash||'').slice(1)); if(h0) i = Math.max(0, Math.min(slides.length-1, h0-1));
+  fit(); render();
+</script>
+</body>
+</html>
