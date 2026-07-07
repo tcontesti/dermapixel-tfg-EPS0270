@@ -820,13 +820,23 @@
     <div class="head"><div class="kicker">Resultado 9 · Interpretabilidad · Sparse Autoencoder (línea Anthropic) · Concept Bottleneck (Koh et al., 2020)</div>
       <h2>¿Qué ha aprendido el modelo?</h2></div>
     <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
-      <div class="chain">
-        <span class="node dark">PanDerm</span><span class="arr">→</span>
-        <span class="node">Sparse Autoencoder</span><span class="arr">→</span>
-        <span class="node">conceptos latentes</span><span class="arr">→</span>
-        <span class="node">Concept Bottleneck</span><span class="arr">→</span>
-        <span class="node">7 criterios</span><span class="arr">→</span>
-        <span class="node dark">diagnóstico</span>
+      <div class="chain" style="align-items:center; gap:16px">
+        <span class="node dark">PanDerm<span style="font-weight:400; opacity:.65"> · congelado</span></span><span class="arr">→</span>
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div style="display:flex; align-items:center; gap:14px">
+            <span class="node">Sparse Autoencoder</span><span class="arr">→</span>
+            <span class="node">conceptos latentes</span>
+            <span class="muted" style="font-size:12px; color:var(--ink400)">interpretabilidad · no supervisado</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px">
+            <span class="node">CBM multitarea · LoRA</span><span class="arr">→</span>
+            <div style="display:flex; flex-direction:column; gap:6px">
+              <span class="node">7 criterios (conceptos)</span>
+              <span class="node dark">diagnóstico</span>
+            </div>
+            <span class="muted" style="font-size:12px; color:var(--ink400)">en paralelo · no secuencial</span>
+          </div>
+        </div>
       </div>
       <div style="display:flex; gap:50px; align-items:center">
         <div>
