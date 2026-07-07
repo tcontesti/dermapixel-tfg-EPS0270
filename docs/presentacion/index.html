@@ -293,31 +293,31 @@
         <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">01</div>
         <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Encoders visuales auto-supervisados</div></div>
         <div class="muted" style="flex:1; font-size:16px">Aprenden representaciones sin etiquetas</div>
-        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">PanDerm · DINOv2</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">PanDerm (Monash) · DINOv2 (Meta)</div>
       </div>
       <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
         <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">02</div>
         <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Vision-language contrastivo</div></div>
         <div class="muted" style="flex:1; font-size:16px">Alinean imagen y texto en un espacio común (CLIP)</div>
-        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP · SigLIP</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP (Monash) · SigLIP (Google)</div>
       </div>
       <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
         <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">03</div>
         <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Zero-shot nativo</div></div>
         <div class="muted" style="flex:1; font-size:16px">Clasifican sin reentrenar, solo con una descripción</div>
-        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP · BiomedCLIP</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">DermLIP (Monash) · BiomedCLIP (Microsoft)</div>
       </div>
       <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200)">
         <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">04</div>
         <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">Segmentación promptable</div></div>
         <div class="muted" style="flex:1; font-size:16px">Delimitan la lesión con una simple indicación</div>
-        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">SAM2 · MedSAM2</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">SAM2 (Meta) · MedSAM2 (Ma et al.)</div>
       </div>
       <div style="display:flex; align-items:baseline; gap:22px; padding:14px 0; border-top:1px solid var(--ink200); border-bottom:1px solid var(--ink200)">
         <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">05</div>
         <div style="width:330px; flex:none"><div class="lead" style="font-size:21px; color:var(--ink)">LLMs multimodales generalistas</div></div>
         <div class="muted" style="flex:1; font-size:16px">Razonan sobre la imagen en lenguaje natural</div>
-        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">GPT-4o · MedGemma</div>
+        <div class="mono" style="font-size:12px; color:var(--ink500); flex:none">GPT-4o (OpenAI) · MedGemma (Google)</div>
       </div>
       <div class="muted" style="margin-top:26px; font-size:19px">Las evalué <b style="color:var(--ink); font-weight:500">todas</b> — y al hacerlo encontré <b style="color:var(--ink); font-weight:500">tres retos abiertos</b>.</div>
     </div>
@@ -392,7 +392,7 @@
   <!-- ═══ Slide 7 · Por qué PanDerm ═══ -->
   <section class="slide" data-notes="La primera referencia es PanDerm, el primer modelo fundacional dermatológico abierto. Se entrenó sobre 2,1 millones de imágenes en cuatro modalidades, con una mejora cercana al 10% sobre el estado del arte. Pero lo decisivo para este trabajo: publica pesos, código y benchmarks, lo que permitió una evaluación independiente y reproducible. Por eso es la referencia central.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">La primera referencia · encoder visual · Vision Transformer (ViT)</div>
+    <div class="head"><div class="kicker">La primera referencia · encoder visual · Vision Transformer / ViT (Google)</div>
       <h2 style="font-size:96px; font-weight:300; letter-spacing:-.02em; line-height:1">PanDerm</h2></div>
     <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:36px">
       <div class="lead" style="font-size:27px; max-width:34ch">El primer modelo fundacional dermatológico <b style="font-weight:600">abierto</b> — la referencia central de toda la comparación.</div>
@@ -402,19 +402,19 @@
         <div><div class="lead" style="font-size:24px">Pesos + código + benchmarks <b style="font-weight:600">públicos</b></div><div class="muted" style="margin-top:10px; font-size:16px">→ evaluación independiente</div></div>
       </div>
     </div>
-    <div class="muted mono" style="position:absolute; left:84px; bottom:40px; font-size:12px">ViT Base ~86M / Large ~307M · +10% sobre el estado del arte previo</div>
+    <div class="muted mono" style="position:absolute; left:84px; bottom:40px; font-size:12px">PanDerm · Yan et al., Monash 2025 · ViT Base ~86M / Large ~307M · +10% sobre el estado del arte previo</div>
     <div class="pageno mono">08</div>
   </section>
 
   <!-- ═══ Slide 8 · Por qué DermLIP ═══ -->
   <section class="slide" data-notes="La segunda es DermLIP, que extiende PanDerm con una rama textual tipo CLIP, entrenada sobre Derm1M, un millón de pares imagen-texto. La diferencia clave: ya no solo aprende representaciones visuales, sino la relación entre imagen y descripción clínica. Esa alineación es la que hace posible el zero-shot y la recuperación de casos. La pregunta que me planteé: cómo se comportan estos dos paradigmas evaluados de forma independiente y bajo un mismo protocolo.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">La segunda referencia · modelo vision-language · contrastivo (CLIP)</div>
+    <div class="head"><div class="kicker">La segunda referencia · vision-language · contrastivo tipo CLIP (OpenAI)</div>
       <h2 style="font-size:88px; font-weight:300; letter-spacing:-.02em; line-height:1">DermLIP</h2></div>
     <div class="body" style="gap:60px">
       <div style="flex:0 0 40%">
         <div class="lead" style="font-size:25px; max-width:20ch">Añade la <b style="font-weight:600">rama del lenguaje</b> — alinea imagen y texto en un mismo espacio.</div>
-        <div class="muted" style="margin-top:24px; font-size:17px; line-height:1.55">Preentrenado sobre <b style="color:var(--ink); font-weight:500">Derm1M</b> — un millón de pares imagen–texto dermatológicos, el mayor recurso multimodal abierto del dominio.</div>
+        <div class="muted" style="margin-top:24px; font-size:17px; line-height:1.55">Preentrenado sobre <b style="color:var(--ink); font-weight:500">Derm1M</b> — un millón de pares imagen–texto dermatológicos, el mayor recurso multimodal abierto del dominio. <span style="color:var(--ink400)">DermLIP y Derm1M: Yan et al., Monash.</span></div>
       </div>
       <table class="cmp" style="flex:1">
         <tr><th style="width:26%"></th><th>PanDerm</th><th>DermLIP</th></tr>
@@ -549,6 +549,7 @@
         <div class="c" style="background:#3b3b3b;color:#ffffff">0,953</div><div class="c" style="background:#686868;color:#ffffff">0,890</div><div class="c" style="background:#7d7d7d;color:#ffffff">0,860</div><div class="c" style="background:#e4e4e4;color:#262626">0,714</div><div class="c" style="background:#dcdcdc;color:#262626">0,726</div><div class="c" style="background:#606060;color:#ffffff">0,901</div><div class="c" style="background:#a9a9a9;color:#262626">0,798</div><div class="c" style="background:#c6c6c6;color:#262626">0,757</div><div class="c" style="background:#747474;color:#ffffff">0,873</div><div class="c" style="background:#232323;color:#ffffff">0,987</div>
       </div>
       <div class="cap" style="margin-top:12px">AUROC por modelo y dataset · más oscuro = mayor · <span style="color:#cc3333">▢</span> solapamiento Dermnet (leakage)</div>
+      <div class="cap" style="margin-top:4px; font-size:11px">PanDerm y DermLIP · Monash · DINOv2 · Meta · BiomedCLIP · Microsoft · SigLIP · Google</div>
       </div>
       <div class="txt" style="flex:1">
         <div class="stat"><div class="v" style="font-size:50px">+9,0<small> pp</small></div><div class="k">Balanced accuracy · PanDerm Large vs Base</div></div>
@@ -610,11 +611,12 @@
         <div class="muted" style="margin-top:22px; font-size:14px; line-height:1.55">DDI · <b style="color:var(--ink)">~400 img train</b><br>fine-tuning <b style="color:var(--ink)">−2,1 pp</b> BAcc (sobreajuste)</div>
       </div>
       <div class="divleft">
-        <div class="eyebrow">Punto intermedio · LoRA</div>
-        <div style="margin-top:18px">
+        <div class="eyebrow">Punto intermedio · LoRA <span style="color:var(--ink400)">· Microsoft</span></div>
+        <div class="muted" style="margin-top:12px; font-size:14px; line-height:1.5"><b style="color:var(--ink)">LoRA</b> (Low-Rank Adaptation · Microsoft, 2022): congela el modelo y solo entrena unas <b style="color:var(--ink)">matrices pequeñas de bajo rango</b>.</div>
+        <div style="margin-top:14px">
           <div class="li"><span class="mark-v">✓</span>&nbsp;&nbsp;Adapta pocos parámetros sin reentrenar todo</div>
         </div>
-        <div class="muted" style="margin-top:22px; font-size:15px; line-height:1.5">La vía que adoptamos después · base de <b style="color:var(--ink); font-weight:500">Dermapixel R0</b></div>
+        <div class="muted" style="margin-top:16px; font-size:15px; line-height:1.5">La vía que adoptamos después · base de <b style="color:var(--ink); font-weight:500">Dermapixel R0</b></div>
       </div>
       <div class="divleft">
         <div class="eyebrow">Dataset grande</div>
@@ -631,7 +633,7 @@
   <!-- ═══ Slide 15 · Resultado 4 · Segmentación ═══ -->
   <section class="slide" data-notes="Segmentar la lesión. Adaptando solo el decodificador de SAM2 llegamos a un Dice de 0,947 en ISIC2018, superando la referencia previa, y generaliza sin reentrenar a otros dos datasets. Comparamos cinco arquitecturas: la mejor, MedSAM2-tiny, con Dice 0,9556 en solo 26 milisegundos. Pero el hallazgo más interesante no fue qué arquitectura ganaba.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">Resultado 4 · Segmentación</div>
+    <div class="head"><div class="kicker">Resultado 4 · Segmentación · SAM2 (Meta) · MedSAM2 (Ma et al.)</div>
       <h2>Adaptación eficiente con SAM2.</h2></div>
     <div class="body"><div class="split" style="gap:44px; align-items:center">
       <div class="txt" style="flex:0 0 27%">
@@ -736,27 +738,27 @@
         <div class="eyebrow" style="margin-bottom:16px">Accuracy sobre HAM10000</div>
         <div class="mrank">
           <div class="mrow">
-            <div class="ml"><div class="mn">PanDerm Base</div><div class="md">especialista · FT + TTA</div></div>
+            <div class="ml"><div class="mn">PanDerm Base</div><div class="md">especialista (Monash) · FT + TTA</div></div>
             <div class="mtrack"><div class="mfill" style="width:92%; background:var(--ink)"></div></div>
             <div class="mv mono">0,920</div>
           </div>
           <div class="mrow">
-            <div class="ml"><div class="mn">MedGemma 27B + LoRA</div><div class="md">generalista adaptado al dominio</div></div>
+            <div class="ml"><div class="mn">MedGemma 27B + LoRA</div><div class="md">Google + LoRA (Microsoft)</div></div>
             <div class="mtrack"><div class="mfill" style="width:80.2%; background:var(--ink700)"></div></div>
             <div class="mv mono">0,802</div>
           </div>
           <div class="mrow">
-            <div class="ml"><div class="mn">MedGemma 27B</div><div class="md">generalista · zero-shot</div></div>
+            <div class="ml"><div class="mn">MedGemma 27B</div><div class="md">generalista (Google) · zero-shot</div></div>
             <div class="mtrack"><div class="mfill" style="width:66.5%; background:var(--ink500)"></div></div>
             <div class="mv mono">0,665</div>
           </div>
           <div class="mrow">
-            <div class="ml"><div class="mn">GPT-4o</div><div class="md">mejor generalista · zero-shot</div></div>
+            <div class="ml"><div class="mn">GPT-4o</div><div class="md">mejor generalista (OpenAI) · zero-shot</div></div>
             <div class="mtrack"><div class="mfill" style="width:48.5%; background:var(--ink500)"></div></div>
             <div class="mv mono">0,485</div>
           </div>
           <div class="mrow">
-            <div class="ml"><div class="mn">BLIP-2 · InstructBLIP</div><div class="md">generalista · zero-shot</div></div>
+            <div class="ml"><div class="mn">BLIP-2 · InstructBLIP</div><div class="md">generalista (Salesforce) · zero-shot</div></div>
             <div class="mtrack"><div class="mfill" style="width:2%; background:var(--ink300)"></div></div>
             <div class="mv mono">≈0,02</div>
           </div>
