@@ -664,7 +664,7 @@
   </section>
 
   <!-- ═══ Slide 16 · Resultado 5 · La caja ═══ -->
-  <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso SAM2 es el segmentador del prototipo.">
+  <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto ---voto mayoritario de píxel de las máscaras de los anotadores--- mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso SAM2 es el segmentador del prototipo.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
     <div class="head"><div class="kicker">Resultado 5 · Segmentación · ablación de factores</div>
       <h2>Lo que gobierna el rendimiento es la caja, no la arquitectura.</h2></div>
@@ -698,7 +698,7 @@
         </div>
       </div>
       <div style="display:flex; gap:48px; align-items:baseline; flex-wrap:wrap">
-        <div class="muted" style="font-size:15px; line-height:1.5; max-width:none">Techo inter-anotador · <b style="color:var(--ink)">312 imgs con ≥2 máscaras expertas</b> (held-out): modelo vs consenso <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; acuerdo entre dos dermatólogos <b style="color:var(--ink)">0,728</b> → dentro de la envolvente humana el <b style="color:var(--ink)">97,8%</b>. Jitter ±20 px inocuo (−0,86 pp).</div>
+        <div class="muted" style="font-size:15px; line-height:1.5; max-width:none">Techo inter-anotador · <b style="color:var(--ink)">312 imgs con ≥2 máscaras expertas</b> (held-out): modelo vs <b style="color:var(--ink)">consenso por voto mayoritario de píxel</b> <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; acuerdo entre dos dermatólogos <b style="color:var(--ink)">0,728</b> → dentro de la envolvente humana el <b style="color:var(--ink)">97,8%</b>. Jitter ±20 px inocuo (−0,86 pp).</div>
         <span class="tag">SAM2 → prototipo · M2</span>
       </div>
     </div>
