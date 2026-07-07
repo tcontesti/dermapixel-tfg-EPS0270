@@ -894,10 +894,10 @@
         <div class="li" style="font-size:15px; margin:7px 0">Mejor que el fine-tuning denso con <b style="color:var(--ink)">48× menos parámetros</b></div>
         <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5"><b style="color:var(--ink)">Ablación:</b> aumentar el <i>train</i> sobre el encoder congelado no ayuda (FLAT, ±0,01) → la palanca es <b style="color:var(--ink)">dato real</b>, no reprocesar.</div></div></div>
       <div class="divleft"><div class="eyebrow">R0 · rama contrastiva (SpanDerm-CLIP)</div><div style="margin-top:12px">
-        <div class="li" style="font-size:15px; margin:7px 0">Buscador texto↔imagen en español · 854 pares reales · v1→v5</div>
-        <div class="li" style="font-size:15px; margin:7px 0">Zero-shot L3 <b style="color:var(--ink)">0,2475</b> — a 1 imagen del objetivo (0,25)</div>
-        <div class="li" style="font-size:15px; margin:7px 0">Escalar con <b style="color:var(--ink)">texto sintético externo</b> (15.128 imgs) empeora (v5 0,2079)</div>
-        <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5">El texto apenas ayuda; mueve la aguja la <b style="color:var(--ink)">visión</b>. No generaliza al uso real → <b style="color:var(--ink)">no desplegada</b>. El límite es el dato en español.</div></div></div>
+        <div class="li" style="font-size:15px; margin:7px 0"><b style="color:var(--ink)">Buscador texto↔imagen</b>: describes una lesión en español y recupera casos parecidos (854 pares reales)</div>
+        <div class="li" style="font-size:15px; margin:7px 0"><b style="color:var(--ink)">5 versiones (v1→v5)</b>: cada una prueba mejorar el texto, la visión o añadir más datos</div>
+        <div class="li" style="font-size:15px; margin:7px 0">Mejor caso (v4): acierta el <b style="color:var(--ink)">diagnóstico fino sin entrenar el 24,75%</b> — a 1 imagen del objetivo (25%)</div>
+        <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5">El texto casi no suma; lo que sube el resultado es la <b style="color:var(--ink)">visión</b>. Escalar con imágenes externas + texto sintético de IA (v5) lo <b style="color:var(--ink)">empeora</b>: no suena a clínica real. No falla el método, <b style="color:var(--ink)">falta dato en español</b> → no se despliega.</div></div></div>
     </div></div>
     <div class="pageno mono">22</div>
   </section>
