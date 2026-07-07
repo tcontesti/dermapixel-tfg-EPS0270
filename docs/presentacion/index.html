@@ -869,6 +869,42 @@
     <div class="pageno mono">22</div>
   </section>
 
+  <!-- ═══ Slide 22b · Limitaciones ═══ -->
+  <section class="slide" data-notes="Antes de concluir, quiero ser honesto con las limitaciones, porque son limitaciones declaradas, no errores ocultos. Primera, estadística: gran parte de los experimentos usan una sola semilla; el bootstrap acota la incertidumbre de los datos, pero no la variabilidad entre inicializaciones. Aun así, la magnitud de los efectos —nueve puntos, cuarenta y tres— excede esa variabilidad esperable. Segunda, la potencia: en los datasets pequeños no hay tamaño muestral para separar a los mejores modelos, así que el cierre estadístico con DeLong solo lo hago donde hay positivos suficientes, en Fitzpatrick17k; falta de potencia no es lo mismo que ausencia de efecto. Tercera, la auditoría de contaminación por MD5 solo detecta duplicados exactos, no reescalados ni recortes. Cuarta, el dato en español todavía es limitado: con 672 casos, la recuperación por texto aún no generaliza. Y quinta, esto es un prototipo, no un producto validado clínicamente: no hay cohorte prospectiva ni marcado CE, y los modelos cerrados evaluados por API no son plenamente reproducibles. Reconocerlas es parte del rigor: ninguna invalida las conclusiones, pero marcan hasta dónde llegan.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Antes de concluir · honestidad</div>
+      <h2>Limitaciones asumidas.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:0">
+      <div style="display:flex; align-items:baseline; gap:22px; padding:13px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">01</div>
+        <div style="width:280px; flex:none"><div class="lead" style="font-size:20px; color:var(--ink)">Semilla única</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.4">LP, fine-tuning y equidad con una sola semilla — el bootstrap acota la incertidumbre muestral, no la variabilidad entre inicializaciones.</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:13px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">02</div>
+        <div style="width:280px; flex:none"><div class="lead" style="font-size:20px; color:var(--ink)">Potencia estadística</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.4">Datasets pequeños (DDI, DermapixelAI) sin tamaño para significar — el cierre DeLong solo tiene potencia en Fitzpatrick17k. Falta de potencia ≠ ausencia de efecto.</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:13px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">03</div>
+        <div style="width:280px; flex:none"><div class="lead" style="font-size:20px; color:var(--ink)">Contaminación: solo exacta</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.4">La auditoría MD5 detecta duplicados byte a byte, no reescalados ni recortes (near-duplicates); su extensión es el perceptual hashing.</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:13px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">04</div>
+        <div style="width:280px; flex:none"><div class="lead" style="font-size:20px; color:var(--ink)">Datos en español</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.4">DermapixelAI (672 casos) aún no basta para que la recuperación por texto generalice — el límite es el dato, no el método.</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:22px; padding:13px 0; border-top:1px solid var(--ink200); border-bottom:1px solid var(--ink200)">
+        <div class="mono" style="font-size:13px; color:var(--ink400); width:24px; flex:none">05</div>
+        <div style="width:280px; flex:none"><div class="lead" style="font-size:20px; color:var(--ink)">Sin validación prospectiva</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.4">Es un prototipo, no un producto certificado: sin cohorte prospectiva ni marcado CE; los modelos cerrados vía API no son reproducibles.</div>
+      </div>
+      <div class="muted" style="margin-top:22px; font-size:18px">Limitaciones <b style="color:var(--ink); font-weight:500">declaradas, no ocultas</b> — ninguna invalida las conclusiones, pero marcan hasta dónde llegan.</div>
+    </div>
+    <div class="pageno mono">23</div>
+  </section>
+
   <!-- ═══ Slide 22 · Conclusiones ═══ -->
   <section class="slide" data-notes="Si resumo el trabajo en tres ideas: no existe un modelo universalmente superior; una vez maduros los encoders, el cuello de botella deja de ser la arquitectura y pasa a ser el dato; y los modelos ya empiezan a aprender conceptos clínicos que podemos interpretar: el SAE alinea 32 conceptos de SkinCon sin supervisión, y con la Dra. Taberner construimos un vocabulario dermatoscópico propio de 37 estructuras por 15 diagnósticos. Con ello cumplo los tres objetivos. Y en una idea: los modelos fundacionales han cambiado la pregunta —el reto ya no es modelos más grandes, sino mejores datos. Por eso el trabajo no termina como un benchmark, sino como una plataforma abierta. Y esa plataforma es el prototipo que os enseño ahora.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
@@ -895,7 +931,7 @@
       </div>
       <div class="announce" style="max-width:none"><span class="lbl">La idea que reaparece</span>Los modelos fundacionales cambian la tecnología; <b>los datos cambian la medicina</b>.</div>
     </div>
-    <div class="pageno mono">23</div>
+    <div class="pageno mono">24</div>
   </section>
 
   <!-- ═══ Slide 23 · Del benchmark al producto ═══ -->
@@ -927,7 +963,7 @@
           <span class="tag sm">Auditoría por estudio</span><span class="tag sm">orientado a ENS</span></div></div>
       </div>
     </div>
-    <div class="pageno mono">24</div>
+    <div class="pageno mono">25</div>
   </section>
 
   <!-- ═══ Slide 24 · Los 11 módulos ═══ -->
@@ -946,7 +982,7 @@
       <div class="m"><div class="mn">M3 · M6</div><div class="md">Interpretabilidad SAE · zero-shot</div></div>
     </div></div>
     <div class="muted serif" style="position:absolute; left:84px; bottom:40px; font-size:18px">No los recorro uno a uno — los vais a ver funcionando.</div>
-    <div class="pageno mono">25</div>
+    <div class="pageno mono">26</div>
   </section>
 
   <!-- ═══ Slide 25 · El veredicto ═══ -->
@@ -962,7 +998,7 @@
       </div>
       <div class="pic"><div class="picwrap"><img src="assets/proto_consenso.png" alt="Veredicto de consenso"></div></div>
     </div></div>
-    <div class="pageno mono">26</div>
+    <div class="pageno mono">27</div>
   </section>
 
   <!-- ═══ Slide 26 · La investigación, funcionando ═══ -->
@@ -974,7 +1010,7 @@
       <div><div class="picwrap"><img src="assets/proto_seg.png" alt="Segmentación"></div><div class="cap">Segmentación · U-Net → MedSAM2</div></div>
       <div><div class="picwrap"><img src="assets/proto_ragES.png" alt="Casos similares"></div><div class="cap">Casos similares del archivo · M4-bis</div></div>
     </div></div>
-    <div class="pageno mono">27</div>
+    <div class="pageno mono">28</div>
   </section>
 
   <!-- ═══ Slide 27 · Explicabilidad y garantías ═══ -->
@@ -991,7 +1027,7 @@
       </div>
       <div class="pic"><div class="picwrap"><img src="assets/proto_razonamiento.png" alt="Razonamiento clínico"></div></div>
     </div></div>
-    <div class="pageno mono">28</div>
+    <div class="pageno mono">29</div>
   </section>
 
   <!-- ═══ Slide 28 · DEMOSTRACIÓN EN VIVO ═══ -->
@@ -1005,7 +1041,7 @@
       <video src="assets/TFGEPS0270VIDEOUI_web.mp4" controls playsinline preload="metadata"
              style="height:100%; max-height:520px; width:auto; max-width:100%; border-radius:10px; display:block; background:#000; box-shadow:0 12px 40px rgba(0,0,0,.18)"></video>
     </div>
-    <div class="pageno mono">29</div>
+    <div class="pageno mono">30</div>
   </section>
 
   <!-- ═══ Slide 29 · Cierre ═══ -->
@@ -1024,7 +1060,7 @@
       </div>
       <div class="muted mono" style="font-size:12px; margin-top:4px">Gracias por su atención · Quedo a su disposición para las preguntas</div>
     </div>
-    <div class="pageno mono">30</div>
+    <div class="pageno mono">31</div>
   </section>
 
 </div>
