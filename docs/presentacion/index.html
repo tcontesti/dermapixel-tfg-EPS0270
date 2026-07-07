@@ -878,24 +878,26 @@
   </section>
 
   <!-- ═══ Slide 21 · Contribuciones ═══ -->
-  <section class="slide" data-notes="Además de evaluar, el trabajo aporta tres cosas propias. DermapixelAI 1.0: un dataset clínico en español, multimodal —imagen, texto y caso—, 672 casos y 1.089 imágenes, auditado y liberado. Dermapixel R0: la adaptación de PanDerm al castellano con LoRA, entrenando solo el 0,17% de los parámetros, que iguala a DermLIP en subcategoría; valida que con pocos datos las adaptaciones eficientes ganan al fine-tuning. Y la tercera, honesta: la búsqueda por texto en español es viable pero aún no generaliza; no falla el método, faltan datos. En conjunto, transforman un benchmark en una plataforma. Y a medio plazo, estas piezas encajan en un sistema de IA agéntica: varios agentes especializados que trabajan en paralelo y se combinan bajo control del médico, en lugar de delegar todo en un único modelo.">
+  <section class="slide" data-notes="Además de evaluar, aporto recursos propios. DermapixelAI 1.0: un dataset clínico en español, multimodal —imagen, texto y caso—, 672 casos y 1.089 imágenes, auditado y liberado; es el dato que hace posible lo siguiente. Y Dermapixel R0, la adaptación de PanDerm al castellano, sobre el encoder congelado, con dos ramas. La supervisada, con LoRA: entrena solo el 0,17% de los parámetros, 524 mil, y logra la mejor balanced accuracy documentada en subcategoría, 0,363, empatando en AUROC a DermLIP; rinde mejor que el fine-tuning denso con 48 veces menos parámetros. Y una ablación clara: aumentar el train sobre el encoder congelado no aporta nada —resultado plano, más o menos una centésima—; la palanca son datos reales nuevos, no reprocesar. La segunda rama, contrastiva, SpanDerm-CLIP: un buscador texto-imagen en español, cinco iteraciones sobre 854 pares reales; llega a un zero-shot de subcategoría fina de 0,2475, a una sola imagen del objetivo. Tres hallazgos: mejorar el texto apenas ayuda, lo que mueve la aguja es la parte visual, y escalar con quince mil imágenes externas y descripciones sintéticas generadas por IA empeora el encaje en castellano. No generaliza al uso real, así que no se despliega. La conclusión honesta: no falla el método, falta dato en español.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">De evaluar a crear</div>
-      <h2 class="biglead">No propone un modelo más; propone una <span class="serif">plataforma</span>.</h2></div>
+    <div class="head"><div class="kicker">Contribución propia · adaptación al español</div>
+      <h2 class="biglead">Dermapixel R0: adaptar un modelo fundacional al <span class="serif">castellano</span>.</h2></div>
     <div class="body"><div class="cols3">
-      <div><div class="eyebrow">DermapixelAI 1.0</div><div style="margin-top:14px">
-        <div class="li" style="font-size:17px; margin:8px 0">Dataset multimodal en español</div>
-        <div class="li" style="font-size:17px; margin:8px 0">672 casos · 1.089 imágenes</div>
-        <div class="li" style="font-size:17px; margin:8px 0">Auditado · licencia abierta</div></div></div>
-      <div class="divleft"><div class="eyebrow">Dermapixel R0</div><div style="margin-top:14px">
-        <div class="li" style="font-size:17px; margin:8px 0">Adaptación al español con LoRA</div>
-        <div class="li" style="font-size:17px; margin:8px 0">Solo 0,17% de parámetros</div>
-        <div class="li" style="font-size:17px; margin:8px 0">≈ DermLIP v2</div></div></div>
-      <div class="divleft"><div class="eyebrow">Próximo paso</div><div style="margin-top:14px">
-        <div class="li" style="font-size:17px; margin:8px 0">Retrieval clínico en español</div>
-        <div class="li" style="font-size:17px; margin:8px 0">Banco del hospital</div>
-        <div class="li" style="font-size:17px; margin:8px 0">El límite es el dato, no el método</div>
-        <div class="muted" style="margin-top:16px; font-size:13px; line-height:1.45">Horizonte: una <b style="color:var(--ink)">IA agéntica</b> —varios agentes especializados, verificables y combinados bajo control médico— con rama multimodal en español.</div></div></div>
+      <div><div class="eyebrow">DermapixelAI 1.0 · el dato que lo permite</div><div style="margin-top:12px">
+        <div class="li" style="font-size:15px; margin:7px 0">Dataset clínico multimodal en español (imagen + texto + caso)</div>
+        <div class="li" style="font-size:15px; margin:7px 0">672 casos · 1.089 imágenes</div>
+        <div class="li" style="font-size:15px; margin:7px 0">Auditado · licencia abierta</div>
+        <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5">Sobre PanDerm Large <b style="color:var(--ink)">congelado</b>, R0 solo añade piezas entrenables. Dos ramas.</div></div></div>
+      <div class="divleft"><div class="eyebrow">R0 · rama LoRA (L2) · desplegada M9</div><div style="margin-top:12px">
+        <div class="li" style="font-size:15px; margin:7px 0">Adapta al español entrenando <b style="color:var(--ink)">solo el 0,17%</b> de parámetros (524 K)</div>
+        <div class="li" style="font-size:15px; margin:7px 0"><b style="color:var(--ink)">BAcc L2 0,363</b> — mejor documentada · AUROC 0,855 ≈ DermLIP v2</div>
+        <div class="li" style="font-size:15px; margin:7px 0">Mejor que el fine-tuning denso con <b style="color:var(--ink)">48× menos parámetros</b></div>
+        <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5"><b style="color:var(--ink)">Ablación:</b> aumentar el <i>train</i> sobre el encoder congelado no ayuda (FLAT, ±0,01) → la palanca es <b style="color:var(--ink)">dato real</b>, no reprocesar.</div></div></div>
+      <div class="divleft"><div class="eyebrow">R0 · rama contrastiva (SpanDerm-CLIP)</div><div style="margin-top:12px">
+        <div class="li" style="font-size:15px; margin:7px 0">Buscador texto↔imagen en español · 854 pares reales · v1→v5</div>
+        <div class="li" style="font-size:15px; margin:7px 0">Zero-shot L3 <b style="color:var(--ink)">0,2475</b> — a 1 imagen del objetivo (0,25)</div>
+        <div class="li" style="font-size:15px; margin:7px 0">Escalar con <b style="color:var(--ink)">texto sintético externo</b> (15.128 imgs) empeora (v5 0,2079)</div>
+        <div class="muted" style="margin-top:14px; font-size:13px; line-height:1.5">El texto apenas ayuda; mueve la aguja la <b style="color:var(--ink)">visión</b>. No generaliza al uso real → <b style="color:var(--ink)">no desplegada</b>. El límite es el dato en español.</div></div></div>
     </div></div>
     <div class="pageno mono">22</div>
   </section>
