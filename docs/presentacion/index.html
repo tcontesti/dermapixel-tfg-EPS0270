@@ -658,13 +658,14 @@
           <div class="scell"><img src="assets/seg/ood_3.png" alt=""><span class="sd">0,946</span></div>
         </div>
         <div class="cap" style="margin-top:14px"><span style="color:#cc3333">rojo</span> = predicho · <span style="color:#2e9e4f">verde</span> = referencia · <span style="color:#d9a021">amarillo</span> = caja-prompt</div>
+        <div class="cap" style="margin-top:7px; line-height:1.5">5 arquitecturas promptables comparadas · Dice ISIC2018 (N=1000): <b style="color:var(--ink)">MedSAM2-tiny 0,9556</b> · SAM2.1-tiny 0,9517 · SAM2.1-Large 0,9503 · SAM-Med2D 0,9465 · MedSAM v1 0,9458 &nbsp;<span style="color:var(--ink400)">· MedSAM2/MedSAM/SAM-Med2D médicos · SAM2 (Meta) general</span></div>
       </div>
     </div></div>
     <div class="pageno mono">16</div>
   </section>
 
   <!-- ═══ Slide 16 · Resultado 5 · La caja ═══ -->
-  <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto ---voto mayoritario de píxel de las máscaras de los anotadores--- mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso SAM2 es el segmentador del prototipo.">
+  <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto ---voto mayoritario de píxel de las máscaras de los anotadores--- mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso el segmentador del prototipo es un SAM2, en concreto la versión MedSAM2-tiny: mejor Dice y el más rápido, 26 milisegundos.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
     <div class="head"><div class="kicker">Resultado 5 · Segmentación · ablación de factores</div>
       <h2>Lo que gobierna el rendimiento es la caja, no la arquitectura.</h2></div>
@@ -698,8 +699,8 @@
         </div>
       </div>
       <div style="display:flex; gap:48px; align-items:baseline; flex-wrap:wrap">
-        <div class="muted" style="font-size:15px; line-height:1.5; max-width:none">Techo inter-anotador · <b style="color:var(--ink)">312 imgs con ≥2 máscaras expertas</b> (held-out): modelo vs <b style="color:var(--ink)">consenso por voto mayoritario de píxel</b> <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; acuerdo entre dos dermatólogos <b style="color:var(--ink)">0,728</b> → dentro de la envolvente humana el <b style="color:var(--ink)">97,8%</b>. Jitter ±20 px inocuo (−0,86 pp).</div>
-        <span class="tag">SAM2 → prototipo · M2</span>
+        <div class="muted" style="font-size:15px; line-height:1.5; max-width:none">Techo inter-anotador · <b style="color:var(--ink)">IMA++ · 312 imgs con ≥2 máscaras expertas</b> (held-out): modelo vs <b style="color:var(--ink)">consenso por voto mayoritario de píxel</b> <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; acuerdo entre dos dermatólogos <b style="color:var(--ink)">0,728</b> → dentro de la envolvente humana el <b style="color:var(--ink)">97,8%</b>. Jitter ±20 px inocuo (−0,86 pp).</div>
+        <span class="tag" style="border-color:var(--ink); color:var(--ink)">Desplegado: <b>SAM2 · MedSAM2-tiny</b> → prototipo · M2</span>
       </div>
     </div>
     <div class="pageno mono">17</div>
