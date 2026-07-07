@@ -666,12 +666,12 @@
   <!-- ═══ Slide 16 · Resultado 5 · La caja ═══ -->
   <section class="slide" data-notes="Lo importante fue qué factor gobierna el rendimiento. Pensábamos que la arquitectura o el preentrenamiento médico; pero no: cada uno aporta alrededor de un punto. En cambio, quitar la caja que localiza la lesión hace caer siete puntos y medio. La localización pesa entre seis y siete veces más que el modelo. Merece más la pena detectar bien la lesión que cambiar de segmentador. Y el techo: el modelo coincide con el consenso experto mejor que dos dermatólogos entre sí, 0,915 frente a 0,728. El margen restante ya no viene del algoritmo, sino de la incertidumbre de la anotación. Por eso SAM2 es el segmentador del prototipo.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">Resultado 5 · Segmentación</div>
+    <div class="head"><div class="kicker">Resultado 5 · Segmentación · ablación de factores</div>
       <h2>Lo que gobierna el rendimiento es la caja, no la arquitectura.</h2></div>
     <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
       <div class="split" style="gap:54px; align-items:center">
         <div style="flex:1">
-          <div class="eyebrow" style="margin-bottom:16px">Qué factor pesa</div>
+          <div class="eyebrow" style="margin-bottom:16px">Ablación · qué factor pesa (Dice)</div>
           <div class="bc" style="max-width:none">
             <div class="row"><div class="name">Arquitectura</div><div class="fill" style="width:13%"></div><div class="val">+1 pp</div></div>
             <div class="row"><div class="name">Preentrenamiento médico</div><div class="fill" style="width:13%"></div><div class="val">+1 pp</div></div>
@@ -698,7 +698,7 @@
         </div>
       </div>
       <div style="display:flex; gap:48px; align-items:baseline; flex-wrap:wrap">
-        <div class="muted" style="font-size:16px">Modelo vs consenso experto <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; dermatólogo vs dermatólogo 0,728 · jitter ±20 px inocuo (−0,86 pp)</div>
+        <div class="muted" style="font-size:15px; line-height:1.5; max-width:none">Techo inter-anotador · <b style="color:var(--ink)">312 imgs con ≥2 máscaras expertas</b> (held-out): modelo vs consenso <b style="color:var(--ink); font-weight:600">0,915</b> &nbsp;&gt;&nbsp; acuerdo entre dos dermatólogos <b style="color:var(--ink)">0,728</b> → dentro de la envolvente humana el <b style="color:var(--ink)">97,8%</b>. Jitter ±20 px inocuo (−0,86 pp).</div>
         <span class="tag">SAM2 → prototipo · M2</span>
       </div>
     </div>
