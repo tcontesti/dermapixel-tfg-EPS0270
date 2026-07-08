@@ -342,7 +342,7 @@
   </section>
 
   <!-- ═══ Slide 5 · Objetivos y aportaciones ═══ -->
-  <section class="slide" data-notes="Tres objetivos: comparar de forma independiente los modelos fundacionales; evaluar las estrategias clave —LoRA, zero-shot, multimodalidad, interpretabilidad—; y trasladar el reconocimiento sobre fotografía clínica a un prototipo funcional. Y la idea que resume el espíritu: no propone un modelo más, propone una forma de evaluarlos. De ahí sus cuatro aportaciones: benchmark independiente, DermapixelAI, evidencia metodológica con Dermapixel R0, y un prototipo funcional. Todas las comparaciones priorizan modelos abiertos, por reproducibilidad; los cerrados, solo como referencia. A esas cuatro se suman dos aportaciones transversales: una ontología clínica propia de tres niveles, mapeada a SNOMED y CIE-10, que armoniza todos los datasets; y —ya fuera del alcance evaluado— la clasificación de conceptos dermatoscópicos y clínicos de la Dra. Taberner, ground-truth que habilitará los Sparse Autoencoders y los Concept Bottleneck en las líneas futuras.">
+  <section class="slide" data-notes="Tres objetivos: comparar de forma independiente los modelos fundacionales; evaluar los protocolos definidos —linear probing, fine-tuning, segmentación, zero-shot, LLM, equidad por fototipo y conceptos con Sparse Autoencoders—; y trasladar el reconocimiento sobre fotografía clínica a un prototipo funcional. Y la idea que resume el espíritu: no propone un modelo más, propone una forma de evaluarlos. De ahí sus cuatro aportaciones: benchmark independiente, DermapixelAI, evidencia metodológica con Dermapixel R0, y un prototipo funcional. Todas las comparaciones priorizan modelos abiertos, por reproducibilidad; los cerrados, solo como referencia. A esas cuatro se suman dos aportaciones transversales: una ontología clínica propia de tres niveles, mapeada a SNOMED y CIE-10, que armoniza todos los datasets; y —ya fuera del alcance evaluado— la clasificación de conceptos dermatoscópicos y clínicos de la Dra. Taberner, ground-truth que habilitará los Sparse Autoencoders y los Concept Bottleneck en las líneas futuras.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
     <div class="head"><div class="kicker">Objetivos y aportaciones</div>
       <h2 class="biglead">No propone un modelo más; propone una <span class="serif">forma de evaluarlos</span>.</h2></div>
@@ -351,8 +351,8 @@
         <div class="eyebrow">Objetivos</div>
         <div style="margin-top:16px">
           <div class="check">Comparar de forma independiente los modelos fundacionales</div>
-          <div class="check">Evaluar las estrategias clave · LoRA · zero-shot · multimodalidad · interpretabilidad</div>
-          <div class="check">Trasladar el reconocimiento clínico a un prototipo funcional</div>
+          <div class="check">Evaluar los protocolos definidos · linear probing y eficiencia de etiquetas · fine-tuning · segmentación · zero-shot · LLM · equidad por fototipo · conceptos (SAE)</div>
+          <div class="check">Trasladar la investigación a un prototipo funcional</div>
         </div>
       </div>
       <div class="divleft">
@@ -371,24 +371,6 @@
     <div class="pageno mono">06</div>
   </section>
 
-  <!-- ═══ Slide 6 · El alcance ═══ -->
-  <section class="slide" data-notes="Antes de los resultados, el alcance: no comparo dos o tres modelos, sino un benchmark amplio —catorce modelos, doce datasets, más de setenta mil imágenes armonizadas y varios protocolos. Ese volumen es lo que da solidez a las conclusiones. Y con ese alcance, la siguiente pregunta era cómo comparar de forma justa.">
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">El alcance del trabajo</div>
-      <h2>No es un benchmark pequeño.</h2></div>
-    <div class="body"><div class="numgrid">
-      <div><div class="n">14</div><div class="l">modelos</div><div class="cycler" data-items="PanDerm Large|PanDerm Base|DermLIP v1|DermLIP v2|SigLIP-Large|DINOv2 ViT-L|ConvNeXt-Large|EfficientNetV2|BiomedCLIP|GPT-4o|Gemini 2.5 Pro|MedGemma 4B|MedGemma 27B|SAM2.1-Large">PanDerm Large</div></div>
-      <div><div class="n">12</div><div class="l">datasets públicos</div><div class="cycler" data-items="HAM10000|BCN20000|PAD-UFES-20|DDI|Dermnet|Derm7pt|HIBA|MSKCC|WSI patches|ISIC2018|Fitzpatrick17k|SkinCon">HAM10000</div></div>
-      <div><div class="n">72.654</div><div class="l">imágenes armonizadas</div></div>
-      <div><div class="n">3</div><div class="l">modalidades clínicas</div><div class="cycler" data-items="Fotografía clínica|Dermatoscopia|Histopatología">Fotografía clínica</div></div>
-      <div><div class="n">4</div><div class="l">protocolos experimentales</div><div class="cycler" data-items="Linear probing|Fine-tuning|Segmentación|Zero-shot">Linear probing</div></div>
-      <div><div class="n" style="font-size:34px; font-weight:300">Ontología</div><div class="l">propia · L1/L2/L3</div><div class="cycler" data-items="L1 · 4 familias|L2 · 43 subcategorías|L3 · 367 diagnósticos">L1 · 4 familias</div></div>
-      <div><div class="n" style="font-size:34px; font-weight:300">Dataset</div><div class="l">propio · DermapixelAI</div><div class="cycler" data-items="672 casos|1.089 imágenes|texto clínico en español">672 casos</div></div>
-      <div><div class="n" style="font-size:34px; font-weight:300">Prototipo</div><div class="l">funcional</div><div class="cycler" data-items="11 módulos de IA|web · WhatsApp · voz|dermapixel.eu">11 módulos de IA</div></div>
-    </div></div>
-    <div class="pageno mono">07</div>
-  </section>
-
   <!-- ═══ Slide 7 · Por qué PanDerm ═══ -->
   <section class="slide" data-notes="La primera referencia es PanDerm, el primer modelo fundacional dermatológico abierto. Se entrenó sobre 2,1 millones de imágenes en cuatro modalidades, con una mejora cercana al 10% sobre el estado del arte. Pero lo decisivo para este trabajo: publica pesos, código y benchmarks, lo que permitió una evaluación independiente y reproducible. Por eso es la referencia central.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
@@ -403,7 +385,7 @@
       </div>
     </div>
     <div class="muted mono" style="position:absolute; left:84px; bottom:40px; font-size:12px">PanDerm · Yan et al., Monash 2025 · ViT Base ~86M / Large ~307M · +10% sobre el estado del arte previo</div>
-    <div class="pageno mono">08</div>
+    <div class="pageno mono">07</div>
   </section>
 
   <!-- ═══ Slide 8 · Por qué DermLIP ═══ -->
@@ -424,7 +406,7 @@
         <tr><td>Permite zero-shot</td><td>✗</td><td>✓</td></tr>
       </table>
     </div>
-    <div class="pageno mono">09</div>
+    <div class="pageno mono">08</div>
   </section>
 
   <!-- ═══ Slide 9 · Escenarios clínicos ═══ -->
@@ -467,7 +449,7 @@
       </div>
       <div class="muted mono" style="font-size:11px; margin-top:4px">Imágenes de ejemplo por modalidad · cortesía Dr. Àlex Llambrich (uso autorizado)</div>
     </div>
-    <div class="pageno mono">10</div>
+    <div class="pageno mono">09</div>
   </section>
 
   <!-- ═══ Slide · Auditoría de contaminación (data leakage) ═══ -->
@@ -488,7 +470,7 @@
       </div>
       <div class="lead" style="font-size:22px; max-width:none">Comparar modelos solo tiene sentido si <b style="font-weight:600">todos juegan con las mismas reglas</b>.</div>
     </div>
-    <div class="pageno mono">11</div>
+    <div class="pageno mono">10</div>
   </section>
 
   <!-- ═══ Slide 10 · Ontología L1/L2/L3 ═══ -->
@@ -516,6 +498,51 @@
       </div>
       <div class="muted" style="font-size:14px; color:var(--ink400)">De los <b style="color:var(--ink)">diagnósticos</b> definidos en la ontología: <b style="color:var(--ink)">~47% inflamatoria · 27% tumoral · 25% infecciosa · 2% genodermatosis</b> — la dermatología clínica es, sobre todo, inflamatoria.</div>
       <div class="muted" style="margin-top:6px; font-size:15px; line-height:1.5; box-shadow:inset 3px 0 0 var(--ink); padding-left:14px; max-width:none">No es un detalle técnico: <b style="color:var(--ink)">sin un vocabulario común no hay comparación justa</b> entre datasets. Y no se queda en el benchmark — es un <b style="color:var(--ink)">recurso clínico reutilizable</b>, interoperable con los sistemas del hospital (SNOMED/CIE-10), y la <b style="color:var(--ink)">base del prototipo</b>.</div>
+    </div>
+    <div class="pageno mono">11</div>
+  </section>
+
+  <!-- ═══ Slide · Divisor · Protocolos de evaluación ═══ -->
+  <section class="slide" data-notes="Sobre este banco común aplicamos siete protocolos complementarios, que estructuran los resultados que vienen: linear probing y eficiencia de etiquetas, para medir la calidad de las representaciones y el rendimiento con pocas etiquetas; fine-tuning, para el rendimiento máximo tras adaptación; segmentación, para la localización de la lesión; zero-shot, para la clasificación guiada por texto sin entrenamiento específico; LLM, para el razonamiento clínico guiado por texto; equidad por fototipo, para medir el sesgo por tono de piel; y conceptos con Sparse Autoencoders, para la interpretabilidad del modelo.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Resultados · cómo evaluamos</div>
+      <h2>Siete protocolos sobre el mismo banco.</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:0">
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">01</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Linear probing y eficiencia de etiquetas</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Calidad de las representaciones y régimen de pocas etiquetas — encoder congelado + clasificador lineal</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">02</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Fine-tuning</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Rendimiento máximo tras adaptación — se reentrena el modelo</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">03</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Segmentación</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Localización de la lesión — máscara promptable (box-prompt)</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">04</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Zero-shot</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Clasificación guiada por texto — sin entrenamiento específico</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">05</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">LLM</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Razonamiento clínico guiado por texto — providers de lenguaje</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">06</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Equidad por fototipo</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Sesgo por tono de piel — escala Fitzpatrick</div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:24px; padding:10px 0; border-top:1px solid var(--ink200); border-bottom:1px solid var(--ink200)">
+        <div class="mono" style="font-size:12px; color:var(--ink400); width:26px; flex:none">07</div>
+        <div style="width:300px; flex:none"><div class="lead" style="font-size:19px; color:var(--ink)">Conceptos (SAE)</div></div>
+        <div class="muted" style="flex:1; font-size:15px; line-height:1.35">Interpretabilidad — Sparse Autoencoders + Concept Bottleneck</div>
+      </div>
     </div>
     <div class="pageno mono">12</div>
   </section>
@@ -962,38 +989,6 @@
     <div class="pageno mono">24</div>
   </section>
 
-  <!-- ═══ Slide 23 · Del benchmark al producto ═══ -->
-  <section class="slide" data-notes="Hasta ahora hablé de investigación. Quería comprobar si ese conocimiento podía trasladarse a un sistema real. Ese sistema es Dermapixel, en dermapixel.eu. Un único apunte de arquitectura: está desacoplada —el backend nunca ejecuta modelos; toda la inferencia ocurre en un servidor GPU independiente. Así, si la GPU falla, el servicio se degrada con elegancia en lugar de caerse. Y cada estudio queda auditado. Está construido con un stack estándar y reproducible —Vue, FastAPI, Docker, RabbitMQ, MySQL— sobre el servidor DGX Spark.">
-
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">Del benchmark al producto</div>
-      <h2>La investigación, en un sistema real.</h2></div>
-    <div class="body" style="gap:56px; align-items:stretch">
-      <div style="flex:1; display:flex; flex-direction:column; justify-content:center">
-        <div class="arch">
-          <span class="box">Frontend web</span><span class="sep">→</span>
-          <span class="box">Backend<br><small style="color:var(--ink500); font-size:12px">nunca ejecuta modelos</small></span><span class="sep">— red privada →</span>
-          <span class="box gpu">Servidor GPU<br><small style="font-size:12px; opacity:.75">inferencia · 11 módulos</small></span>
-        </div>
-        <div class="lead" style="font-size:21px; max-width:42ch; margin-top:40px">Arquitectura <b style="font-weight:600">desacoplada y resiliente</b>: si la GPU falla, el servicio se degrada con elegancia. Cada estudio, auditado.</div>
-      </div>
-      <div class="divleft" style="flex:0 0 33%">
-        <div class="eyebrow">Stack tecnológico</div>
-        <div class="stackgrp"><div class="gl">Frontend</div><div class="chips">
-          <span class="tag sm">Vue 3</span><span class="tag sm">Vite</span><span class="tag sm">Tailwind CSS</span></div></div>
-        <div class="stackgrp"><div class="gl">Backend</div><div class="chips">
-          <span class="tag sm">FastAPI</span><span class="tag sm">Uvicorn</span><span class="tag sm">SQLAlchemy</span><span class="tag sm">Docker Compose</span></div></div>
-        <div class="stackgrp"><div class="gl">Datos · mensajería</div><div class="chips">
-          <span class="tag sm">MySQL 8</span><span class="tag sm">FAISS</span><span class="tag sm">RabbitMQ</span><span class="tag sm">AMQP</span><span class="tag sm">RPC</span></div></div>
-        <div class="stackgrp"><div class="gl">Infraestructura</div><div class="chips">
-          <span class="tag sm">Nginx</span><span class="tag sm">DGX Spark · GB10</span><span class="tag sm">PyTorch</span><span class="tag sm">Ollama</span></div></div>
-        <div class="stackgrp"><div class="gl">Seguridad · trazabilidad</div><div class="chips">
-          <span class="tag sm">Auditoría por estudio</span><span class="tag sm">orientado a ENS</span></div></div>
-      </div>
-    </div>
-    <div class="pageno mono">25</div>
-  </section>
-
   <!-- ═══ Slide 24 · Los 11 módulos ═══ -->
   <section class="slide" data-notes="El prototipo integra once módulos de inteligencia artificial, muchos desarrollados en este trabajo. No los recorro uno a uno: los vais a ver funcionando en un caso real dentro de un momento.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
@@ -1010,52 +1005,7 @@
       <div class="m"><div class="mn">M3 · M6</div><div class="md">Interpretabilidad SAE · zero-shot</div></div>
     </div></div>
     <div class="muted serif" style="position:absolute; left:84px; bottom:40px; font-size:18px">No los recorro uno a uno — los vais a ver funcionando.</div>
-    <div class="pageno mono">26</div>
-  </section>
-
-  <!-- ═══ Slide 25 · El veredicto ═══ -->
-  <section class="slide" data-notes="El médico sube una foto y en segundos recibe un veredicto. Tres ideas: no lo genera un modelo de lenguaje, es una síntesis determinista y auditable del consenso de cinco clasificadores, y nunca rebaja la urgencia. El diagnóstico es jerárquico y coherente, L1, L2, L3. Y cuando los módulos discrepan, lo dice: no oculta la incertidumbre, la muestra y recomienda valoración presencial.">
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">La demostración · el veredicto</div>
-      <h2 style="font-size:38px">Consenso determinista, jerárquico y honesto con la incertidumbre.</h2></div>
-    <div class="body"><div class="split">
-      <div class="txt">
-        <div class="check">Veredicto <b>determinista y auditable</b> — no lo genera un LLM</div>
-        <div class="check">Consenso de <b>5 clasificadores</b> · diagnóstico L1/L2/L3 coherente</div>
-        <div class="check">Si los módulos discrepan, <b>lo avisa</b> — muestra la incertidumbre</div>
-      </div>
-      <div class="pic"><div class="picwrap"><img src="assets/proto_consenso.png" alt="Veredicto de consenso"></div></div>
-    </div></div>
-    <div class="pageno mono">27</div>
-  </section>
-
-  <!-- ═══ Slide 26 · La investigación, funcionando ═══ -->
-  <section class="slide" data-notes="Aquí veis la investigación funcionando. La segmentación aplica el hallazgo de la caja: una U-Net localiza la lesión y MedSAM2 traza la máscara, que el clínico acepta o corrige. Y el sistema recupera casos parecidos del propio archivo de la Dra. Taberner, por similitud visual, con su diagnóstico y su texto. Un detalle coherente: desplegamos la búsqueda imagen-imagen, no la contrastiva por texto, porque esa todavía no generaliza. La investigación decide qué se despliega.">
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">La investigación, funcionando</div>
-      <h2 style="font-size:36px">Segmentación y casos similares — lo evaluado, en producción.</h2></div>
-    <div class="body"><div class="two">
-      <div><div class="picwrap"><img src="assets/proto_seg.png" alt="Segmentación"></div><div class="cap">Segmentación · U-Net → MedSAM2</div></div>
-      <div><div class="picwrap"><img src="assets/proto_ragES.png" alt="Casos similares"></div><div class="cap">Casos similares del archivo · M4-bis</div></div>
-    </div></div>
-    <div class="pageno mono">28</div>
-  </section>
-
-  <!-- ═══ Slide 27 · Explicabilidad y garantías ═══ -->
-  <section class="slide" data-notes="Sobre el veredicto, un modelo de lenguaje añade el razonamiento clínico, con una regla innegociable: la IA puede subir la urgencia, nunca bajarla; asiste, no decide. Responde con recuperación aumentada sobre el archivo, citando siempre sus fuentes. Y el experto valida y anota cada caso, que realimenta el entrenamiento. El sistema está diseñado con criterios de seguridad clínica y trazabilidad, no solo de precisión. No pretende sustituir al dermatólogo: aprende de él.">
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">Explicabilidad y seguridad clínica</div>
-      <h2 style="font-size:38px">La IA asiste; no decide.</h2></div>
-    <div class="body"><div class="split">
-      <div class="txt">
-        <div class="check"><b>La urgencia nunca baja por IA</b> — solo puede subir</div>
-        <div class="check">RAG sobre el archivo, <b>citando siempre sus fuentes</b></div>
-        <div class="check">El experto valida y anota → <b>aprendizaje activo</b></div>
-        <div class="muted" style="margin-top:18px; font-size:16px">Diseñado con criterios de seguridad clínica y trazabilidad, no solo de precisión.</div>
-      </div>
-      <div class="pic"><div class="picwrap"><img src="assets/proto_razonamiento.png" alt="Razonamiento clínico"></div></div>
-    </div></div>
-    <div class="pageno mono">29</div>
+    <div class="pageno mono">25</div>
   </section>
 
   <!-- ═══ Slide 28 · DEMOSTRACIÓN EN VIVO ═══ -->
@@ -1069,7 +1019,7 @@
       <video src="assets/TFGEPS0270VIDEOUI_web.mp4" controls playsinline preload="metadata"
              style="height:100%; max-height:520px; width:auto; max-width:100%; border-radius:10px; display:block; background:#000; box-shadow:0 12px 40px rgba(0,0,0,.18)"></video>
     </div>
-    <div class="pageno mono">30</div>
+    <div class="pageno mono">26</div>
   </section>
 
   <!-- ═══ Slide 28b · Líneas futuras ═══ -->
@@ -1110,7 +1060,7 @@
       </div>
       <div class="muted" style="margin-top:20px; font-size:18px">Una dirección común: <b style="color:var(--ink); font-weight:500">mejores datos para cada tarea</b>. El límite ya no es el modelo.</div>
     </div>
-    <div class="pageno mono">31</div>
+    <div class="pageno mono">27</div>
   </section>
 
   <!-- ═══ Slide 29 · Cierre ═══ -->
@@ -1129,7 +1079,7 @@
       </div>
       <div class="muted mono" style="font-size:12px; margin-top:4px">Gracias por su atención · Quedo a su disposición para las preguntas</div>
     </div>
-    <div class="pageno mono">32</div>
+    <div class="pageno mono">28</div>
   </section>
 
 </div>
