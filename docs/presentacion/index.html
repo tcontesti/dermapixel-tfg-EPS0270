@@ -470,6 +470,27 @@
     <div class="pageno mono">10</div>
   </section>
 
+  <!-- ═══ Slide · Auditoría de contaminación (data leakage) ═══ -->
+  <section class="slide" data-notes="Y un aspecto del que estoy especialmente orgulloso: antes de comparar, auditamos por hash MD5 si alguno de estos datasets ya estaba en el preentrenamiento de los modelos, en Derm1M. Solo DermNet aparecía contaminado, al cien por cien; los otros once, cero. Eso nos permitió señalar explícitamente qué comparaciones podían estar afectadas por contaminación de datos y leerlas con cautela. Porque comparar modelos solo tiene sentido si todos juegan con las mismas reglas.">
+    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
+    <div class="head"><div class="kicker">Rigor metodológico · auditoría de contaminación</div>
+      <h2>¿Ha visto el modelo estos datos antes?</h2></div>
+    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:30px">
+      <div class="halfs" style="align-items:center">
+        <div>
+          <div class="stat"><div class="v" style="font-size:64px">0%</div><div class="k">solapamiento en 11 de los 12 datasets</div></div>
+          <div class="stat" style="margin-top:26px"><div class="v" style="font-size:64px">100%</div><div class="k">DermNet — único contaminado (contenido en Derm1M)</div></div>
+        </div>
+        <div class="divleft">
+          <div class="muted" style="font-size:16px; line-height:1.6">Antes de comparar, <b style="color:var(--ink)">auditamos por hash MD5</b> si algún dataset ya estaba en el preentrenamiento (Derm1M). Solo <b style="color:var(--ink)">DermNet</b> aparece contaminado → su comparación zero-shot lleva caveat explícito.</div>
+          <div class="muted" style="margin-top:16px; font-size:13px; color:var(--ink400); line-height:1.5">MD5 detecta duplicados <b style="color:var(--ink)">byte a byte</b>, no reescalados ni recortes. Su extensión es el <b style="color:var(--ink)">perceptual hashing</b> (dHash), que aplicamos al dataset propio para <i>near-duplicates</i>.</div>
+        </div>
+      </div>
+      <div class="lead" style="font-size:22px; max-width:none">Comparar modelos solo tiene sentido si <b style="font-weight:600">todos juegan con las mismas reglas</b>.</div>
+    </div>
+    <div class="pageno mono">11</div>
+  </section>
+
   <!-- ═══ Slide 10 · Ontología L1/L2/L3 ═══ -->
   <section class="slide" data-notes="Antes de comparar apareció un problema: cada dataset habla un idioma distinto. Un mismo diagnóstico recibe nombres distintos o se agrupa de otra forma; sin vocabulario común, la comparación no es justa. Construimos con la Dra. Taberner una ontología de tres niveles: cuatro familias, cuarenta y tres subcategorías y más de trescientos diagnósticos, mapeados a SNOMED y CIE-10. Con ella armonizamos setenta y dos mil imágenes de once datasets bajo un único lenguaje. Antes de comparar modelos, primero hicimos que todos hablaran el mismo idioma. Y quiero subrayarlo, porque es una de las aportaciones de las que más orgulloso estoy: parece un detalle técnico, pero sin ella no hay comparación justa; y además es un recurso clínico reutilizable, interoperable con los sistemas del hospital, y la base sobre la que se organiza el prototipo. Es más importante de lo que parece.">
     <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
@@ -495,36 +516,6 @@
       </div>
       <div class="muted" style="font-size:14px; color:var(--ink400)">Reparto por L1 <b style="color:var(--ink)">desbalanceado</b> (refleja el dominio dermatoscópico público): <b style="color:var(--ink)">~74% tumoral · 17% inflamatoria · 9% infecciosa · 0,2% genodermatosis</b>.</div>
       <div class="muted" style="margin-top:6px; font-size:15px; line-height:1.5; box-shadow:inset 3px 0 0 var(--ink); padding-left:14px; max-width:none">No es un detalle técnico: <b style="color:var(--ink)">sin un vocabulario común no hay comparación justa</b> entre datasets. Y no se queda en el benchmark — es un <b style="color:var(--ink)">recurso clínico reutilizable</b>, interoperable con los sistemas del hospital (SNOMED/CIE-10), y la <b style="color:var(--ink)">base del prototipo</b>.</div>
-    </div>
-    <div class="pageno mono">11</div>
-  </section>
-
-  <!-- ═══ Slide 11 · Reproducibilidad ═══ -->
-  <section class="slide" data-notes="Sobre este banco aplicamos cuatro protocolos: linear probing, fine-tuning, segmentación y zero-shot. Y un aspecto del que estoy especialmente orgulloso: antes de comparar, auditamos por hash MD5 si algún dataset ya estaba en el preentrenamiento. Solo DermNet aparecía contaminado, al cien por cien; el resto, cero. Eso nos permitió señalar explícitamente qué comparaciones podían estar afectadas. Todo con semillas fijas y predicciones guardadas. Porque comparar modelos solo tiene sentido si todos juegan con las mismas reglas.">
-    <img class="uib-mark" src="assets/537341_escudoUIB_horizontal.png" alt="Universitat de les Illes Balears">
-    <div class="head"><div class="kicker">Rigor metodológico</div>
-      <h2>Evaluación reproducible y sin sesgos.</h2></div>
-    <div class="body" style="flex-direction:column; align-items:stretch; justify-content:center; gap:36px">
-      <div class="halfs">
-        <div>
-          <div class="eyebrow">4 protocolos</div>
-          <div style="margin-top:16px">
-            <div class="check">Linear probing · calidad de la representación</div>
-            <div class="check">Fine-tuning · rendimiento máximo</div>
-            <div class="check">Segmentación · localización de la lesión</div>
-            <div class="check">Zero-shot · clasificación guiada por texto</div>
-          </div>
-        </div>
-        <div class="divleft">
-          <div class="eyebrow">Auditoría de contaminación · MD5</div>
-          <div style="margin-top:20px">
-            <div class="stat"><div class="v" style="font-size:50px">0%</div><div class="k">solapamiento en 11 datasets</div></div>
-            <div class="stat" style="margin-top:22px"><div class="v" style="font-size:50px">100%</div><div class="k">DermNet — marcado como contaminado</div></div>
-            <div class="muted" style="margin-top:20px; font-size:13px; line-height:1.5">MD5 detecta duplicados <b>byte a byte</b>, no reescalados ni recortes. Su extensión es el <b style="color:var(--ink)">perceptual hashing</b> (dHash), que aplicamos al dataset propio para detectar <i>near-duplicates</i>.</div>
-          </div>
-        </div>
-      </div>
-      <div class="lead" style="font-size:22px; max-width:none">Comparar modelos solo tiene sentido si <b style="font-weight:600">todos juegan con las mismas reglas</b>.</div>
     </div>
     <div class="pageno mono">12</div>
   </section>
