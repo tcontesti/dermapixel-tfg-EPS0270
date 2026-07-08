@@ -195,10 +195,10 @@
 
   /* HUD (fuera del stage) */
   .hud{position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
-       display:flex; gap:16px; align-items:center; color:#888; font-size:12px;
+       display:flex; gap:16px; align-items:center; color:#555; font-size:12px;
        font-family:"JetBrains Mono",monospace; letter-spacing:.08em; user-select:none}
-  .hud button{background:none; border:1px solid #333; color:#aaa; border-radius:6px; padding:4px 9px; cursor:pointer; font:inherit}
-  .hud button:hover{color:#fff; border-color:#666}
+  .hud button{background:#fff; border:1px solid #bbb; color:#444; border-radius:6px; padding:4px 9px; cursor:pointer; font:inherit}
+  .hud button:hover{color:#000; border-color:#666}
   /* Presenter notes */
   #notes{position:fixed; left:0; right:0; bottom:0; max-height:38vh; overflow:auto;
          background:#0d0d0d; color:#d8d8d8; border-top:1px solid #333;
@@ -207,7 +207,7 @@
   #notes .nlabel{font-family:"JetBrains Mono",monospace; font-size:11px; color:#777; text-transform:uppercase; letter-spacing:.15em; margin-bottom:8px}
   #notes b{color:#fff}
   #notes .nnext{margin-top:12px; padding-top:10px; border-top:1px solid #333; color:#8a8a8a; font-size:13px; font-family:"JetBrains Mono",monospace}
-  .hud #timer{color:#ddd; min-width:46px; text-align:center; font-variant-numeric:tabular-nums}
+  .hud #timer{color:#0a0a0a; font-size:16px; font-weight:600; min-width:58px; text-align:center; font-variant-numeric:tabular-nums; background:#fff; border:1px solid #bbb; border-radius:6px; padding:3px 9px}
   #notes #ntimer{color:#bbb}
 </style>
 </head>
